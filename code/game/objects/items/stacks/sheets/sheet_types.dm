@@ -75,7 +75,16 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 		new /datum/stack_recipe("Black Checker King", /obj/structure/chess/checker/blackking, 2, time = 1 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_ENTERTAINMENT), \
 	)),
 	null, \
-	new/datum/stack_recipe("rack parts", /obj/item/rack_parts, category = CAT_FURNITURE), \
+	//METASTRUCT EDIT BEGIN: ADDS CRAFTABLE SHELVES
+	new /datum/stack_recipe_list("Racks and Shelves", list( \
+		new/datum/stack_recipe("rack parts", /obj/item/rack_parts, category = CAT_FURNITURE), \
+		new/datum/stack_recipe("Cargo shelf parts", /obj/item/rack_parts/cargo_shelf, 4, category = CAT_FURNITURE), \
+		new/datum/stack_recipe("Gun shelf parts", /obj/item/rack_parts/gun, 2, category = CAT_FURNITURE), \
+		new/datum/stack_recipe("Shelf parts", /obj/item/rack_parts/shelf, 2, category = CAT_FURNITURE), \
+	)),
+	null, \
+	/* new/datum/stack_recipe("rack parts", /obj/item/rack_parts, category = CAT_FURNITURE), \*/
+	//METASTRUCT EDIT END: ADDS CRAFTABLE SHELVES
 	new/datum/stack_recipe("closet", /obj/structure/closet, 2, time = 1.5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
 	null, \
 	new/datum/stack_recipe("atmos canister", /obj/machinery/portable_atmospherics/canister, 10, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_ATMOSPHERIC), \
@@ -144,7 +153,9 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("telescreen auxbase frame", /obj/item/wallframe/telescreen/auxbase, 7, crafting_flags = NONE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("tram controller frame", /obj/item/wallframe/tram/controller, 20, crafting_flags = NONE, category = CAT_STRUCTURE), \
 	new/datum/stack_recipe("tram display frame", /obj/item/wallframe/indicator_display, 7, crafting_flags = NONE, category = CAT_STRUCTURE), \
+	//METASTRUCT ADDITION BEGIN
 	new/datum/stack_recipe("mounted closet frame", /obj/item/wallframe/closet, 2, time = 1.5 SECONDS, category = CAT_STRUCTURE), \
+	//METASTRUCT ADDITION END
 	null, \
 	new/datum/stack_recipe("iron door", /obj/structure/mineral_door/iron, 20, time = 5 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND | CRAFT_APPLIES_MATS, category = CAT_DOORS), \
 	new/datum/stack_recipe("filing cabinet", /obj/structure/filingcabinet, 2, time = 10 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, category = CAT_FURNITURE), \
