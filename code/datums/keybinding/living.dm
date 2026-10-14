@@ -31,7 +31,9 @@
 		owner.hud_used.resist_icon.icon_state = owner.hud_used.resist_icon.base_icon_state
 
 /datum/keybinding/living/look_up
-	hotkey_keys = list("L")
+	// PORT EDIT - CHANGE - LOOC
+	// ORIGINAL: hotkey_keys = list("L")
+	hotkey_keys = list("P")
 	name = "look up"
 	full_name = "Look Up"
 	description = "Look up at the next z-level.  Only works if directly below open space."
@@ -52,7 +54,9 @@
 	return TRUE
 
 /datum/keybinding/living/look_down
-	hotkey_keys = list(";")
+	// PORT EDIT - CHANGE - LOOC
+	// ORIGINAL: hotkey_keys = list(";")
+	hotkey_keys = list("\[")
 	name = "look down"
 	full_name = "Look Down"
 	description = "Look down at the previous z-level.  Only works if directly above open space."

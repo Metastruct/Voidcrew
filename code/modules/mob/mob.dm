@@ -1197,6 +1197,12 @@
 				if(obj.target && obj.target.current && obj.target.current.real_name == name)
 					obj.update_explanation_text()
 
+	// META EDIT - ADDITION - CHAT_LOG_NAME_COLORS
+	// Keep the per-name chat colour cache in step with a rename.
+	if(client)
+		GLOB.chat_colors_by_mob_name -= oldname
+		GLOB.chat_colors_by_mob_name[name] = list(chat_color, chat_color_darkened)
+
 	log_mob_tag("TAG: [tag] RENAMED: [key_name(src)]")
 
 	return TRUE

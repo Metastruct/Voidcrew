@@ -340,8 +340,10 @@
 
 	return ceil(damage * (ceil(athletics_level / 2)) * fitness_modifier * maxHealth)
 
-/mob/living/carbon/human/proc/item_heal(mob/user, brute_heal, burn_heal, heal_message_brute, heal_message_burn, required_bodytype)
-	var/obj/item/bodypart/affecting = src.get_bodypart(check_zone(user.zone_selected))
+/mob/living/carbon/human/proc/item_heal(mob/user, brute_heal, burn_heal, heal_message_brute, heal_message_burn, required_bodytype, obj/item/bodypart/target)
+	// PORT EDIT - CHANGE - SYNTH_AUTO_REPAIR
+	// Let the welder/cable repair loop heal a chosen limb, not the user's targeted zone.
+	var/obj/item/bodypart/affecting = target || src.get_bodypart(check_zone(user.zone_selected))
 	if (!affecting || !(affecting.bodytype & required_bodytype))
 		to_chat(user, span_warning("[affecting] is already in good condition!"))
 		return FALSE

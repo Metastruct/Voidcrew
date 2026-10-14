@@ -16,7 +16,10 @@
 	return TRUE
 
 /datum/keybinding/client/communication/radio
-	hotkey_keys = list("Y")
+	// PORT EDIT - CHANGE - LOOC
+	// ORIGINAL: hotkey_keys = list("Y")
+	// Free up Y for the whisper channel (Bubber parity: radio on ;, whisper on Y).
+	hotkey_keys = list(";")
 	name = RADIO_CHANNEL
 	full_name = "IC Radio (;)"
 	keybind_signal = COMSIG_KB_CLIENT_RADIO_DOWN

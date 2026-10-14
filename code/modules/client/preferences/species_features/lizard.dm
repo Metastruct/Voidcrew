@@ -14,8 +14,27 @@
 	var/datum/universal_icon/final_icon = include_snout ? lizard_with_snout.copy() : lizard.copy()
 
 	if (!isnull(sprite_accessory) && sprite_accessory.icon_state != SPRITE_ACCESSORY_NONE)
-		var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
-		final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
+		// PORT EDIT - CHANGE - BUBBER_CUSTOMIZATION
+		// Ported art is on the FRONT layer, often only as a _primary or _tertiary slice,
+		// while core lizard art uses _ADJ. Try each layer and suffix, or the preview comes
+		// out blank.
+		// ORIGINAL: var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, "m_[key]_[sprite_accessory.icon_state]_ADJ", EAST)
+		var/list/all_states = icon_states(sprite_accessory.icon)
+		var/state
+		for(var/layer in list("ADJ", "FRONT", "BEHIND"))
+			var/base_state = "m_[key]_[sprite_accessory.icon_state]_[layer]"
+			if(base_state in all_states)
+				state = base_state
+				break
+			for(var/suffix in list("primary", "secondary", "tertiary"))
+				if("[base_state]_[suffix]" in all_states)
+					state = "[base_state]_[suffix]"
+					break
+			if(state)
+				break
+		if(state)
+			var/datum/universal_icon/accessory_icon = uni_icon(sprite_accessory.icon, state, EAST)
+			final_icon.blend_icon(accessory_icon, ICON_OVERLAY)
 
 	final_icon.crop(11, 20, 23, 32)
 	final_icon.scale(32, 32)
@@ -109,8 +128,12 @@
 	var/list/correct_legs = target.dna.species.bodypart_overrides.Copy() & list(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG)
 
 	if(value == DIGITIGRADE_LEGS)
-		correct_legs[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		correct_legs[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+		// PORT EDIT - CHANGE - BUBBER_CUSTOMIZATION
+		// Let the species pick its own digitigrade art.
+		// ORIGINAL: correct_legs[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
+		// ORIGINAL: correct_legs[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+		correct_legs[BODY_ZONE_R_LEG] = target.dna.species.digitigrade_right_type
+		correct_legs[BODY_ZONE_L_LEG] = target.dna.species.digitigrade_left_type
 
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if(old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES)

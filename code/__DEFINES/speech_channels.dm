@@ -4,3 +4,6 @@
 #define ME_CHANNEL "Me"
 #define OOC_CHANNEL "OOC"
 #define ADMIN_CHANNEL "Admin"
+// PORT EDIT - ADDITION - LOOC
+#define LOOC_CHANNEL "LOOC"
+#define WHIS_CHANNEL "Whis"

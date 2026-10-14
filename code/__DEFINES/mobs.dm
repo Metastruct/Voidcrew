@@ -709,7 +709,8 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 // Mob Overlays Indexes
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
-/// Also consider updating layers_to_offset
+/// PORT EDIT - CHANGE - HEIGHT_REFACTOR
+/// tgstation #96570 removed layers_to_offset, so there is no other list to bump here.
 #define TOTAL_LAYERS 38
 /// Mutations layer - Tk headglows, cold resistance glow, etc
 #define MUTATIONS_LAYER 37
@@ -789,50 +790,16 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define UPPER_BODY "upper body"
 #define LOWER_BODY "lower body"
 #define NO_MODIFY "do not modify"
+// PORT EDIT - ADDITION - HEIGHT_REFACTOR
+/// Overlays that span the whole body and need a height displacement filter.
+#define ENTIRE_BODY "full body"
 
-/// Used for human height overlay adjustments
-/// Certain standing overlay layers shouldn't have a filter applied and should instead just offset by a pixel y
-/// This list contains all the layers that must offset, with its value being whether it's a part of the upper half of the body (TRUE) or not (FALSE)
-GLOBAL_LIST_INIT(layers_to_offset, list(
-	// Weapons commonly cross the middle of the sprite so they get cut in half by the filter
-	"[HANDS_LAYER]" = LOWER_BODY,
-	// Very tall hats will get cut off by filter
-	"[HEAD_LAYER]" = UPPER_BODY,
-	// Hair will get cut off by filter
-	"[HAIR_LAYER]" = UPPER_BODY,
-	// Long belts (sabre sheathe) will get cut off by filter
-	"[BELT_LAYER]" = LOWER_BODY,
-	// Everything below looks fine with or without a filter, so we can skip it and just offset
-	// (In practice they'd be fine if they got a filter but we can optimize a bit by not.)
-	"[NECK_LAYER]" = UPPER_BODY,
-	"[GLASSES_LAYER]" = UPPER_BODY,
-	"[LOW_NECK_LAYER]" = UPPER_BODY,
-	"[ABOVE_BODY_FRONT_GLASSES_LAYER]" = UPPER_BODY, // currently unused
-	"[ABOVE_BODY_FRONT_HEAD_LAYER]" = UPPER_BODY, // only used for head stuff
-	"[GLOVES_LAYER]" = LOWER_BODY,
-	"[HALO_LAYER]" = UPPER_BODY, // above the head
-	"[HANDCUFF_LAYER]" = LOWER_BODY,
-	"[ID_CARD_LAYER]" = UPPER_BODY, // unused
-	"[ID_LAYER]" = UPPER_BODY,
-	"[FACEMASK_LAYER]" = UPPER_BODY,
-	"[LOW_FACEMASK_LAYER]" = UPPER_BODY,
-	// These two are cached, and have their appearance shared(?), so it's safer to just not touch it
-	"[MUTATIONS_LAYER]" = NO_MODIFY,
-	"[FRONT_MUTATIONS_LAYER]" = NO_MODIFY,
-	// These DO get a filter, I'm leaving them here as reference,
-	// to show how many filters are added at a glance
-	// BACK_LAYER (backpacks are big)
-	// BODYPARTS_HIGH_LAYER (arms)
-	// BODY_LAYER (body markings (full body), underwear (full body))
-	// EYES_LAYER,
-	// BODY_ADJ_LAYER (external organs like wings)
-	// BODY_BEHIND_LAYER (external organs like wings)
-	// BODY_FRONT_LAYER (external organs like wings)
-	// DAMAGE_LAYER (full body)
-	// HIGHEST_LAYER (full body)
-	// UNIFORM_LAYER (full body)
-	// WOUND_LAYER (full body)
-))
+// PORT EDIT - REMOVAL - HEIGHT_REFACTOR
+// tgstation #96570 dropped layers_to_offset; it was only read by the
+// /mob/living/carbon/human/apply_overlay() height hook, which the explicit apply_height()
+// calls replaced. ORIGINAL: GLOBAL_LIST_INIT(layers_to_offset, ...)
+// (HANDS/HEAD/HAIR/BELT/NECK/GLASSES/GLOVES/HALO/HANDCUFF/ID/FACEMASK -> UPPER/LOWER_BODY,
+// MUTATIONS -> NO_MODIFY); see tgstation #96570 for the full table.
 
 //Bitflags for the layers a bodypart overlay can draw on (can be drawn on multiple layers)
 /// Draws overlay on the BODY_FRONT_LAYER

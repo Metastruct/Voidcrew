@@ -22,8 +22,16 @@ import { selectSettings } from './selectors';
 import { importChatSettings } from './settingsImExport';
 
 export function SettingsGeneral(props) {
-  const { theme, fontFamily, fontSize, lineHeight } =
-    useSelector(selectSettings);
+  const {
+    theme,
+    fontFamily,
+    fontSize,
+    lineHeight,
+    // META EDIT - ADDITION - CHAT_LOG_NAME_COLORS
+    chatNameColorMixSay,
+    chatNameColorMixRadio,
+    chatNameColorMixLooc,
+  } = useSelector(selectSettings);
   const dispatch = useDispatch();
   const [freeFont, setFreeFont] = useState(false);
 
@@ -172,6 +180,62 @@ export function SettingsGeneral(props) {
             }
           />
         </LabeledList.Item>
+        {/* META EDIT - ADDITION - START - CHAT_LOG_NAME_COLORS */}
+        <LabeledList.Item label="Say color mix">
+          <Slider
+            width="100%"
+            step={1}
+            minValue={0}
+            maxValue={100}
+            value={chatNameColorMixSay}
+            unit="%"
+            format={(value) => toFixed(value)}
+            onChange={(e, value) =>
+              dispatch(
+                updateSettings({
+                  chatNameColorMixSay: value,
+                }),
+              )
+            }
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="Radio color mix">
+          <Slider
+            width="100%"
+            step={1}
+            minValue={0}
+            maxValue={100}
+            value={chatNameColorMixRadio}
+            unit="%"
+            format={(value) => toFixed(value)}
+            onChange={(e, value) =>
+              dispatch(
+                updateSettings({
+                  chatNameColorMixRadio: value,
+                }),
+              )
+            }
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="LOOC color mix">
+          <Slider
+            width="100%"
+            step={1}
+            minValue={0}
+            maxValue={100}
+            value={chatNameColorMixLooc}
+            unit="%"
+            format={(value) => toFixed(value)}
+            onChange={(e, value) =>
+              dispatch(
+                updateSettings({
+                  chatNameColorMixLooc: value,
+                }),
+              )
+            }
+          />
+        </LabeledList.Item>
+        {/* META EDIT - ADDITION - END */}
       </LabeledList>
       <Divider />
       <Stack fill>

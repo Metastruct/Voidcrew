@@ -50,12 +50,12 @@
 		balloon_alert(user, "currently [active ? "unsealing" : "sealing"]!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 		return FALSE
-	var/deploy = FALSE
-	for(var/obj/item/part as anything in get_parts())
-		if(part.loc != src)
-			continue
-		deploy = TRUE
-		break
+	// PORT EDIT - CHANGE - MODSUIT_OVERSLOT
+	// Only deploy when every part is retracted. The old loop deployed if any part was
+	// retracted, so a part that could not deploy (a blocking hat or armour) made
+	// right-click deploy re-deploy forever and never retract. Matches tgstation's
+	// check_retracted().
+	var/deploy = check_retracted()
 	wearer.visible_message(span_notice("[wearer]'s [src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_notice("[src] [deploy ? "deploys" : "retracts"] its parts with a mechanical hiss."),
 		span_hear("You hear a mechanical hiss."))
@@ -72,6 +72,13 @@
 		SEND_SIGNAL(src, COMSIG_MOD_RETRACTED, user)
 	return TRUE
 
+/// TRUE if every part is currently stowed in the control unit (nothing deployed).
+/obj/item/mod/control/proc/check_retracted()
+	for(var/obj/item/part as anything in get_parts())
+		if(part.loc != src)
+			return FALSE
+	return TRUE
+
 /// Deploys a part of the suit onto the user.
 /obj/item/mod/control/proc/deploy(mob/user, obj/item/part, instant = FALSE)
 	var/datum/mod_part/part_datum = get_part_datum(part)
@@ -83,12 +90,15 @@
 			return FALSE
 		balloon_alert(user, "already deployed!")
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
-	if(part_datum.can_overslot)
-		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
-		if(istype(overslot, /obj/item/clothing))
-			part_datum.overslotting = overslot
-			wearer.transferItemToLoc(overslot, part, force = TRUE)
-			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
+	// PORT EDIT - CHANGE - MODSUIT_OVERSLOT - START
+	// Bubber/upstream #97872. Any form-fitting item flagged CAN_BE_OVERSLOT can be
+	// overslotted, not only the parts whose theme opts in via can_overslot.
+	var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
+	if(istype(overslot, /obj/item/clothing) && (part_datum.can_overslot || (overslot.item_flags & CAN_BE_OVERSLOT)))
+		part_datum.overslotting = overslot
+		wearer.transferItemToLoc(overslot, part, force = TRUE)
+		RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
+	// PORT EDIT - CHANGE - MODSUIT_OVERSLOT - END
 	if(wearer.equip_to_slot_if_possible(part, part.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
 		ADD_TRAIT(part, TRAIT_NODROP, MOD_TRAIT)
 		wearer.update_clothing(slot_flags|part.slot_flags)
@@ -108,10 +118,9 @@
 		balloon_alert(user, "can't seal, retracting!")
 		retract(user, part, instant = TRUE)
 	else
-		if(part_datum.overslotting)
-			var/obj/item/overslot = part_datum.overslotting
-			if(!wearer.equip_to_slot_if_possible(overslot, overslot.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
-				wearer.dropItemToGround(overslot, force = TRUE, silent = TRUE)
+		// PORT EDIT - CHANGE - MODSUIT_OVERSLOT
+		if(part_datum.overslotting && !wearer.equip_to_slot_if_possible(part_datum.overslotting, part_datum.overslotting.slot_flags, qdel_on_fail = FALSE, disable_warning = TRUE))
+			wearer.dropItemToGround(part_datum.overslotting, force = TRUE, silent = TRUE)
 		if(!user)
 			return FALSE
 		balloon_alert(user, "bodypart clothed!")

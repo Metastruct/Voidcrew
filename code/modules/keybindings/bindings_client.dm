@@ -59,6 +59,12 @@
 
 	//the time a key was pressed isn't actually used anywhere (as of 2019-9-10) but this allows easier access usage/checking
 	keys_held[_key] = world.time
+	// META EDIT - ADDITION - INSTANT_OPEN_MODIFIER_GUARD
+	// Release the client-local instant-open chat macros while a modifier is held, so
+	// e.g. Ctrl+L doesn't also pop LOOC. See modular_meta/modules/clientside_chatbox.
+	if(_key == "Alt" || _key == "Ctrl" || _key == "Shift")
+		set_instant_open_macros(FALSE)
+	// META EDIT - ADDITION - END - INSTANT_OPEN_MODIFIER_GUARD
 	var/movement = movement_keys[_key]
 	if(movement)
 		calculate_move_dir()
@@ -87,7 +93,10 @@
 	for(var/kb_name in prefs.key_bindings_by_key[full_key])
 		keycount++
 		var/datum/keybinding/kb = GLOB.keybindings_by_name[kb_name]
-		if(kb.can_use(src) && kb.down(src, click_data[1]) && keycount >= MAX_COMMANDS_PER_KEY)
+		// PORT EDIT - ADDITION - PRECISE_DROP
+		// Pass the mouse-offset residuals so precise-drop can place the item under the cursor.
+		// ORIGINAL: if(kb.can_use(src) && kb.down(src, click_data[1]) && keycount >= MAX_COMMANDS_PER_KEY)
+		if(kb.can_use(src) && kb.down(src, click_data[1], click_data[2], click_data[3]) && keycount >= MAX_COMMANDS_PER_KEY)
 			break
 
 	holder?.key_down(_key, src, full_key)
@@ -108,6 +117,11 @@
 
 	keys_held -= _key
 
+	// META EDIT - ADDITION - INSTANT_OPEN_MODIFIER_GUARD
+	// Re-arm the instant-open chat macros once every modifier has been released.
+	if((_key == "Alt" || _key == "Ctrl" || _key == "Shift") && !keys_held["Alt"] && !keys_held["Ctrl"] && !keys_held["Shift"])
+		set_instant_open_macros(TRUE)
+	// META EDIT - ADDITION - END - INSTANT_OPEN_MODIFIER_GUARD
 	var/movement = movement_keys[_key]
 	if(movement)
 		calculate_move_dir()

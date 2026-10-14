@@ -174,14 +174,24 @@
 /obj/item/bodypart/head/get_limb_icon(dropped, mob/living/carbon/update_on)
 	. = ..()
 
+	// PORT EDIT - ADDITION - START - HEIGHT_REFACTOR
+	// Hair and lips are added after the base proc has already applied height, so offset
+	// them here with UPPER_BODY. An offset rather than a filter, so tall hair isn't cut.
+	// tgstation #96570.
+	var/list/pre_hair_overlays = list()
+	pre_hair_overlays += .
 	. += get_hair_and_lips_icon(dropped)
+	if(!dropped && !isnull(owner))
+		for(var/image/hair_overlay as anything in . - pre_hair_overlays)
+			owner.apply_height(hair_overlay, UPPER_BODY)
+	// PORT EDIT - ADDITION - END - HEIGHT_REFACTOR
 	// We need to get the eyes if we are dropped (ugh)
 	if(dropped)
 		var/obj/item/organ/eyes/eyes = locate(/obj/item/organ/eyes) in src
 		// This is a bit of copy/paste code from eyes.dm:generate_body_overlay
 		if(eyes?.eye_icon_state && (head_flags & HEAD_EYESPRITES))
-			var/image/eye_left = image('icons/mob/human/human_face.dmi', "[eyes.eye_icon_state]_l", -EYES_LAYER, SOUTH)
-			var/image/eye_right = image('icons/mob/human/human_face.dmi', "[eyes.eye_icon_state]_r", -EYES_LAYER, SOUTH)
+			var/image/eye_left = image(eyes.eye_icon, "[eyes.eye_icon_state]_l", -EYES_LAYER, SOUTH)
+			var/image/eye_right = image(eyes.eye_icon, "[eyes.eye_icon_state]_r", -EYES_LAYER, SOUTH)
 			if(head_flags & HEAD_EYECOLOR)
 				if(eyes.eye_color_left)
 					eye_left.color = eyes.eye_color_left

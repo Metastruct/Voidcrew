@@ -26,6 +26,15 @@
         "es-toolkit": "^1.39.3",
       },
     },
+    "packages/meta_tgui": {
+      "name": "meta_tgui",
+      "version": "0.0.1",
+      "dependencies": {
+        "@types/react": "^19.1.5",
+        "react": "^19.1.0",
+        "tgui": "workspace:*",
+      },
+    },
     "packages/tgfont": {
       "name": "tgfont",
       "version": "2.0.0",
@@ -1001,6 +1010,8 @@
     "merge-descriptors": ["merge-descriptors@1.0.3", "", {}, "sha512-gaNvAS7TZ897/rVaZ0nMtAyxNyi/pdbjbAwUpFQpN70GqnVfOiXpeUUMKRBmzXaSQ8DdTX4/0ms62r2K+hE6mQ=="],
 
     "merge-stream": ["merge-stream@2.0.0", "", {}, "sha512-abv/qOcuPfk3URPfDzmZU1LKmuw8kT+0nIHvKrKgFrwifol/doWcdA4ZqsWQ8ENrFKkd67Mfpo/LovbIUsbt3w=="],
+
+    "meta_tgui": ["meta_tgui@workspace:packages/meta_tgui"],
 
     "methods": ["methods@1.1.2", "", {}, "sha512-iclAHeNqNm68zFtnZ0e+1L2yUIdvzNoauKU4WBA3VvH/vPFieF7qfRlwUZU+DA9P9bPXIS90ulxoUoCH23sV2w=="],
 

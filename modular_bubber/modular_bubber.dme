@@ -1,0 +1,119 @@
+// Ported customization layer (Bubberstation / Skyrat / Zubbers).
+//
+// This is the single include pulled in by tgstation.dme for everything we ported
+// from Bubber's tree. Our own layer lives in modular_meta/ and is included first.
+// Files are listed here so upstream dme churn stays minimal.
+//
+// See readme.md for the rules.
+
+// ---------------------------------------------------------------------------
+// Defines (must load before the content that consumes them)
+// ---------------------------------------------------------------------------
+#include "__DEFINES\species.dm"
+#include "__DEFINES\features.dm"
+#include "__DEFINES\external_organs.dm"
+#include "__DEFINES\teshari.dm"
+#include "__DEFINES\genitals.dm"
+#include "__DEFINES\body_markings.dm"
+#include "__DEFINES\pixel_shift.dm"
+#include "__DEFINES\looc.dm"
+
+// ---------------------------------------------------------------------------
+// Framework
+// ---------------------------------------------------------------------------
+#include "code\datums\bodypart_overlays\matrixed_colors.dm"
+#include "code\datums\bodypart_overlays\modsuit_mesh.dm"
+#include "code\datums\elements\equipment_bodypart_texture.dm"
+#include "code\datums\blood_color.dm"
+#include "code\datums\body_markings\body_marking_framework.dm"
+#include "code\controllers\subsystem\accessories_bubber.dm"
+
+// ---------------------------------------------------------------------------
+// Core re-declarations: override core vars here instead of editing the core files
+// (a later declaration wins for var initialisers). Procs cannot be redefined on the
+// same type in DM, so mid-proc changes stay inline PORT EDIT hooks.
+// ---------------------------------------------------------------------------
+#include "code\datums\sprite_accessories.dm"
+#include "code\modules\client\preferences\species_features\lizard.dm"
+#include "code\modules\mob\living\carbon\human\human_defines.dm"
+#include "code\modules\mob\living\carbon\human\species_types\mothmen.dm"
+#include "code\modules\surgery\bodyparts\species_parts\moth_bodyparts.dm"
+
+// ---------------------------------------------------------------------------
+// Content: sprite accessories (generated from Bubber)
+// ---------------------------------------------------------------------------
+#include "code\datums\sprite_accessories\bubber_ears.dm"
+#include "code\datums\sprite_accessories\bubber_tails.dm"
+#include "code\datums\sprite_accessories\bubber_snouts.dm"
+#include "code\datums\sprite_accessories\bubber_horns.dm"
+#include "code\datums\sprite_accessories\bubber_frills.dm"
+#include "code\datums\sprite_accessories\zubber_ears.dm"
+#include "code\datums\sprite_accessories\zubber_tails.dm"
+#include "code\datums\sprite_accessories\zubber_snouts.dm"
+#include "code\datums\sprite_accessories\zubber_horns.dm"
+#include "code\datums\sprite_accessories\zubber_frills.dm"
+#include "code\datums\sprite_accessories\bubber_fluff.dm"
+#include "code\datums\sprite_accessories\zubber_fluff.dm"
+#include "code\datums\sprite_accessories\zubber_moth_antennae.dm"
+#include "code\datums\sprite_accessories\synth_screen_antenna.dm"
+#include "code\datums\sprite_accessories\synth_chassis.dm"
+#include "code\datums\sprite_accessories\bubber_genitals.dm"
+#include "code\datums\sprite_accessories\bubber_hair.dm"
+#include "code\datums\sprite_accessories\zubber_hair.dm"
+#include "code\datums\body_markings\bubber_body_markings.dm"
+
+// ---------------------------------------------------------------------------
+// Content: organs, species, preferences
+// ---------------------------------------------------------------------------
+#include "code\modules\surgery\organs\external\bubber_organs.dm"
+#include "code\modules\surgery\organs\external\synth_organs.dm"
+#include "code\modules\surgery\organs\external\genitals.dm"
+#include "code\modules\surgery\organs\external\visual_resync.dm"
+#include "code\modules\surgery\exposure.dm"
+#include "code\modules\surgery\bodyparts\teshari_bodyparts.dm"
+#include "code\modules\surgery\bodyparts\shadekin_bodyparts.dm"
+#include "code\modules\surgery\bodyparts\mutant_bodyparts.dm"
+#include "code\modules\surgery\bodyparts\body_markings.dm"
+#include "code\modules\mob\living\carbon\human\species_types\mammal.dm"
+#include "code\modules\mob\living\carbon\human\species_types\mammal_variants.dm"
+#include "code\modules\mob\living\carbon\human\species_types\synthetic.dm"
+#include "code\modules\mob\living\carbon\human\species_types\teshari.dm"
+#include "code\modules\mob\living\carbon\human\species_types\shadekin.dm"
+#include "code\modules\mob\living\carbon\human\species_types\podweak.dm"
+#include "code\modules\client\preferences\part_pref_icons.dm"
+#include "code\modules\client\preferences\erp.dm"
+#include "code\modules\client\preferences\species_features\mammal.dm"
+#include "code\modules\client\preferences\species_features\synth.dm"
+#include "code\modules\client\preferences\species_features\fluff.dm"
+#include "code\modules\client\preferences\species_features\genitals.dm"
+#include "code\modules\client\preferences\species_features\part_colours.dm"
+#include "code\modules\client\preferences\part_colors.dm"
+#include "code\modules\client\preferences\mismatched_parts.dm"
+#include "code\modules\client\preferences\body_markings.dm"
+#include "code\modules\client\preferences\body_size.dm"
+#include "code\modules\client\preferences\blood_color.dm"
+#include "code\modules\client\preferences\character_preview_background.dm"
+#include "code\modules\client\preferences\emissives.dm"
+#include "code\modules\client\preferences\preferences_bubber_import.dm"
+
+// ---------------------------------------------------------------------------
+// Voice packs (Bubber bloopers, loaded alongside Voidcrew's voice_packs.toml)
+// ---------------------------------------------------------------------------
+#include "code\modules\voice_barks\voice_packs.dm"
+
+// ---------------------------------------------------------------------------
+// Core overrides (split type definitions / modules)
+// ---------------------------------------------------------------------------
+#include "code\modules\clothing\overslot.dm"
+#include "code\modules\clothing\modsuit_variations.dm"
+
+// ---------------------------------------------------------------------------
+// Modules: self-contained features
+// ---------------------------------------------------------------------------
+#include "modules\pixel_shift\code\pixel_shift_living.dm"
+#include "modules\pixel_shift\code\pixel_shift_component.dm"
+#include "modules\pixel_shift\code\pixel_shift_keybind.dm"
+#include "modules\precise_drop\code\precise_drop.dm"
+#include "modules\looc\code\looc.dm"
+#include "modules\looc\code\looc_preferences.dm"
+#include "modules\looc\code\looc_keybind.dm"

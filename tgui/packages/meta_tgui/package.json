@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "meta_tgui",
+  "version": "0.0.1",
+  "dependencies": {
+    "@types/react": "^19.1.5",
+    "react": "^19.1.0",
+    "tgui": "workspace:*"
+  }
+}

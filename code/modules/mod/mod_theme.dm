@@ -145,7 +145,12 @@
 		part_datum.sealed_layer = category[SEALED_LAYER]
 		part_datum.unsealed_message = category[UNSEALED_MESSAGE] || "No unseal message set! Tell a coder!"
 		part_datum.sealed_message = category[SEALED_MESSAGE] || "No seal message set! Tell a coder!"
-		part_datum.can_overslot = category[CAN_OVERSLOT] || FALSE
+		// PORT EDIT - CHANGE - MODSUIT_OVERSLOT
+		// Bubber lets a suit overslot any item in the slot, not only the CAN_BE_OVERSLOT
+		// form-fitting ones, which is why a hardhat or fire helmet could not be worn under
+		// it. Matches Bubber's SKYRAT EDIT.
+		// ORIGINAL: part_datum.can_overslot = category[CAN_OVERSLOT] || FALSE
+		part_datum.can_overslot = TRUE
 		part.clothing_flags = category[UNSEALED_CLOTHING] || NONE
 		part.visor_flags = category[SEALED_CLOTHING] || NONE
 		part.flags_inv = category[UNSEALED_INVISIBILITY] || NONE
@@ -159,9 +164,9 @@
 			part.alternate_worn_layer = part_datum.sealed_layer
 		else
 			part.alternate_worn_layer = part_datum.unsealed_layer
-		if(!part_datum.can_overslot && part_datum.overslotting)
-			var/obj/item/overslot = part_datum.overslotting
-			overslot.forceMove(mod.drop_location())
+		// PORT EDIT - CHANGE - MODSUIT_OVERSLOT
+		if(part_datum.overslotting)
+			part_datum.overslotting.forceMove(mod.drop_location())
 	for(var/obj/item/part as anything in parts + mod)
 		part.icon = used_skin[MOD_ICON_OVERRIDE] || 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 		part.worn_icon = used_skin[MOD_WORN_ICON_OVERRIDE] || 'icons/mob/clothing/modsuit/mod_clothing.dmi'

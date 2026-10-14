@@ -615,13 +615,23 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	if(uniform?.repair_sensors(src, user))
 		return ITEM_INTERACT_SUCCESS
 
-	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
-	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
+	var/obj/item/bodypart/preferred = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
+	if(isnull(preferred) || !IS_ROBOTIC_LIMB(preferred))
 		return NONE
 
-	if (!affecting.burn_dam)
-		balloon_alert(user, "limb not damaged")
+	// PORT EDIT - ADDITION - SYNTH_AUTO_REPAIR - START
+	// Repair every damaged robotic limb, not just the targeted one (Bubber #4935).
+	// Once the selected limb is repaired the loop moves on to the next damaged limb.
+	var/list/damaged_limbs = list()
+	for(var/obj/item/bodypart/limb as anything in attacked_humanoid.bodyparts)
+		if(isnull(limb) || !IS_ROBOTIC_LIMB(limb) || !(limb.burn_dam > 0))
+			continue
+		damaged_limbs += limb
+	if(!length(damaged_limbs))
+		balloon_alert(user, repeating ? "fully repaired" : "limb not damaged")
 		return ITEM_INTERACT_BLOCKING
+	var/obj/item/bodypart/affecting = (preferred in damaged_limbs) ? preferred : damaged_limbs[1]
+	// PORT EDIT - ADDITION - SYNTH_AUTO_REPAIR - END
 
 	user.visible_message(span_notice("[user] starts to fix some of the wires in [attacked_humanoid == user ? user.p_their() : "[attacked_humanoid]'s"] [affecting.name]."),
 		span_notice("You start fixing some of the wires in [attacked_humanoid == user ? "your" : "[attacked_humanoid]'s"] [affecting.name]."))
@@ -633,7 +643,7 @@ GLOBAL_LIST_INIT(wire_node_generating_types, typecacheof(list(
 	if(!do_after(user, use_delay, attacked_humanoid))
 		return ITEM_INTERACT_BLOCKING
 
-	if (!attacked_humanoid.item_heal(user, brute_heal = 0, burn_heal = 15, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC))
+	if (!attacked_humanoid.item_heal(user, brute_heal = 0, burn_heal = 15, heal_message_brute = "dents", heal_message_burn = "burnt wires", required_bodytype = BODYTYPE_ROBOTIC, target = affecting))
 		return ITEM_INTERACT_BLOCKING
 
 	if (use(1) && amount > 0)

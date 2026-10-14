@@ -10,7 +10,9 @@
 /datum/tgui_say/proc/alter_entry(payload)
 	var/entry = payload["entry"]
 	/// No OOC leaks
-	if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
+	// PORT EDIT - CHANGE - LOOC
+	// ORIGINAL: if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
+	if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL || payload["channel"] == LOOC_CHANNEL)
 		return pick(hurt_phrases)
 	/// Random trimming for larger sentences
 	if(length(entry) > 50)
@@ -46,6 +48,13 @@
 			return TRUE
 		if(ADMIN_CHANNEL)
 			SSadmin_verbs.dynamic_invoke_verb(client, /datum/admin_verb/cmd_admin_say, entry)
+			return TRUE
+		// PORT EDIT - ADDITION - LOOC
+		if(LOOC_CHANNEL)
+			INVOKE_ASYNC(client, TYPE_PROC_REF(/client, looc_message), entry)
+			return TRUE
+		if(WHIS_CHANNEL)
+			client.mob.whisper_verb(entry)
 			return TRUE
 	return FALSE
 

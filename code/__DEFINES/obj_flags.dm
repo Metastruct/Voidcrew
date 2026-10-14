@@ -51,6 +51,10 @@
 #define NO_BLOOD_ON_ITEM (1 << 19)
 /// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
 #define SKIP_FANTASY_ON_SPAWN (1<<20)
+/// PORT EDIT - ADDITION - MODSUIT_OVERSLOT
+/// MODsuits can deploy over these form-fitting items without removing them first.
+/// Bubber/upstream #97872.
+#define CAN_BE_OVERSLOT (1<<21)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

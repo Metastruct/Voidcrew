@@ -393,7 +393,15 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		else if(old_species.exotic_bloodtype && isnull(exotic_bloodtype))
 			human_who_gained_species.set_blood_type(random_human_blood_type())
 
+	// PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
+	// A species swap resets the blood type, so re-apply the character's custom blood
+	// colour afterwards.
+	meta_apply_blood_color(human_who_gained_species)
+
 	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs, replace_missing = replace_missing)
+	meta_sync_mismatched_organs(human_who_gained_species, src) // PORT EDIT - ADDITION - BUBBER_MISMATCHED_PARTS
+	meta_sync_genital_organs(human_who_gained_species) // PORT EDIT - ADDITION - BUBBER_GENITALS
+	meta_sync_body_markings(human_who_gained_species, src) // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
 	// Update locked slots AFTER all organ and body stuff is handled
 	human_who_gained_species.hud_used?.update_locked_slots()
 	// Drop the items the new species can't wear
@@ -506,7 +514,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/organ/eyes/eye_organ = species_human.get_organ_slot(ORGAN_SLOT_EYES)
 			if(eye_organ)
 				eye_organ.refresh(call_update = FALSE)
-				species_human.overlays_standing[EYES_LAYER] = eye_organ.generate_body_overlay(species_human)
+				var/list/eye_overlays = eye_organ.generate_body_overlay(species_human)
+				for(var/image/overlay as anything in eye_overlays)
+					species_human.apply_height(overlay, UPPER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
+				species_human.overlays_standing[EYES_LAYER] = eye_overlays
 				species_human.apply_overlay(EYES_LAYER)
 
 	if(HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
@@ -542,6 +553,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 
 	if(standing.len)
+		for(var/image/overlay as anything in standing)
+			species_human.apply_height(overlay, ENTIRE_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		species_human.overlays_standing[BODY_LAYER] = standing
 
 	species_human.apply_overlay(BODY_LAYER)
@@ -558,6 +571,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	for (var/mutable_appearance/overlay as anything in eye_overlays)
 		overlay.pixel_w = 0
 		overlay.pixel_z = 0
+		species_human.apply_height(overlay, UPPER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		noggin.worn_face_offset.apply_offset(overlay)
 
 	species_human.overlays_standing[EYES_LAYER] = eye_overlays
@@ -2029,8 +2043,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	var/list/final_bodypart_overrides = new_species.bodypart_overrides.Copy()
 	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		final_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		final_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+		// PORT EDIT - CHANGE - BUBBER_CUSTOMIZATION
+		// Use the species' own digitigrade type. Hardcoding the lizard type here would
+		// override ported species that draw digitigrade legs from another sheet.
+		// ORIGINAL: final_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
+		// ORIGINAL: final_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+		final_bodypart_overrides[BODY_ZONE_R_LEG] = new_species.digitigrade_right_type
+		final_bodypart_overrides[BODY_ZONE_L_LEG] = new_species.digitigrade_left_type
 
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))

@@ -330,6 +330,7 @@
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif
+#include "../../../modular_bubber/code/modules/unit_tests/accessories.dm" // PORT EDIT - ADDITION - BUBBER_ACCESSORIES
 
 #undef TEST_ASSERT
 #undef TEST_ASSERT_EQUAL

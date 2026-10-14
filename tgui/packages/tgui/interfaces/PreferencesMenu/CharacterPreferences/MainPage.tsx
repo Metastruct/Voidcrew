@@ -466,11 +466,20 @@ export function MainPage(props: MainPageProps) {
 
   const serverData = useServerPrefs();
 
+  // PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION: options for the preview-background swatches.
+  const backgroundData = serverData?.background_state as
+    | FeatureChoicedServerData
+    | undefined;
+
   const currentSpeciesData =
     serverData?.species[data.character_preferences.misc.species];
 
-  const contextualPreferences =
-    data.character_preferences.secondary_features || [];
+  const contextualPreferences = Object.fromEntries(
+    Object.entries(data.character_preferences.secondary_features || {}).filter(
+      // Rendered as a dedicated dropdown under the preview controls instead.
+      ([featureId]) => featureId !== 'background_state',
+    ),
+  );
 
   const mainFeatures = [
     ...Object.entries(data.character_preferences.clothing ?? {}),
@@ -526,7 +535,12 @@ export function MainPage(props: MainPageProps) {
         />
       )}
 
-      <Stack height={`${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`}>
+      <Stack
+        fill
+        style={{
+          minHeight: `${CLOTHING_SIDEBAR_ROWS * CLOTHING_CELL_SIZE}px`,
+        }}
+      >
         <Stack.Item>
           <Stack vertical fill>
             <Stack.Item>
@@ -547,6 +561,39 @@ export function MainPage(props: MainPageProps) {
                 }
                 handleDeleteCharacter={() => setDeleteCharacterPopupOpen(true)}
               />
+            </Stack.Item>
+
+            {/* PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION: character-preview background */}
+            <Stack.Item>
+              <Stack wrap justify="center">
+                {(backgroundData?.choices || []).map((choice) => (
+                  <Stack.Item key={choice}>
+                    <Button
+                      selected={
+                        data.character_preferences.secondary_features
+                          ?.background_state === choice
+                      }
+                      tooltip={
+                        backgroundData?.display_names?.[choice] || choice
+                      }
+                      tooltipPosition="bottom"
+                      onClick={() => {
+                        createSetPreference(act, 'background_state')(choice);
+                      }}
+                      p={0}
+                      width="2em"
+                      height="2em"
+                    >
+                      <Box
+                        className={classes([
+                          'preferences32x32',
+                          backgroundData?.icons?.[choice],
+                        ])}
+                      />
+                    </Button>
+                  </Stack.Item>
+                ))}
+              </Stack>
             </Stack.Item>
 
             <Stack.Item grow>

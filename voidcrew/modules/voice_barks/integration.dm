@@ -63,5 +63,11 @@ ADMIN_VERB(reload_voice_packs_file, R_SERVER, "Reload Voice Packs", "Reloads voi
 	GLOB.voice_pack_groups_all = list()
 	GLOB.random_voice_packs = list()
 	GLOB.voice_pack_list = gen_voice_packs()
+	// The choiced preference memoises its option list on first use and deserialize()
+	// sanitizes selections against it. Without this, ids that only exist in the freshly
+	// loaded config get silently swapped for a random default when a player picks them.
+	var/datum/preference/choiced/voice_pack/voice_pack_preference = GLOB.preference_entries[/datum/preference/choiced/voice_pack]
+	if(voice_pack_preference)
+		voice_pack_preference.cached_values = null
 	to_chat(user, span_adminnotice("Voice packs reloaded. [length(GLOB.voice_pack_list)] packs loaded."))
 	log_admin("[key_name(user)] reloaded voice packs.")

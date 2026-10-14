@@ -24,8 +24,11 @@
 
 	return icon_with_hair
 
+// PORT EDIT - CHANGE - BUBBER_CUSTOMIZATION
+// Default to bald instead of a random style.
+// ORIGINAL: return pick(assoc_to_keys_features(SSaccessories.pod_hair_list))
 /datum/preference/choiced/pod_hair/create_default_value()
-	return pick(assoc_to_keys_features(SSaccessories.pod_hair_list))
+	return SPRITE_ACCESSORY_NONE
 
 /datum/preference/choiced/pod_hair/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features[FEATURE_POD_HAIR] = value

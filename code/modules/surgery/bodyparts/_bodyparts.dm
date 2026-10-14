@@ -1000,6 +1000,9 @@
 	for(var/datum/bodypart_overlay/simple/body_marking/marking in bodypart_overlays)
 		marking.set_appearance(human_owner.dna.features[marking.dna_feature_key], species_color)
 
+	// PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
+	meta_set_markings_from_dna(human_owner)
+
 	return TRUE
 
 /obj/item/bodypart/proc/update_draw_color()
@@ -1169,6 +1172,49 @@
 			//add two masked images based on the old one
 			. += leg_source.generate_masked_leg(limb_image)
 
+	// PORT EDIT - ADDITION - START - BUBBER_BODY_MARKINGS
+	// Per-limb body markings from dna.body_markings, drawn from the bodypart's own copies
+	// so they survive dismemberment. Digitigrade legs use the _digitigrade_1_ variant,
+	// and chest markings can be gendered.
+	var/marking_override_color
+	var/atom/marking_offset_spokesman = owner || src
+	if(is_husked)
+		marking_override_color = "#888888"
+	if(!(bodypart_flags & BODYPART_PSEUDOPART) && !isnull(owner))
+		for(var/key in markings)
+			var/datum/body_marking/body_marking = GLOB.body_markings[key]
+			if(isnull(body_marking))
+				continue
+			var/gender_modifier = ""
+			if(body_zone == BODY_ZONE_CHEST && body_marking.gendered)
+				gender_modifier = is_dimorphic ? "_[limb_gender]" : "_m"
+			var/mutable_appearance/accessory_overlay = mutable_appearance(body_marking.icon, body_marking.get_limb_state(src, body_zone, gender_modifier), -BODYPARTS_LAYER)
+			accessory_overlay.alpha = markings_alpha
+			accessory_overlay.color = marking_override_color || markings[key][1]
+			. += accessory_overlay
+			if(markings[key][2])
+				. += emissive_appearance(accessory_overlay.icon, accessory_overlay.icon_state, marking_offset_spokesman, layer = accessory_overlay.layer)
+		if(aux_zone)
+			for(var/key in aux_zone_markings)
+				var/datum/body_marking/body_marking = GLOB.body_markings[key]
+				if(isnull(body_marking))
+					continue
+				var/mutable_appearance/accessory_overlay = mutable_appearance(body_marking.icon, "[body_marking.icon_state]_[aux_zone]", -BODYPARTS_HIGH_LAYER)
+				accessory_overlay.alpha = markings_alpha
+				accessory_overlay.color = marking_override_color || aux_zone_markings[key][1]
+				. += accessory_overlay
+				if(aux_zone_markings[key][2])
+					. += emissive_appearance(accessory_overlay.icon, accessory_overlay.icon_state, marking_offset_spokesman, layer = accessory_overlay.layer)
+	// PORT EDIT - ADDITION - END - BUBBER_BODY_MARKINGS
+
+	// PORT EDIT - ADDITION - START - HEIGHT_REFACTOR
+	// tgstation #96570. Apply height to the overlays built above (limbs, emissives,
+	// markings) before the external organs are added, so nothing gets it twice.
+	// ORIGINAL: height was applied later, in /mob/living/carbon/human/apply_overlay().
+	if(!dropped && !isnull(owner))
+		for(var/image/generated_overlay as anything in .)
+			owner.apply_height(generated_overlay, ENTIRE_BODY)
+
 	// And finally put bodypart_overlays on if not husked
 	if(is_husked)
 		return .
@@ -1180,10 +1226,18 @@
 		//Some externals have multiple layers for background, foreground and between
 		for(var/external_layer in overlay.all_layers)
 			if(overlay.layers & external_layer)
-				. += overlay.get_overlay(external_layer, src)
+				var/external_overlay = overlay.get_overlay(external_layer, src)
+				if(!dropped && !isnull(owner))
+					if(islist(external_overlay))
+						for(var/image/actual_overlay as anything in external_overlay)
+							owner.apply_height(actual_overlay, ENTIRE_BODY)
+					else if(isimage(external_overlay))
+						owner.apply_height(external_overlay, ENTIRE_BODY)
+				. += external_overlay
 		for(var/datum/layer in .)
 			overlay.modify_bodypart_appearance(layer)
 	return .
+	// PORT EDIT - ADDITION - END - HEIGHT_REFACTOR
 
 /obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
 	var/icon/husk_icon = new(thing_to_husk.icon)

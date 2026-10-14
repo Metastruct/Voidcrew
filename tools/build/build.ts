@@ -172,6 +172,8 @@ export const DmTarget = new Juke.Target({
     '_maps/map_files/generic/**',
     'maps/**/*.dm',
     'code/**',
+    'modular_bubber/**', // PORT EDIT - ADDITION - MODULAR_LAYER
+    'modular_meta/**', // META EDIT - ADDITION - MODULAR_LAYER
     'voidcrew/**',
     'html/**',
     'icons/**',

@@ -165,8 +165,11 @@
 
 	// Calculate target color if not already present
 	if (!target.chat_color || target.chat_color_name != chat_color_name_to_use)
-		target.chat_color = colorize_string(chat_color_name_to_use)
-		target.chat_color_darkened = colorize_string(chat_color_name_to_use, 0.85, 0.85)
+		// META EDIT - CHANGE - CHAT_LOG_NAME_COLORS
+		// ORIGINAL: target.chat_color = colorize_string(chat_color_name_to_use)
+		// ORIGINAL: target.chat_color_darkened = colorize_string(chat_color_name_to_use, 0.85, 0.85)
+		target.chat_color = get_chat_color_string(chat_color_name_to_use)
+		target.chat_color_darkened = get_chat_color_string(chat_color_name_to_use, darkened = TRUE)
 		target.chat_color_name = chat_color_name_to_use
 
 	// Append language icon if the language uses one

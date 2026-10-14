@@ -336,6 +336,11 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	if(isnull(relevant_inherent_trait) && isnull(relevant_external_organ) && isnull(relevant_head_flag) && isnull(relevant_body_markings))
 		return TRUE
 
+	// PORT EDIT - ADDITION - BUBBER_MISMATCHED_PARTS
+	// With the toggle on, every species-gated feature counts as relevant.
+	if(!isnull(preferences?.savefile) && preferences.read_preference(/datum/preference/toggle/allow_mismatched_parts))
+		return TRUE
+
 	return current_species_has_savekey(preferences)
 
 /// Returns whether or not this preference is accessible.

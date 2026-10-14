@@ -19,6 +19,16 @@
 		return FALSE
 	bodypart_insert(limb_owner = receiver, movement_flags = movement_flags)
 
+	// PORT EDIT - ADDITION - MODSUIT_MESH
+	// mob_insert() syncs bodytypes/bodyshapes before bodypart_insert() moves the organ
+	// into the limb, so the organ's own external_bodyshapes/external_bodytypes were
+	// missed. Sync again now that it is inside, or a snout never sets BODYSHAPE_SNOUTED
+	// and snouted clothing never applies.
+	if(external_bodytypes)
+		receiver.synchronize_bodytypes()
+	if(external_bodyshapes)
+		receiver.synchronize_bodyshapes()
+
 	if(!special && !(receiver.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
 		receiver.update_body_parts()
 

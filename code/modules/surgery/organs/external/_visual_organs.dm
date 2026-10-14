@@ -64,6 +64,13 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	if(isnull(feature_key))
 		return TRUE
 
+	// PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
+	// The ported anthro ears are a working hearing organ, not just an overlay, so they
+	// have to exist even with no sprite chosen. Without this the mob has no ears slot and
+	// can_hear() is FALSE.
+	if(ispath(organpath, /obj/item/organ/ears/bubber) || istype(organpath, /obj/item/organ/ears/bubber))
+		return TRUE
+
 	if(target.dna.features[feature_key] != SPRITE_ACCESSORY_NONE)
 		return TRUE
 	return FALSE

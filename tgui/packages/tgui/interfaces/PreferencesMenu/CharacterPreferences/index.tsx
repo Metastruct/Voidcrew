@@ -6,6 +6,8 @@ import { exhaustiveCheck } from 'tgui-core/exhaustive';
 
 import { PageButton } from '../components/PageButton';
 import type { PreferencesMenuData } from '../types';
+// PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
+import { MarkingsPage } from 'meta_tgui/preferences/MarkingsPage';
 import { LoadoutPage } from './loadout';
 import { MainPage } from './MainPage';
 import { QuirksPage } from './QuirksPage';
@@ -18,6 +20,8 @@ enum Page {
   Species,
   Quirks,
   Loadout,
+  // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
+  Markings,
 }
 
 type ProfileProps = {
@@ -79,6 +83,11 @@ export function CharacterPreferenceWindow(props) {
       pageContents = <LoadoutPage />;
       break;
 
+    // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
+    case Page.Markings:
+      pageContents = <MarkingsPage />;
+      break;
+
     default:
       exhaustiveCheck(currentPage);
   }
@@ -122,6 +131,16 @@ export function CharacterPreferenceWindow(props) {
               setPage={setCurrentPage}
             >
               Loadout
+            </PageButton>
+          </Stack.Item>
+
+          <Stack.Item grow>
+            <PageButton
+              currentPage={currentPage}
+              page={Page.Markings}
+              setPage={setCurrentPage}
+            >
+              Markings
             </PageButton>
           </Stack.Item>
 

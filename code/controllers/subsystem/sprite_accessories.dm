@@ -111,6 +111,7 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	moth_antennae_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae)[DEFAULT_SPRITE_LIST]
 	moth_markings_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, add_blank = TRUE)[DEFAULT_SPRITE_LIST]
 	pod_hair_list = init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair)[DEFAULT_SPRITE_LIST]
+	setup_ported_lists() // PORT EDIT - ADDITION - BUBBER_ACCESSORIES
 
 /// This proc just initializes all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 /datum/controller/subsystem/accessories/proc/init_hair_gradients()
@@ -141,6 +142,12 @@ SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 
 	for(var/path in subtypesof(prototype))
 		var/datum/sprite_accessory/accessory = new path
+
+		// PORT EDIT - ADDITION - INTERMEDIATE_ACCESSORY_FIX
+		// Skip abstract entries with no name. They would add a null entry and the TGUI
+		// dropdown crashes on capitalizeFirst(null).
+		if(isnull(accessory.name) || accessory.name == "")
+			continue
 
 		if(accessory.icon_state)
 			returnable_list[DEFAULT_SPRITE_LIST][accessory.name] = accessory

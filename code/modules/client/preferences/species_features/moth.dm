@@ -20,7 +20,26 @@
 	var/datum/sprite_accessory/antennae = SSaccessories.moth_antennae_list[value]
 
 	var/datum/universal_icon/icon_with_antennae = moth_head.copy()
-	icon_with_antennae.blend_icon(uni_icon(antennae.icon, "m_moth_antennae_[antennae.icon_state]_FRONT"), ICON_OVERLAY)
+	// PORT EDIT - CHANGE - BUBBER_CUSTOMIZATION
+	// Ported antennae ship as m_moth_antennae_<state>_FRONT_primary and also have a
+	// BEHIND layer. Pass an explicit direction or the renderer composites every facing.
+	// ORIGINAL: icon_with_antennae.blend_icon(uni_icon(antennae.icon, "m_moth_antennae_[antennae.icon_state]_FRONT"), ICON_OVERLAY)
+	if(!isnull(antennae))
+		var/list/all_states = icon_states(antennae.icon)
+		var/state
+		for(var/layer in list("FRONT", "ADJ", "BEHIND"))
+			var/base = "m_moth_antennae_[antennae.icon_state]_[layer]"
+			if(base in all_states)
+				state = base
+				break
+			for(var/suffix in list("primary", "secondary", "tertiary"))
+				if("[base]_[suffix]" in all_states)
+					state = "[base]_[suffix]"
+					break
+			if(state)
+				break
+		if(state)
+			icon_with_antennae.blend_icon(uni_icon(antennae.icon, state, SOUTH), ICON_OVERLAY)
 	icon_with_antennae.scale(64, 64)
 	icon_with_antennae.crop(15, 64 - 31, 15 + 31, 64)
 

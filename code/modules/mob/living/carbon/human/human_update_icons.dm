@@ -129,6 +129,7 @@ There are several things that need to be remembered:
 			override_file = handled_by_bodyshape ? icon_file : null,
 		)
 
+		apply_height(uniform_overlay, ENTIRE_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_uniform_offset?.apply_offset(uniform_overlay)
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
@@ -162,6 +163,7 @@ There are several things that need to be remembered:
 		if(!id_overlay)
 			return
 
+		apply_height(id_overlay, UPPER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_id_offset?.apply_offset(id_overlay)
 		overlays_standing[ID_LAYER] = id_overlay
@@ -190,6 +192,7 @@ There are several things that need to be remembered:
 			var/mutable_appearance/blood_overlay = mutable_appearance('icons/effects/blood.dmi', "bloodyhands_right")
 			blood_overlay.color = get_blood_dna_color()
 			hands_combined.overlays += blood_overlay
+		apply_height(hands_combined, LOWER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		overlays_standing[GLOVES_LAYER] = hands_combined
 		apply_overlay(GLOVES_LAYER)
 		return
@@ -216,6 +219,7 @@ There are several things that need to be remembered:
 			feature_y_offset = glove_offset["y"]
 
 	gloves_overlay.pixel_z += feature_y_offset
+	apply_height(gloves_overlay, LOWER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 
 	// We dont have any >2 hands human species (and likely wont ever), so theres no point in splitting this because:
 	// It will only run if the left hand OR the right hand is missing, and it wont run if both are missing because you cant wear gloves with no arms
@@ -257,6 +261,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/eyes.dmi'
 
 		var/mutable_appearance/glasses_overlay = glasses.build_worn_icon(default_layer = GLASSES_LAYER, default_icon_file = icon_file)
+		apply_height(glasses_overlay, UPPER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		my_head.worn_glasses_offset?.apply_offset(glasses_overlay)
 		overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
@@ -285,6 +290,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/ears.dmi'
 
 		var/mutable_appearance/ears_overlay = ears.build_worn_icon(default_layer = EARS_LAYER, default_icon_file = icon_file)
+		apply_height(ears_overlay, UPPER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		my_head.worn_ears_offset?.apply_offset(ears_overlay)
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
@@ -309,6 +315,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/neck.dmi'
 
 		var/mutable_appearance/neck_overlay = worn_item.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = icon_file)
+		apply_height(neck_overlay, ENTIRE_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_belt_offset?.apply_offset(neck_overlay)
 		overlays_standing[NECK_LAYER] = neck_overlay
@@ -374,6 +381,7 @@ There are several things that need to be remembered:
 			return
 
 		var/mutable_appearance/s_store_overlay = worn_item.build_worn_icon(default_layer = SUIT_STORE_LAYER, default_icon_file = 'icons/mob/clothing/belt_mirror.dmi')
+		apply_height(s_store_overlay, ENTIRE_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_storage_offset?.apply_offset(s_store_overlay)
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
@@ -397,7 +405,17 @@ There are several things that need to be remembered:
 
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
 
-		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file)
+		// PORT EDIT - ADDITION - START - MODSUIT_MESH
+		// Use the muzzled worn sprite when the item ships one and the wearer is snouted.
+		// Ported from Bubber's MODsuit helmet.
+		var/snouted_override
+		if((bodyshape & BODYSHAPE_SNOUTED) && (worn_item.supports_variations_flags & CLOTHING_SNOUTED_VARIATION) && worn_item.worn_icon_muzzled)
+			if(icon_exists(worn_item.worn_icon_muzzled, RESOLVE_ICON_STATE(worn_item)))
+				snouted_override = worn_item.worn_icon_muzzled
+		// PORT EDIT - ADDITION - END - MODSUIT_MESH
+
+		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, override_file = snouted_override)
+		apply_height(head_overlay, UPPER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		var/obj/item/bodypart/head/my_head = get_bodypart(BODY_ZONE_HEAD)
 		my_head?.worn_head_offset?.apply_offset(head_overlay)
 		overlays_standing[HEAD_LAYER] = head_overlay
@@ -425,6 +443,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/belt.dmi'
 
 		var/mutable_appearance/belt_overlay = belt.build_worn_icon(default_layer = BELT_LAYER, default_icon_file = icon_file)
+		apply_height(belt_overlay, ENTIRE_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_belt_offset?.apply_offset(belt_overlay)
 		overlays_standing[BELT_LAYER] = belt_overlay
@@ -451,6 +470,7 @@ There are several things that need to be remembered:
 		var/icon_file = DEFAULT_SUIT_FILE
 
 		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file)
+		apply_height(suit_overlay, ENTIRE_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
 		overlays_standing[SUIT_LAYER] = suit_overlay
@@ -503,6 +523,7 @@ There are several things that need to be remembered:
 		var/icon_file = 'icons/mob/clothing/mask.dmi'
 
 		var/mutable_appearance/mask_overlay = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = icon_file)
+		apply_height(mask_overlay, LOWER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		my_head.worn_mask_offset?.apply_offset(mask_overlay)
 		overlays_standing[FACEMASK_LAYER] = mask_overlay
 
@@ -533,6 +554,7 @@ There are several things that need to be remembered:
 
 		if(!back_overlay)
 			return
+		apply_height(back_overlay, ENTIRE_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_back_offset?.apply_offset(back_overlay)
 		overlays_standing[BACK_LAYER] = back_overlay
@@ -563,6 +585,7 @@ There are several things that need to be remembered:
 		var/mutable_appearance/hand_overlay
 		var/icon_file = IS_RIGHT_INDEX(held_index) ? worn_item.righthand_file : worn_item.lefthand_file
 		hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		apply_height(hand_overlay, LOWER_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		var/obj/item/bodypart/arm/held_in_hand = hand_bodyparts[held_index]
 		held_in_hand?.held_hand_offset?.apply_offset(hand_overlay)
 
@@ -955,56 +978,44 @@ generate/load female uniform sprites matching all previously decided variables
 			if(thing.supports_variations_flags & DIGITIGRADE_VARIATIONS)
 				thing.update_slot_icon()
 
-// Hooks into human apply overlay so that we can modify all overlays applied through standing overlays to our height system.
-// Some of our overlays will be passed through a displacement filter to make our mob look taller or shorter.
-// Some overlays can't be displaced as they're too close to the edge of the sprite or cross the middle point in a weird way.
-// So instead we have to pass them through an offset, which is close enough to look good.
-/mob/living/carbon/human/apply_overlay(cache_index)
-	if(mob_height == HUMAN_HEIGHT_MEDIUM)
-		return ..()
-
-	var/raw_applied = overlays_standing[cache_index]
-	var/string_form_index = num2text(cache_index)
-	var/offset_type = GLOB.layers_to_offset[string_form_index]
-	if(isnull(offset_type))
-		if(islist(raw_applied))
-			for(var/image/applied_appearance in raw_applied)
-				apply_height_filters(applied_appearance)
-		else if(isimage(raw_applied))
-			apply_height_filters(raw_applied)
-	else
-		if(islist(raw_applied))
-			for(var/image/applied_appearance in raw_applied)
-				apply_height_offsets(applied_appearance, offset_type)
-		else if(isimage(raw_applied))
-			apply_height_offsets(raw_applied, offset_type)
-
-	return ..()
-
+// PORT EDIT - CHANGE - START - HEIGHT_REFACTOR
+// tgstation #96570 (Bubber already has it). Height is no longer applied inside the
+// apply_overlay() hook. Each overlay goes through apply_height() when it is built, which
+// picks either a filter for the whole body or a pixel offset for the upper/lower half.
+// ORIGINAL: /mob/living/carbon/human/apply_overlay() plus apply_height_offsets().
 /**
- * Used in some circumstances where appearances can get cut off from the mob sprite from being too tall
+ * Adjusts an appearance for the mob's height.
  *
- * upper_torso is to specify whether the appearance is locate in the upper half of the mob rather than the lower half,
- * higher up things (hats for example) need to be offset more due to the location of the filter displacement
+ * * appearance - the appearance to adjust
+ * * body_area - where the appearance sits, which decides the offset or filter to use
  */
-/mob/living/carbon/human/proc/apply_height_offsets(image/appearance, upper_torso)
-	var/height_to_use = num2text(mob_height)
-	var/final_offset = 0
-	switch(upper_torso)
+/mob/living/carbon/proc/apply_height(image/appearance, body_area)
+	return
+
+/mob/living/carbon/human/apply_height(image/appearance, body_area)
+	if(mob_height == HUMAN_HEIGHT_MEDIUM)
+		return // default, no handling needed
+
+	switch(body_area)
 		if(UPPER_BODY)
-			final_offset = GLOB.human_heights_to_offsets[height_to_use][1]
+			appearance.pixel_z += GLOB.human_heights_to_offsets[num2text(mob_height)][1]
+			return
 		if(LOWER_BODY)
-			final_offset = GLOB.human_heights_to_offsets[height_to_use][2]
-		else
+			appearance.pixel_z += GLOB.human_heights_to_offsets[num2text(mob_height)][2]
+			return
+		if(ENTIRE_BODY)
+			apply_height_filter(appearance)
+			return
+		if(NO_MODIFY)
 			return
 
-	appearance.pixel_z += final_offset
-	return appearance
+	stack_trace("Invalid height body_area specified ([body_area || "null"])")
 
 /**
  * Applies a filter to an appearance according to mob height
  */
-/mob/living/carbon/human/proc/apply_height_filters(image/appearance)
+/mob/living/carbon/human/proc/apply_height_filter(image/appearance)
+	PRIVATE_PROC(TRUE)
 	var/static/icon/cut_torso_mask = icon('icons/effects/cut.dmi', "Cut1")
 	var/static/icon/cut_legs_mask = icon('icons/effects/cut.dmi', "Cut2")
 	var/static/icon/lenghten_torso_mask = icon('icons/effects/cut.dmi', "Cut3")
@@ -1126,9 +1137,10 @@ generate/load female uniform sprites matching all previously decided variables
 	// Kinda gross but because many humans overlays do not use KEEP_TOGETHER we need to manually propogate the filter
 	// Otherwise overlays, such as worn overlays on icons, won't have the filter "applied", and the effect kinda breaks
 	if(!(appearance.appearance_flags & KEEP_TOGETHER))
-		for(var/image/overlay in list() + appearance.underlays + appearance.overlays)
-			apply_height_filters(overlay)
+		for(var/mutable_appearance/child_overlay as anything in appearance.underlays + appearance.overlays)
+			apply_height_filter(child_overlay) // PORT EDIT - CHANGE - HEIGHT_REFACTOR
 
 	return appearance
+// PORT EDIT - CHANGE - END - HEIGHT_REFACTOR
 
 #undef RESOLVE_ICON_STATE

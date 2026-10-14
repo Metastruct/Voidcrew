@@ -40,6 +40,10 @@
 	var/eye_color_left = null // set to a hex code to override a mob's left eye color
 	var/eye_color_right = null // set to a hex code to override a mob's right eye color
 	var/eye_icon_state = "eyes"
+	// PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
+	// Species with custom eye art, shadekin for example, point this at their own sheet.
+	// Used for both attached and dropped heads instead of hardcoding human_face.dmi.
+	var/eye_icon = 'icons/mob/human/human_face.dmi'
 	/// Do these eyes have blinking animations
 	var/blink_animation = TRUE
 	/// Icon state for iris overlays
@@ -74,6 +78,8 @@
 	if (blink_animation)
 		eyelid_left = new(src, "[eye_icon_state]_l")
 		eyelid_right = new(src, "[eye_icon_state]_r")
+		eyelid_left.icon = eye_icon
+		eyelid_right.icon = eye_icon
 
 /obj/item/organ/eyes/Destroy()
 	QDEL_NULL(eyelid_left)
@@ -263,12 +269,20 @@
 	if(isnull(eye_icon_state))
 		return list()
 
-	var/mutable_appearance/eye_left = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_l", -EYES_LAYER, parent)
-	var/mutable_appearance/eye_right = mutable_appearance('icons/mob/human/human_face.dmi', "[eye_icon_state]_r", -EYES_LAYER, parent)
+	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -EYES_LAYER, parent)
+	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -EYES_LAYER, parent)
 	var/list/overlays = list(eye_left, eye_right)
 
 	var/obscured = parent.check_obscured_slots()
 	if(overlay_ignore_lighting && !(obscured & ITEM_SLOT_EYES))
+		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -EYES_LAYER, alpha = eye_left.alpha)
+		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -EYES_LAYER, alpha = eye_right.alpha)
+
+	// PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
+	// Per-character eye glow. Kept separate from the overlay_ignore_lighting case above,
+	// so special eyes still glow without the toggle and the toggle does not depend on
+	// lighting behaviour.
+	else if(parent.emissive_eyes)
 		overlays += emissive_appearance(eye_left.icon, eye_left.icon_state, parent, -EYES_LAYER, alpha = eye_left.alpha)
 		overlays += emissive_appearance(eye_right.icon, eye_right.icon_state, parent, -EYES_LAYER, alpha = eye_right.alpha)
 
@@ -1026,7 +1040,11 @@
 	name = "moth eyes"
 	desc = "These eyes seem to have increased sensitivity to bright light, with no improvement to low light vision."
 	icon_state = "eyes_moth"
-	eye_icon_state = "motheyes"
+	// PORT EDIT - CHANGE - BUBBER_CUSTOMIZATION
+	// The organic moth eye art (motheyes) is near-black, so tinting it with the eye colour
+	// did nothing. motheyes_white is the same 5-pixel shape and tints correctly.
+	// ORIGINAL: eye_icon_state = "motheyes"
+	eye_icon_state = "motheyes_white"
 	blink_animation = FALSE
 	iris_overlay = null
 	flash_protect = FLASH_PROTECTION_SENSITIVE

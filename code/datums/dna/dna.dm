@@ -88,6 +88,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	new_dna.unique_identity = unique_identity
 	new_dna.unique_features = unique_features
 	new_dna.features = features.Copy()
+	new_dna.body_markings = body_markings.Copy() // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
 	new_dna.real_name = real_name
 	new_dna.temporary_mutations = temporary_mutations.Copy()
 	new_dna.mutation_index = mutation_index

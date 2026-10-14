@@ -67,4 +67,5 @@ GLOBAL_REAL(GLOB, /datum/controller/global_vars)
 
 	// Someone make it so this call isn't necessary
 	make_datum_reference_lists()
+	meta_make_body_marking_references() // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
 

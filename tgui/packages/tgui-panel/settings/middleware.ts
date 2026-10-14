@@ -81,6 +81,18 @@ function setStatTabsStyle(style: string) {
   }, 1500);
 }
 
+// META EDIT - ADDITION - CHAT_LOG_NAME_COLORS
+/** Drives the --chat-name-color-mix-* CSS variables the color-mix() rules in main.scss read. */
+function setChatNameColorMix(
+  sayMix: number,
+  radioMix: number,
+  loocMix: number,
+): void {
+  document.body.style.setProperty('--chat-name-color-mix-say', `${sayMix}%`);
+  document.body.style.setProperty('--chat-name-color-mix-radio', `${radioMix}%`);
+  document.body.style.setProperty('--chat-name-color-mix-looc', `${loocMix}%`);
+}
+
 export function settingsMiddleware(store) {
   let initialized = false;
 
@@ -139,6 +151,13 @@ export function settingsMiddleware(store) {
     );
     setGlobalFontFamily(settings.fontFamily);
     updateGlobalOverrideRule();
+
+    // META EDIT - ADDITION - CHAT_LOG_NAME_COLORS
+    setChatNameColorMix(
+      settings.chatNameColorMixSay,
+      settings.chatNameColorMixRadio,
+      settings.chatNameColorMixLooc,
+    );
 
     // Save settings to the web storage
     storage.set('panel-settings', settings);

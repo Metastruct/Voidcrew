@@ -1,0 +1,8 @@
+// Metastruct's own modular layer basically like Bubber's modular_zzmeta.
+// See readme.md for the rules.
+
+#include "code\datums\world_topic.dm"
+#include "modules\chat_colors\code\chat_color.dm"
+#include "modules\chat_colors\code\say_chat_colors.dm"
+#include "modules\clientside_chatbox\code\client_procs.dm"
+#include "modules\clientside_chatbox\code\tgui_preference.dm"

@@ -383,12 +383,22 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	var/datum/preferences/preferences
 	/// Whether we show current job clothes or nude/loadout only
 	var/show_job_clothes = TRUE
+	// PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
+	// Character preview canvas. A template image is used as the background so an
+	// oversized body fits the frame instead of being cropped. It grows to 64x64 or 96x96
+	// with body size. Ported from Bubber.
+	var/image/canvas
+	var/last_canvas_size
+	var/last_canvas_state
 
 /atom/movable/screen/map_view/char_preview/Initialize(mapload, datum/preferences/preferences)
 	. = ..()
 	src.preferences = preferences
 
 /atom/movable/screen/map_view/char_preview/Destroy()
+	// PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
+	canvas?.cut_overlays()
+	QDEL_NULL(canvas)
 	QDEL_NULL(body)
 	preferences?.character_preview_view = null
 	preferences = null
@@ -401,7 +411,38 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		body.wipe_state()
 
-	appearance = preferences.render_new_preview_appearance(body, show_job_clothes)
+	// PORT EDIT - ADDITION - START - BUBBER_CUSTOMIZATION
+	if (canvas)
+		canvas.cut_overlays()
+
+	preferences.render_new_preview_appearance(body, show_job_clothes)
+
+	var/canvas_size = 0
+	var/canvas_state = preferences.read_preference(/datum/preference/choiced/background_state)
+
+	// Scale the canvas up for oversized bodies so the whole sprite stays visible.
+	if (!isnull(body.current_size) && body.current_size > 1.1)
+		canvas_size = 1
+
+	if (isnull(canvas) || last_canvas_size != canvas_size || last_canvas_state != canvas_state)
+		QDEL_NULL(canvas)
+		switch(canvas_size)
+			if(0)
+				body.pixel_x = 0
+				canvas = image('modular_bubber/icons/zubbers/customization/template.dmi', icon_state = canvas_state)
+			if(1)
+				body.pixel_x = 16
+				canvas = image('modular_bubber/icons/zubbers/customization/template_64x64.dmi', icon_state = canvas_state)
+			else
+				body.pixel_x = 32
+				canvas = image('modular_bubber/icons/zubbers/customization/template_96x96.dmi', icon_state = canvas_state)
+
+		last_canvas_size = canvas_size
+		last_canvas_state = canvas_state
+
+	canvas.add_overlay(body.appearance)
+	appearance = canvas.appearance
+	// PORT EDIT - ADDITION - END - BUBBER_CUSTOMIZATION
 
 /atom/movable/screen/map_view/char_preview/proc/create_body()
 	QDEL_NULL(body)
@@ -548,6 +589,12 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 			continue
 
 		preference.apply_to_human(character, read_preference(preference.type))
+
+	meta_sync_mismatched_organs(character) // PORT EDIT - ADDITION - BUBBER_MISMATCHED_PARTS
+	meta_sync_genital_organs(character) // PORT EDIT - ADDITION - BUBBER_GENITALS
+	meta_resync_visual_organs(character) // PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
+	meta_apply_synth_chassis(character) // PORT EDIT - ADDITION - BUBBER_SYNTH
+	meta_sync_body_markings(character) // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
 
 	character.dna.real_name = character.real_name
 

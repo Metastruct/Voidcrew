@@ -27,6 +27,10 @@ const initialState = {
   lineHeight: 1.2,
   theme: 'light',
   adminMusicVolume: 0.5,
+  // META EDIT - ADDITION - CHAT_LOG_NAME_COLORS
+  chatNameColorMixSay: 100,
+  chatNameColorMixRadio: 50,
+  chatNameColorMixLooc: 50,
   // Keep these two state vars for compatibility with other servers
   highlightText: '',
   highlightColor: '#ffdd44',

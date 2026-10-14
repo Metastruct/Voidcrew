@@ -1,0 +1,940 @@
+# Bubberstation voice packs.
+#
+# Loaded alongside config/voidcrew/voice_packs.toml by meta_read_bubber_voice_packs()
+# (see modular_bubber/code/modules/voice_barks/voice_packs.dm).
+# Ported from Bubberstation's config/bloopers/blooper_config.json.
+# Files live under modular_bubber/sound/voice/barks/bubber/<group>/.
+# min_vary/max_vary are omitted: the bark system has no per-pack pitch variance.
+
+[bubber_kazooie]
+name = "Bubber - Banjo-Kazooie"
+path = "modular_bubber/sound/voice/barks/bubber/kazooie"
+
+[bubber_kazooie.whistle1]
+name = "Whistle 1"
+path = "birdwhistle.ogg"
+volume = 0.183
+
+[bubber_kazooie.whistle2]
+name = "Whistle 2"
+path = "birdwhistle2.ogg"
+volume = 0.183
+
+[bubber_kazooie.caw2]
+name = "Caw 2"
+path = "caw.ogg"
+min_speed = 4
+max_speed = 9
+volume = 0.183
+
+[bubber_kazooie.caw_3]
+name = "Caw 3"
+path = "caw2.ogg"
+min_speed = 3
+max_speed = 9
+volume = 0.183
+
+[bubber_kazooie.caw4]
+name = "Caw 4"
+path = "caw3.ogg"
+min_speed = 3
+max_speed = 9
+volume = 0.183
+
+[bubber_kazooie.ehh1]
+name = "Ehh 1"
+path = "ehh.ogg"
+min_speed = 3
+max_speed = 9
+volume = 0.183
+
+[bubber_kazooie.ehh2]
+name = "Ehh 2"
+path = "ehh2.ogg"
+volume = 0.183
+
+[bubber_kazooie.ehh3]
+name = "Ehh 3"
+path = "ehh3.ogg"
+volume = 0.183
+
+[bubber_kazooie.ehh4]
+name = "Ehh 4"
+path = "ehh4.ogg"
+min_speed = 3
+max_speed = 9
+volume = 0.183
+
+[bubber_kazooie.ehh5]
+name = "Ehh 5"
+path = "ehh5.ogg"
+volume = 0.183
+
+[bubber_kazooie.faucet1]
+name = "Faucet 1"
+path = "faucet.ogg"
+volume = 0.183
+
+[bubber_kazooie.faucet2]
+name = "Faucet2"
+path = "faucet2.ogg"
+volume = 0.183
+
+[bubber_kazooie.ribbit]
+name = "Ribbit"
+path = "ribbit.ogg"
+volume = 0.183
+
+[bubber_kazooie.hoot]
+name = "Hoot"
+path = "hoot.ogg"
+min_speed = 4
+max_speed = 9
+volume = 0.183
+
+[bubber_kazooie.tweet]
+name = "Tweet"
+path = "tweet.ogg"
+volume = 0.183
+
+[bubber_kazooie.dwoop]
+name = "Dwoop"
+path = "dwoop.ogg"
+min_speed = 3
+max_speed = 9
+volume = 0.183
+
+[bubber_kazooie.uhm]
+name = "Uhm"
+path = "uhm.ogg"
+volume = 0.183
+
+[bubber_kazooie.wurtesh]
+name = "Wurtesh"
+path = "wurble1.ogg"
+volume = 0.183
+
+[bubber_kazooie.chitter2]
+name = "Chitter 2"
+path = "chitter1.ogg"
+volume = 0.183
+
+[bubber_kazooie.alien1]
+name = "Alien 1"
+path = "ayy.ogg"
+volume = 0.183
+
+[bubber_kazooie.alien2]
+name = "Alien 2"
+path = "ayy2.ogg"
+volume = 0.183
+
+[bubber_kazooie.alien3]
+name = "Alien 3"
+path = "ayy3.ogg"
+volume = 0.183
+
+[bubber_kazooie.bee]
+name = "Bee"
+path = "bee.ogg"
+volume = 0.183
+
+[bubber_kazooie.blobbelda1]
+name = "Blobbelda 1"
+path = "blobbelda.ogg"
+volume = 0.183
+
+[bubber_kazooie.blobbelda2]
+name = "Blobbelda 2"
+path = "blobbelda2.ogg"
+volume = 0.183
+
+[bubber_kazooie.blobbelda3]
+name = "Blobbelda 3"
+path = "blobbelda.ogg"
+volume = 0.183
+
+[bubber_kazooie.boggy]
+name = "Boggy"
+path = "boggy.ogg"
+volume = 0.183
+
+[bubber_kazooie.bottles1]
+name = "Bottles 1"
+path = "bottles.ogg"
+volume = 0.183
+
+[bubber_kazooie.bottles2]
+name = "Bottles 2"
+path = "bottles2.ogg"
+volume = 0.183
+
+[bubber_kazooie.bottles3]
+name = "Bottles 3"
+path = "bottles3.ogg"
+volume = 0.183
+
+[bubber_kazooie.canarymary1]
+name = "Canary Mary 1"
+path = "canarymary.ogg"
+volume = 0.183
+
+[bubber_kazooie.canarymary2]
+name = "Canary Mary 2"
+path = "canarymary2.ogg"
+volume = 0.183
+
+[bubber_kazooie.caveman1]
+name = "Caveman 1"
+path = "caveman.ogg"
+volume = 0.183
+
+[bubber_kazooie.caveman2]
+name = "Caveman 2"
+path = "caveman2.ogg"
+volume = 0.183
+
+[bubber_kazooie.cheato]
+name = "Cheato"
+path = "cheato.ogg"
+volume = 0.183
+
+[bubber_kazooie.chicken1]
+name = "Chicken 1"
+path = "chicken.ogg"
+volume = 0.183
+
+[bubber_kazooie.chicken2]
+name = "Chicken 2"
+path = "chicken2.ogg"
+volume = 0.183
+
+[bubber_kazooie.chicken3]
+name = "Chicken 3"
+path = "chicken3.ogg"
+volume = 0.183
+
+[bubber_kazooie.ehh6]
+name = "Ehh 6"
+path = "ehh6.ogg"
+volume = 0.183
+
+[bubber_kazooie.ehh7]
+name = "Ehh 7"
+path = "ehh7.ogg"
+volume = 0.183
+
+[bubber_kazooie.ehh8]
+name = "Ehh 8"
+path = "ehh8.ogg"
+volume = 0.183
+
+[bubber_kazooie.erm]
+name = "Erm"
+path = "erm.ogg"
+volume = 0.183
+
+[bubber_kazooie.gobish1]
+name = "Gobish 1"
+path = "gobish.ogg"
+volume = 0.183
+
+[bubber_kazooie.gobish2]
+name = "Gobish 2"
+path = "gobish2.ogg"
+volume = 0.183
+
+[bubber_kazooie.gorilla1]
+name = "Gorilla 1"
+path = "gorilla.ogg"
+volume = 0.183
+
+[bubber_kazooie.gorilla2]
+name = "Gorilla 2"
+path = "gorilla2.ogg"
+volume = 0.183
+
+[bubber_kazooie.gorilla3]
+name = "Gorilla 3"
+path = "gorilla3.ogg"
+volume = 0.183
+
+[bubber_kazooie.grah1]
+name = "Grah 1"
+path = "grah.ogg"
+volume = 0.183
+
+[bubber_kazooie.grah2]
+name = "Grah 2"
+path = "grah2.ogg"
+volume = 0.183
+
+[bubber_kazooie.grr]
+name = "Grr"
+path = "grr.ogg"
+volume = 0.183
+
+[bubber_kazooie.gruh]
+name = "Gruh"
+path = "gruh.ogg"
+volume = 0.183
+
+[bubber_kazooie.grunty1]
+name = "Grunty 1"
+path = "grunty.ogg"
+volume = 0.183
+
+[bubber_kazooie.grunty2]
+name = "Grunty 2"
+path = "grunty2.ogg"
+volume = 0.183
+
+[bubber_kazooie.grunty3]
+name = "Grunty 3"
+path = "grunty3.ogg"
+volume = 0.183
+
+[bubber_kazooie.hah]
+name = "Hah"
+path = "hah.ogg"
+volume = 0.183
+
+[bubber_kazooie.heh]
+name = "Heh"
+path = "heh.ogg"
+volume = 0.183
+
+[bubber_kazooie.hmm]
+name = "Hmm"
+path = "hmm.ogg"
+volume = 0.183
+
+[bubber_kazooie.hon]
+name = "Hon"
+path = "hon.ogg"
+volume = 0.183
+
+[bubber_kazooie.huh]
+name = "Huh"
+path = "huh.ogg"
+volume = 0.183
+
+[bubber_kazooie.huh2]
+name = "Huh 2"
+path = "huh2.ogg"
+volume = 0.183
+
+[bubber_kazooie.humba1]
+name = "Humba 1"
+path = "humba.ogg"
+volume = 0.183
+
+[bubber_kazooie.humba2]
+name = "Humba 2"
+path = "humba2.ogg"
+volume = 0.183
+
+[bubber_kazooie.humba3]
+name = "Humba 3"
+path = "humba3.ogg"
+volume = 0.183
+
+[bubber_kazooie.jamjars1]
+name = "Jamjars 1"
+path = "jamjars.ogg"
+volume = 0.183
+
+[bubber_kazooie.jamjars2]
+name = "Jamjars 2"
+path = "jamjars2.ogg"
+volume = 0.183
+
+[bubber_kazooie.jamjars3]
+name = "Jamjars 3"
+path = "jamjars3.ogg"
+volume = 0.183
+
+[bubber_kazooie.jamjars4]
+name = "Jamjars 4"
+path = "jamjars4.ogg"
+volume = 0.183
+
+[bubber_kazooie.jiggywiggy]
+name = "Jiggy Wiggy"
+path = "jiggywiggy.ogg"
+volume = 0.183
+
+[bubber_kazooie.jinjo]
+name = "Jinjo"
+path = "jinjo.ogg"
+volume = 0.183
+
+[bubber_kazooie.kazooie1]
+name = "Kazooie 1"
+path = "kazooie.ogg"
+volume = 0.183
+
+[bubber_kazooie.kazooie2]
+name = "Kazooie 2"
+path = "kazooie2.ogg"
+volume = 0.183
+
+[bubber_kazooie.kazooie3]
+name = "Kazooie 3"
+path = "kazooie3.ogg"
+volume = 0.183
+
+[bubber_kazooie.kazooie4]
+name = "Kazooie 4"
+path = "kazooie4.ogg"
+volume = 0.183
+
+[bubber_kazooie.meep]
+name = "Meep"
+path = "meep.ogg"
+volume = 0.183
+
+[bubber_kazooie.mingella]
+name = "Mingella"
+path = "mingella.ogg"
+volume = 0.183
+
+[bubber_kazooie.mingy1]
+name = "Mingy 1"
+path = "mingy.ogg"
+volume = 0.183
+
+[bubber_kazooie.mingy2]
+name = "Mingy 2"
+path = "mingy2.ogg"
+volume = 0.183
+
+[bubber_kazooie.mingy3]
+name = "Mingy 3"
+path = "mingy3.ogg"
+volume = 0.183
+
+[bubber_kazooie.mingy4]
+name = "Mingy 4"
+path = "mingy4.ogg"
+volume = 0.183
+
+[bubber_kazooie.mingy5]
+name = "Mingy 5"
+path = "mingy5.ogg"
+volume = 0.183
+
+[bubber_kazooie.mingy6]
+name = "Mingy 6"
+path = "mingy6.ogg"
+volume = 0.183
+
+[bubber_kazooie.minjo]
+name = "Minjo"
+path = "minjo.ogg"
+volume = 0.183
+
+[bubber_kazooie.mmm]
+name = "Mmm"
+path = "mmm.ogg"
+volume = 0.183
+
+[bubber_kazooie.mumbo1]
+name = "Mumbo 1"
+path = "mumbo.ogg"
+volume = 0.183
+
+[bubber_kazooie.mumbo2]
+name = "Mumbo 2"
+path = "mumbo2.ogg"
+volume = 0.183
+
+[bubber_kazooie.mumbo3]
+name = "Mumbo 3"
+path = "mumbo3.ogg"
+volume = 0.183
+
+[bubber_kazooie.mumbo4]
+name = "Mumbo 4"
+path = "mumbo4.ogg"
+volume = 0.183
+
+[bubber_kazooie.mumbo5]
+name = "Mumbo 5"
+path = "mumbo5.ogg"
+volume = 0.183
+
+[bubber_kazooie.mumbo6]
+name = "Mumbo 6"
+path = "mumbo6.ogg"
+volume = 0.183
+
+[bubber_kazooie.oh1]
+name = "Oh 1"
+path = "oh.ogg"
+volume = 0.183
+
+[bubber_kazooie.oh2]
+name = "Oh 2"
+path = "oh2.ogg"
+volume = 0.183
+
+[bubber_kazooie.oi]
+name = "Oi"
+path = "oi.ogg"
+volume = 0.183
+
+[bubber_kazooie.oink]
+name = "Oink"
+path = "oink.ogg"
+volume = 0.183
+
+[bubber_kazooie.pa1]
+name = "PA 1"
+path = "pasystem.ogg"
+volume = 0.183
+
+[bubber_kazooie.pa2]
+name = "PA 2"
+path = "pasystem2.ogg"
+volume = 0.183
+
+[bubber_kazooie.ploboh]
+name = "Ploboh"
+path = "ploboh.ogg"
+volume = 0.183
+
+[bubber_kazooie.ploh1]
+name = "Ploh 1"
+path = "ploh.ogg"
+volume = 0.183
+
+[bubber_kazooie.ploh2]
+name = "Ploh 2"
+path = "ploh2.ogg"
+volume = 0.183
+
+[bubber_kazooie.radioerm]
+name = "Radio Erm"
+path = "radioerm.ogg"
+volume = 0.183
+
+[bubber_kazooie.rahh]
+name = "Rahh"
+path = "rahh.ogg"
+volume = 0.183
+
+[bubber_kazooie.rawr]
+name = "Rawr"
+path = "rawr.ogg"
+volume = 0.183
+
+[bubber_kazooie.squawk]
+name = "Squawk"
+path = "squawk.ogg"
+volume = 0.183
+
+[bubber_kazooie.squee]
+name = "Squee"
+path = "squee.ogg"
+volume = 0.183
+
+[bubber_kazooie.synthsaucer]
+name = "Synth Saucer"
+path = "synthsaucer.ogg"
+volume = 0.183
+
+[bubber_kazooie.ung]
+name = "Ung"
+path = "ung.ogg"
+volume = 0.183
+
+[bubber_kazooie.urr]
+name = "Urr"
+path = "urr.ogg"
+volume = 0.183
+
+[bubber_creature]
+name = "Bubber - Creatures"
+path = "modular_bubber/sound/voice/barks/bubber/creature"
+
+[bubber_creature.xenohiss]
+name = "Xeno Hiss"
+path = "xenohiss.ogg"
+min_speed = 10
+max_speed = 16
+volume = 0.183
+
+[bubber_creature.chitter3]
+name = "Chittery Alt"
+path = "mothchitter2.ogg"
+volume = 0.183
+
+[bubber_creature.chirp]
+name = "Chirp"
+path = "chirp.ogg"
+volume = 0.183
+
+[bubber_creature.caw1]
+name = "Caw 1"
+path = "caw.ogg"
+volume = 0.183
+
+[bubber_creature.meow]
+name = "Meow"
+path = "meow1.ogg"
+min_speed = 5
+max_speed = 11
+volume = 0.183
+
+[bubber_creature.moffsqueak]
+name = "Moff Squeak"
+path = "mothsqueak.ogg"
+volume = 0.183
+
+[bubber_creature.chitter4]
+name = "Chittery"
+path = "chitter.ogg"
+volume = 0.183
+
+[bubber_goon]
+name = "Bubber - Goonstation"
+path = "modular_bubber/sound/voice/barks/bubber/goon"
+
+[bubber_goon.blub]
+name = "Blub"
+path = "blub.ogg"
+volume = 0.183
+
+[bubber_goon.bottalk1]
+name = "Bottalk 1"
+path = "bottalk_1.ogg"
+min_speed = 3
+max_speed = 9
+volume = 0.183
+
+[bubber_goon.bottalk2]
+name = "Bottalk 2"
+path = "bottalk_2.ogg"
+volume = 0.183
+
+[bubber_goon.bottalk3]
+name = "Bottalk 3"
+path = "bottalk_3.ogg"
+volume = 0.183
+
+[bubber_goon.bottalk4]
+name = "Bottalk 4"
+path = "bottalk_4.ogg"
+volume = 0.183
+
+[bubber_goon.buwoo]
+name = "Buwoo"
+path = "buwoo.ogg"
+volume = 0.183
+
+[bubber_goon.cow]
+name = "Cow"
+path = "cow.ogg"
+volume = 0.183
+
+[bubber_goon.lizard]
+name = "Lizard"
+path = "lizard.ogg"
+volume = 0.183
+
+[bubber_goon.pug]
+name = "Pug"
+path = "pug.ogg"
+volume = 0.183
+
+[bubber_goon.pugg]
+name = "Pugg"
+path = "pugg.ogg"
+volume = 0.183
+
+[bubber_goon.radio1]
+name = "Radio 1"
+path = "radio.ogg"
+volume = 0.183
+
+[bubber_goon.radio2]
+name = "Radio 2"
+path = "radio2.ogg"
+volume = 0.183
+
+[bubber_goon.radio_ai]
+name = "Radio (AI)"
+path = "radio_ai.ogg"
+volume = 0.183
+
+[bubber_goon.roach]
+name = "Roach"
+path = "roach.ogg"
+volume = 0.183
+
+[bubber_goon.skelly]
+name = "Skelly"
+path = "skelly.ogg"
+volume = 0.183
+
+[bubber_goon.speak1]
+name = "Speak 1"
+path = "speak_1.ogg"
+volume = 0.183
+
+[bubber_goon.speak2]
+name = "Speak 2"
+path = "speak_2.ogg"
+volume = 0.183
+
+[bubber_goon.speak3]
+name = "Speak 3"
+path = "speak_3.ogg"
+volume = 0.183
+
+[bubber_goon.speak4]
+name = "Speak 4"
+path = "speak_4.ogg"
+volume = 0.183
+
+[bubber_dont_starve]
+name = "Bubber - Don't Starve"
+path = "modular_bubber/sound/voice/barks/bubber/dont_starve"
+
+[bubber_dont_starve.wilson]
+name = "Wilson"
+path = "wilson_blooper.ogg"
+volume = 0.183
+
+[bubber_dont_starve.wolfgang]
+name = "Wolfgang"
+path = "wolfgang_blooper.ogg"
+min_speed = 4
+max_speed = 10
+volume = 0.183
+
+[bubber_dont_starve.woodie]
+name = "Woodie"
+path = "woodie_blooper.ogg"
+min_speed = 4
+max_speed = 10
+volume = 0.183
+
+[bubber_dont_starve.wurt]
+name = "Wurt"
+path = "wurt_blooper.ogg"
+volume = 0.183
+
+[bubber_dont_starve.wx78]
+name = "wx78"
+path = "wx78_blooper.ogg"
+min_speed = 3
+max_speed = 9
+volume = 0.183
+
+[bubber_undertale]
+name = "Bubber - Undertale"
+path = "modular_bubber/sound/voice/barks/bubber/undertale"
+
+[bubber_undertale.alphys]
+name = "Alphys"
+path = "voice_alphys.ogg"
+volume = 0.183
+
+[bubber_undertale.asgore]
+name = "Asgore"
+path = "voice_asgore.ogg"
+volume = 0.183
+
+[bubber_undertale.flowey1]
+name = "Flowey (normal)"
+path = "voice_flowey_1.ogg"
+volume = 0.183
+
+[bubber_undertale.flowey2]
+name = "Flowey (evil)"
+path = "voice_flowey_2.ogg"
+volume = 0.183
+
+[bubber_undertale.papyrus]
+name = "Papyrus"
+path = "voice_papyrus.ogg"
+volume = 0.183
+
+[bubber_undertale.ralsei]
+name = "Ralsei"
+path = "voice_ralsei.ogg"
+volume = 0.183
+
+[bubber_undertale.sans]
+name = "Sans"
+path = "voice_sans.ogg"
+volume = 0.183
+
+[bubber_undertale.toriel]
+name = "Toriel"
+path = "voice_toriel.ogg"
+volume = 0.183
+
+[bubber_undertale.undyne]
+name = "Undyne"
+path = "voice_undyne.ogg"
+volume = 0.183
+
+[bubber_undertale.temmie]
+name = "Temmie"
+path = "voice_temmie.ogg"
+volume = 0.183
+
+[bubber_undertale.susie]
+name = "Susie"
+path = "voice_susie.ogg"
+volume = 0.183
+
+[bubber_undertale.gaster]
+name = "Gaster"
+path = "voice_gaster_1.ogg"
+volume = 0.183
+
+[bubber_undertale.mettaton]
+name = "Mettaton"
+path = "voice_metta_1.ogg"
+volume = 0.183
+
+[bubber_undertale.gen_monster_1]
+name = "Generic Monster 1"
+path = "voice_monster1.ogg"
+volume = 0.183
+
+[bubber_undertale.gen_monster_2]
+name = "Generic Monster 2"
+path = "voice_monster2.ogg"
+volume = 0.183
+
+[bubber_misc]
+name = "Bubber - Miscellaneous"
+path = "modular_bubber/sound/voice/barks/bubber/misc"
+
+[bubber_misc.squeak]
+name = "Squeaky"
+path = "toysqueak1.ogg"
+max_speed = 4
+volume = 0.183
+
+[bubber_misc.beep]
+name = "Beepy"
+path = "terminal_select.ogg"
+max_pitch = 1
+max_speed = 4
+volume = 0.183
+
+[bubber_misc.synthgrunt]
+name = "Synthetic (Grunt)"
+path = "bloop.ogg"
+volume = 0.183
+
+[bubber_misc.synth]
+name = "Synthetic (Normal)"
+path = "uplinkerror.ogg"
+volume = 0.183
+
+[bubber_misc.bullet]
+name = "Windy"
+path = "bulletflyby.ogg"
+max_pitch = 1.6
+volume = 0.183
+
+[bubber_misc.coggers]
+name = "Brassy"
+path = "integration_cog_install.ogg"
+volume = 0.183
+
+[bubber_instrument]
+name = "Bubber - Instruments"
+path = "modular_bubber/sound/voice/barks/bubber/instrument"
+
+[bubber_instrument.mutedc2]
+name = "Muted String (Low)"
+path = "C2.ogg"
+volume = 0.183
+
+[bubber_instrument.mutedc3]
+name = "Muted String (Medium)"
+path = "C3.ogg"
+volume = 0.183
+
+[bubber_instrument.mutedc4]
+name = "Muted String (High)"
+path = "C4.ogg"
+volume = 0.183
+
+[bubber_instrument.banjoc3]
+name = "Banjo (Medium)"
+path = "Cn3.ogg"
+volume = 0.183
+
+[bubber_instrument.banjoc4]
+name = "Banjo (High)"
+path = "Cn4.ogg"
+volume = 0.183
+
+[bubber_meta]
+name = "Bubber - Meta"
+path = "modular_bubber/sound/voice/barks/bubber/meta"
+
+[bubber_meta.hl1barney]
+name = "HL1 Barney"
+path = "voice_hl1barney.ogg"
+volume = 0.183
+
+[bubber_meta.hl1gman]
+name = "HL1 Gman"
+path = "voice_hl1gman.ogg"
+volume = 0.183
+
+[bubber_meta.hl1sci1]
+name = "HL1 Scientist 1"
+path = "voice_hl1sci1.ogg"
+volume = 0.183
+
+[bubber_meta.hl1sci2]
+name = "HL1 Scientist 2"
+path = "voice_hl1sci2.ogg"
+volume = 0.183
+
+[bubber_meta.hl1grunt]
+name = "HL1 Grunt"
+path = "voice_hl1grunt.ogg"
+volume = 0.183
+
+[bubber_meta.hl1vort]
+name = "HL1 Vortigaunt"
+path = "voice_hl1vort.ogg"
+volume = 0.183
+
+[bubber_meta.hl1headcrab]
+name = "HL1 Headcrab"
+path = "voice_hl1headcrab.ogg"
+volume = 0.183
+
+[bubber_meta.gakvu]
+name = "Gakvu"
+path = "gakvu.ogg"
+volume = 0.183
+
+[bubber_meta.miltza]
+name = "Miltza"
+path = "miltza.ogg"
+volume = 0.183
+
+[bubber_meta.randobesk]
+name = "Randobesk"
+path = "randobesk.ogg"
+volume = 0.183
+
+[bubber_meta.tozik]
+name = "Tozik"
+path = "tozik.ogg"
+volume = 0.183
+

@@ -143,17 +143,34 @@
 	layers = EXTERNAL_FRONT|EXTERNAL_BEHIND
 	dyable = TRUE
 	var/wagging = FALSE
+	// PORT EDIT - ADDITION - MODSUIT_MESH
+	// When TRUE the tail still shows under a suit that applies a mesh texture (MODsuits
+	// and the like). tgstation #97556.
+	var/mesh_in_suits = TRUE
 
 /datum/bodypart_overlay/mutant/tail/get_base_icon_state()
 	return "[wagging ? "wagging_" : ""][sprite_datum.icon_state]" //add the wagging tag if we be wagging
 
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	var/mob/living/carbon/human/human = bodypart_owner.owner
-	if(!istype(human))
-		return TRUE
-	if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
+	// PORT EDIT - CHANGE - START - MODSUIT_MESH
+	// tgstation #97556. A mesh-enabled tail stays visible under a suit that applies a
+	// mesh overlay, instead of being hidden by HIDEJUMPSUIT.
+	// ORIGINAL:
+	// var/mob/living/carbon/human/human = bodypart_owner.owner
+	// if(!istype(human))
+	// 	return TRUE
+	// if(human.wear_suit?.flags_inv & HIDEJUMPSUIT)
+	// 	return FALSE
+	// return TRUE
+	var/mob/living/carbon/human/wearer = bodypart_owner.owner
+	if(!istype(wearer) || !(wearer.wear_suit?.flags_inv & HIDEJUMPSUIT))
+		return ..()
+	if(!mesh_in_suits)
 		return FALSE
-	return TRUE
+	if(locate(/datum/bodypart_overlay/texture/mesh) in bodypart_owner.bodypart_overlays)
+		return ..()
+	return FALSE
+	// PORT EDIT - CHANGE - END - MODSUIT_MESH
 
 /obj/item/organ/tail/cat
 	name = "tail"

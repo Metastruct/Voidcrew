@@ -313,6 +313,7 @@
 	if(isnull(damage_overlay))
 		return
 
+	apply_height(damage_overlay, ENTIRE_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 	overlays_standing[DAMAGE_LAYER] = damage_overlay
 	apply_overlay(DAMAGE_LAYER)
 
@@ -335,6 +336,7 @@
 	if(isnull(wound_overlay))
 		return
 
+	apply_height(wound_overlay, ENTIRE_BODY) // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 	overlays_standing[WOUND_LAYER] = wound_overlay
 	apply_overlay(WOUND_LAYER)
 
@@ -427,6 +429,7 @@
 		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
 			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
 
+		apply_height(handcuff_overlay, LOWER_BODY) // low hanging // PORT EDIT - ADDITION - HEIGHT_REFACTOR
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)
 
@@ -548,6 +551,16 @@
 		if(!overlay.can_draw_on_bodypart(src, owner))
 			continue
 		. += "-[jointext(overlay.generate_icon_cache(), "-")]"
+	// PORT EDIT - ADDITION - START - BUBBER_BODY_MARKINGS
+	// Include the body markings in the icon cache key so the preview redraws when they change.
+	if(LAZYLEN(markings))
+		for(var/key in markings)
+			. += "-[key]_[markings[key][1]]_[markings[key][2]]"
+	if(LAZYLEN(aux_zone_markings))
+		for(var/key in aux_zone_markings)
+			. += "-aux_[key]_[aux_zone_markings[key][1]]_[aux_zone_markings[key][2]]"
+	. += "-markings_alpha_[markings_alpha]"
+	// PORT EDIT - ADDITION - END - BUBBER_BODY_MARKINGS
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human_owner = owner
 		. += "-[human_owner.mob_height]"

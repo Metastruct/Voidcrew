@@ -85,18 +85,19 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/log_mob_tag(text)
 	return
 
-// To speed up the preference menu, we apply 1 filter to the entire mob
+// PORT EDIT - CHANGE - START - HEIGHT_REFACTOR
+// tgstation #96570. The preference preview only needs one height filter on the whole
+// mob, not per-overlay offsets and filters, which is faster and good enough here.
+// ORIGINAL: dummy/regenerate_icons() called apply_height_filters(src, TRUE), and the
+// dummy overrode apply_height_filters/apply_height_offsets instead of apply_height.
 /mob/living/carbon/human/dummy/regenerate_icons()
 	. = ..()
-	apply_height_filters(src, TRUE)
+	apply_height(src, ENTIRE_BODY)
 
-/mob/living/carbon/human/dummy/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
-	if(only_apply_in_prefs)
+/mob/living/carbon/human/dummy/apply_height(image/appearance, body_area)
+	if(appearance == src)
 		return ..()
-
-// Not necessary with above
-/mob/living/carbon/human/dummy/apply_height_offsets(image/appearance, upper_torso)
-	return
+// PORT EDIT - CHANGE - END - HEIGHT_REFACTOR
 
 /// Takes in an accessory list and returns the first entry from that list, ensuring that we dont return SPRITE_ACCESSORY_NONE in the process.
 /proc/get_consistent_feature_entry(list/accessory_feature_list)

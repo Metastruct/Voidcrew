@@ -90,21 +90,51 @@
 /datum/jukebox/proc/init_songs()
 	return load_songs_from_config()
 
+/// File extensions the jukebox will try to read (and sniff a length from). Mirrors
+/// Bubber's `SSsounds.safe_formats` and `IS_SOUND_FILE_SAFE`.
+/datum/jukebox/proc/is_safe_sound_file(file_path)
+	var/static/list/safe_formats = list("ogg", "mp3", "wav")
+	var/ext_start = findlasttext("[file_path]", ".")
+	if(!ext_start)
+		return FALSE
+	return lowertext(copytext("[file_path]", ext_start + 1)) in safe_formats
+
 /// Loads the config sounds once, and returns a copy of them.
+///
+/// META EDIT - CHANGE - START - JUKEBOX_OPTIONAL_TIMINGS
+/// PORTED FROM: Bubberstation code/datums/components/jukebox.dm
+/// A track no longer needs a length or beat baked into its filename. The length is read
+/// from the audio, so song.ogg and song+5.ogg both work. The old song+length+beat.ogg
+/// form still works too.
 /datum/jukebox/proc/load_songs_from_config()
 	var/static/list/config_songs
 	if(isnull(config_songs))
 		config_songs = list()
 		var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
 		for(var/track_file in tracks)
-			var/datum/track/new_track = new()
-			new_track.song_path = file("[global.config.directory]/jukebox_music/sounds/[track_file]")
-			var/list/track_data = splittext(track_file, "+")
-			if(length(track_data) < 3)
+			var/track_path = file("[global.config.directory]/jukebox_music/sounds/[track_file]")
+			if(!is_safe_sound_file(track_path))
 				continue
-			new_track.song_name = track_data[1]
-			new_track.song_length = text2num(track_data[2])
-			new_track.song_beat = text2num(track_data[3])
+			var/list/track_data = splittext(track_file, "+")
+			if(!length(track_data))
+				continue
+			var/datum/track/new_track = new()
+			new_track.song_path = track_path
+			// A single token is `name.ogg`; strip the extension so the menu reads cleanly.
+			// Only strip a known audio extension, so a dot in a title isn't truncated.
+			var/track_name = track_data[1]
+			var/ext_start = findlasttext(track_name, ".")
+			if(ext_start && (lowertext(copytext(track_name, ext_start + 1)) in list("ogg", "mp3", "wav")))
+				track_name = copytext(track_name, 1, ext_start)
+			new_track.song_name = track_name
+			if(track_data.len >= 3)
+				// Legacy `name+length+beat`: trust the baked-in length.
+				new_track.song_length = text2num(track_data[2])
+				new_track.song_beat = text2num(track_data[3])
+			else
+				// `name` or `name+beat`: fetch the length from the file itself.
+				new_track.song_length = SSsounds.get_sound_length(track_path)
+				new_track.song_beat = (track_data.len >= 2) ? text2num(track_data[2]) : 0
 			config_songs[new_track.song_name] = new_track
 
 		if(!length(config_songs))
@@ -113,6 +143,7 @@
 
 	// returns a copy so it can mutate if desired.
 	return config_songs.Copy()
+/// META EDIT - CHANGE - END - JUKEBOX_OPTIONAL_TIMINGS
 
 /**
  * Returns a set of general data relating to the jukebox for use in TGUI.
