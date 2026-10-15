@@ -49,6 +49,10 @@
 		/obj/item/organ/wings/moth = SPRITE_ACCESSORY_NONE,
 	)
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
+	// Robotic digitigrade legs (see synth_bodyparts.dm) so a synth can be repaired with a
+	// welder/cable coil. `port_apply_synth_chassis()` picks the art.
+	digitigrade_left_type = /obj/item/bodypart/leg/left/robot/android/digitigrade
+	digitigrade_right_type = /obj/item/bodypart/leg/right/robot/android/digitigrade
 	payday_modifier = 1.0
 
 /// Selectable at roundstart even without a config entry.
@@ -97,14 +101,34 @@
 					limb.remove_color_override(PORT_LIMB_COLOR_SYNTH)
 				limb.update_draw_color()
 			continue
-		if(chassis)
-			limb.change_appearance(chassis.icon, chassis.icon_state, !!chassis.color_src, limb.body_zone == BODY_ZONE_CHEST && chassis.dimorphic)
-			limb.name = "\improper[chassis.name] [parse_zone(limb.body_zone)]"
-			if(chassis.color_src && istext(chassis_colour) && length(chassis_colour))
-				limb.add_color_override(chassis_colour, META_LIMB_COLOR_SYNTH)
+		if(!chassis)
+			continue
+		// Digitigrade legs draw the chassis' digitigrade states. Only the Mammal/Lizard
+		// chassis ship them (`is_digi_compatible`), every other chassis falls back to the
+		// generic synth digitigrade. The core `change_appearance()` would reset the
+		// limb to its default (organic lizard) art when the state is missing, so the art is
+		// selected here and `BODYPART_ID_DIGITIGRADE` is passed so its sanity check looks
+		// for a digitigrade state instead of the chassis' plantigrade one (if choosen).
+		if(limb.port_synth_digitigrade)
+			var/datum/sprite_accessory/synth_chassis/digi_chassis = chassis
+			if(!chassis.is_digi_compatible)
+				digi_chassis = SSaccessories.synth_chassis_list[SYNTH_FALLBACK_CHASSIS]
+			limb.port_synth_squished_limb_id = digi_chassis.icon_state
+			limb.change_appearance(digi_chassis.icon, BODYPART_ID_DIGITIGRADE, TRUE, FALSE)
+			limb.name = "\improper[digi_chassis.name] [parse_zone(limb.body_zone)]"
+			if(istext(chassis_colour) && length(chassis_colour))
+				limb.add_color_override(chassis_colour, PORT_LIMB_COLOR_SYNTH)
 			else
 				limb.remove_color_override(PORT_LIMB_COLOR_SYNTH)
 			limb.update_draw_color()
+			continue
+		limb.change_appearance(chassis.icon, chassis.icon_state, !!chassis.color_src, limb.body_zone == BODY_ZONE_CHEST && chassis.dimorphic)
+		limb.name = "\improper[chassis.name] [parse_zone(limb.body_zone)]"
+		if(chassis.color_src && istext(chassis_colour) && length(chassis_colour))
+			limb.add_color_override(chassis_colour, PORT_LIMB_COLOR_SYNTH)
+		else
+			limb.remove_color_override(PORT_LIMB_COLOR_SYNTH)
+		limb.update_draw_color()
 	human.update_body_parts()
 
 /// Character-select preview: a synth with the default console screen.

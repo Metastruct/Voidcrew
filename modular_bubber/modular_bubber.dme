@@ -73,6 +73,7 @@
 #include "code\modules\surgery\bodyparts\teshari_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\shadekin_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\mutant_bodyparts.dm"
+#include "code\modules\surgery\bodyparts\synth_bodyparts.dm"
 #include "code\modules\surgery\bodyparts\body_markings.dm"
 #include "code\modules\mob\living\carbon\human\species_types\mammal.dm"
 #include "code\modules\mob\living\carbon\human\species_types\mammal_variants.dm"
