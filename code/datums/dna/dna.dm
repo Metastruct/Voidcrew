@@ -346,10 +346,16 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(create_mutation_blocks) //I hate this
 		generate_dna_blocks(mutation_blacklist = list(/datum/mutation/headless))
 	if(randomize_features)
-		for(var/species_type in GLOB.species_prototypes)
-			var/list/new_features = GLOB.species_prototypes[species_type].randomize_features()
-			for(var/feature in new_features)
-				features[feature] = new_features[feature]
+		// PORT EDIT - CHANGE - BUBBER_RANDOM_FEATURES
+		// don't roll randomize_features for EVERY species prototype and create homunculuses
+		// (Bubber removed this for the same reason.)
+		// ORIGINAL:
+		//   for(var/species_type in GLOB.species_prototypes)
+		//       var/list/new_features = GLOB.species_prototypes[species_type].randomize_features()
+		//       for(var/feature in new_features)
+		//           features[feature] = new_features[feature]
+		if(species)
+			features = species.randomize_features() | features
 
 		features[FEATURE_MUTANT_COLOR] = "#[random_color()]"
 
