@@ -134,6 +134,11 @@
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_MOB_LOGGED_IN, src)
 
+	// PORT EDIT - ADDITION - BUBBER_COMMIT_ANNOUNCER
+	// A late-joining client needs the reboot countdown HUD too.
+	if(SSticker.IsPostgame())
+		client.screen += SSticker.reboot_hud
+
 	return TRUE
 
 

@@ -212,6 +212,17 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 		player_client.give_award(/datum/award/score/hardcore_random, human_mob, round(human_mob.hardcore_survival_score))
 		log_admin("[player_client] gained [round(human_mob.hardcore_survival_score)] hardcore random points.")
 
+// PORT EDIT - ADDITION - BUBBER_COMMIT_ANNOUNCER
+// The "Server rebooting in:" HUD used by the ported commit announcer. Voidcrew's ticker
+// predates upstream's version, so the screen object (and its wiring) is ported here.
+/atom/movable/screen/reboot_timer
+	screen_loc = "CENTER:-140,TOP:-42"
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	maptext_width = 340
+	maptext_height = 64
+	maptext = ""
+	layer = SCREENTIP_LAYER //This is basically an extra screentip
+
 /datum/controller/subsystem/ticker/proc/declare_completion(was_forced = END_ROUND_AS_NORMAL)
 	set waitfor = FALSE
 
@@ -221,6 +232,9 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 
 	var/speed_round = (STATION_TIME_PASSED() <= 10 MINUTES)
 
+	// PORT EDIT - ADDITION - BUBBER_COMMIT_ANNOUNCER
+	if(isnull(reboot_hud))
+		reboot_hud = new()
 	for(var/client/C in GLOB.clients)
 		if(!C?.credits)
 			C?.RollCredits()
@@ -228,6 +242,7 @@ GLOBAL_LIST_INIT(achievements_unlocked, list())
 			C?.playtitlemusic(volume_multiplier = 0.5)
 		if(speed_round && was_forced != ADMIN_FORCE_END_ROUND)
 			C?.give_award(/datum/award/achievement/misc/speed_round, C?.mob)
+		C?.screen += reboot_hud // PORT EDIT - ADDITION - BUBBER_COMMIT_ANNOUNCER
 		HandleRandomHardcoreScore(C)
 
 	var/popcount = gather_roundend_feedback()

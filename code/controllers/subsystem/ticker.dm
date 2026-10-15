@@ -67,6 +67,9 @@ SUBSYSTEM_DEF(ticker)
 
 	/// ID of round reboot timer, if it exists
 	var/reboot_timer = null
+	// PORT EDIT - ADDITION - BUBBER_COMMIT_ANNOUNCER
+	/// "Server rebooting in:" HUD, shown while a reboot timer counts down.
+	var/atom/movable/screen/reboot_timer/reboot_hud
 
 /datum/controller/subsystem/ticker/Initialize()
 	var/list/byond_sound_formats = list(
@@ -219,6 +222,16 @@ SUBSYSTEM_DEF(ticker)
 				toggle_dooc(TRUE)
 				declare_completion(force_ending)
 				Master.SetRunLevel(RUNLEVEL_POSTGAME)
+
+		// PORT EDIT - ADDITION - BUBBER_COMMIT_ANNOUNCER
+		// Upstream refreshes the reboot countdown here; Voidcrew didn't ship it, so the
+		// commit announcer adds it (its modular ticker override covers mid-round reboots).
+		if(GAME_STATE_FINISHED)
+			if(ready_for_reboot)
+				if(isnull(reboot_timer))
+					reboot_hud.maptext = MAPTEXT_PIXELLARI("<center>Server reboot \n\ DELAYED</center>")
+				else
+					reboot_hud.maptext = MAPTEXT_PIXELLARI("<center>Server rebooting in:\n\ [DisplayTimeText(timeleft(SSticker.reboot_timer), 1)]</center>")
 
 /// Checks if the round should be ending, called every ticker tick
 /datum/controller/subsystem/ticker/proc/check_finished()
