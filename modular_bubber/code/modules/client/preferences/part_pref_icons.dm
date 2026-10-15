@@ -16,7 +16,7 @@
 
 /// Pick the first of [base] and its `_primary`/`_secondary`/`_tertiary` slices that
 /// exists in [states].
-/proc/meta_resolve_icon_state(list/states, base)
+/proc/port_resolve_icon_state(list/states, base)
 	if(isnull(base))
 		return null
 	if(base in states)
@@ -36,7 +36,7 @@
 /// in the corner (the core hair/lizard previews crop the head region the same way).
 /// [dir] picks the facing to draw; without it the batched renderer composites every
 /// direction on top of each other, which looks like a tangle of limbs.
-/proc/meta_part_pref_icon(datum/sprite_accessory/accessory, feature_key, state_base, tint = COLOR_VIBRANT_LIME, list/layer_order, list/crop, dir = SOUTH)
+/proc/port_part_pref_icon(datum/sprite_accessory/accessory, feature_key, state_base, tint = COLOR_VIBRANT_LIME, list/layer_order, list/crop, dir = SOUTH)
 	if(isnull(accessory) || isnull(accessory.icon))
 		return blank_pref_icon()
 
@@ -47,14 +47,14 @@
 	var/datum/universal_icon/final_icon
 
 	if(!isnull(state_base))
-		var/state = meta_resolve_icon_state(all_states, state_base)
+		var/state = port_resolve_icon_state(all_states, state_base)
 		if(!isnull(state))
 			final_icon = uni_icon(accessory.icon, state, dir)
 	else if(!isnull(accessory.icon_state) && accessory.icon_state != SPRITE_ACCESSORY_NONE)
 		if(isnull(layer_order))
 			layer_order = list("FRONT", "ADJ", "BEHIND")
 		for(var/layer in layer_order)
-			var/state = meta_resolve_icon_state(all_states, "m_[feature_key]_[accessory.icon_state]_[layer]")
+			var/state = port_resolve_icon_state(all_states, "m_[feature_key]_[accessory.icon_state]_[layer]")
 			if(isnull(state))
 				continue
 			var/datum/universal_icon/part = uni_icon(accessory.icon, state, dir)
@@ -79,7 +79,7 @@
 /// the grid can't know the viewer's gender. Greyscale sheets (`color_src` set) get the same
 /// lime tint as the core part previews, while pre-coloured sheets are left untouched.
 /// [crop] optionally zooms to just the head/body so the part fills the cell.
-/proc/meta_synth_part_pref_icon(datum/sprite_accessory/accessory, zone, dimorphic = FALSE, list/crop)
+/proc/port_synth_part_pref_icon(datum/sprite_accessory/accessory, zone, dimorphic = FALSE, list/crop)
 	if(isnull(accessory) || isnull(accessory.icon))
 		return blank_pref_icon()
 
@@ -87,4 +87,4 @@
 	if(dimorphic)
 		state += "_m"
 
-	return meta_part_pref_icon(accessory, null, state_base = state, tint = accessory.color_src ? COLOR_VIBRANT_LIME : null, crop = crop)
+	return port_part_pref_icon(accessory, null, state_base = state, tint = accessory.color_src ? COLOR_VIBRANT_LIME : null, crop = crop)

@@ -196,7 +196,7 @@
 		FEATURE_MUTANT_COLOR_TWO = preferences.read_preference(/datum/preference/color/mutant_color_two),
 		FEATURE_MUTANT_COLOR_THREE = preferences.read_preference(/datum/preference/color/mutant_color_three),
 	)
-	return save_markings(meta_assemble_body_markings_from_set(marking_set, features, initial(pref_species)))
+	return save_markings(port_assemble_body_markings_from_set(marking_set, features, initial(pref_species)))
 
 /datum/preference_middleware/body_markings/get_ui_data(mob/user)
 	var/list/data = list()

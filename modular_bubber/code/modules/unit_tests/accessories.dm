@@ -5,7 +5,7 @@
 
 /// Does [accessory] have at least one icon state that Voidcrew's mutant renderer can
 /// build for [feature_key]? Catches missing/renamed art and feature-key mismatches.
-/proc/meta_accessory_has_art(datum/sprite_accessory/accessory, feature_key)
+/proc/port_accessory_has_art(datum/sprite_accessory/accessory, feature_key)
 	if(isnull(accessory) || isnull(accessory.icon) || isnull(accessory.icon_state))
 		return FALSE
 	var/prefix = "m_[feature_key]_[accessory.icon_state]_"
@@ -14,7 +14,7 @@
 			return TRUE
 	return FALSE
 
-/datum/unit_test/meta_accessory_art/Run()
+/datum/unit_test/port_accessory_art/Run()
 	var/static/list/checked = list(
 		"ears" = list(SSaccessories.ears_list, FEATURE_EARS),
 		"tails" = list(SSaccessories.tails_list_bubber, "tail"), // FEATURE_TAIL_GENERIC
@@ -36,13 +36,13 @@
 				continue
 			if(accessory.icon_state in list(SPRITE_ACCESSORY_NONE, "none"))
 				continue
-			if(!meta_accessory_has_art(accessory, feature_key))
+			if(!port_accessory_has_art(accessory, feature_key))
 				failures++
 				if(failures <= 5)
 					TEST_FAIL("[category] accessory '[name]' ([accessory.icon_state]) has no m_[feature_key]_[accessory.icon_state]_* art in [accessory.icon]")
 		TEST_ASSERT_EQUAL(failures, 0, "[category] had [failures] accessories with missing art")
 
-/datum/unit_test/meta_mammal_species/Run()
+/datum/unit_test/port_mammal_species/Run()
 	// The ported lists must have been built during SSaccessories PreInit.
 	TEST_ASSERT(length(SSaccessories.tails_list_bubber), "tails_list_bubber was not populated")
 
@@ -60,7 +60,7 @@
 	// Rendering must not runtime on the ported overlays.
 	human.update_body()
 
-/datum/unit_test/meta_mammal_variants/Run()
+/datum/unit_test/port_mammal_variants/Run()
 	var/static/list/variants = list(
 		/datum/species/human/mammal/vulpkanin,
 		/datum/species/human/mammal/tajaran,
@@ -79,7 +79,7 @@
 
 		human.update_body()
 
-/datum/unit_test/meta_bubber_import_translate/Run()
+/datum/unit_test/port_bubber_import_translate/Run()
 	var/list/bubber = list(
 		"real_name" = "Test",
 		"age" = 30,
@@ -109,7 +109,7 @@
 	var/list/unknown = translate_bubber_character(list("species" = "not_a_species"))
 	TEST_ASSERT_EQUAL(unknown["species"], SPECIES_HUMAN, "unknown species did not fall back to human")
 
-/datum/unit_test/meta_synth_species/Run()
+/datum/unit_test/port_synth_species/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	human.set_species(/datum/species/android/synthetic)
 
@@ -121,7 +121,7 @@
 
 	human.update_body()
 
-/datum/unit_test/meta_teshari_species/Run()
+/datum/unit_test/port_teshari_species/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	human.set_species(/datum/species/human/teshari)
 
@@ -133,7 +133,7 @@
 
 	human.update_body()
 
-/datum/unit_test/meta_shadekin_species/Run()
+/datum/unit_test/port_shadekin_species/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	human.set_species(/datum/species/human/shadekin)
 
@@ -146,7 +146,7 @@
 
 	human.update_body()
 
-/datum/unit_test/meta_podweak_species/Run()
+/datum/unit_test/port_podweak_species/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 	human.set_species(/datum/species/pod/podweak)
 
@@ -160,7 +160,7 @@
 	human.update_body()
 
 // Genital art sanity. The anus is deliberately omitted: it has no on-mob art in Bubber.
-/datum/unit_test/meta_genital_art/Run()
+/datum/unit_test/port_genital_art/Run()
 	// Feature-key literals: the modular __DEFINES compile after this file.
 	var/static/list/checked = list(
 		"penis" = list(SSaccessories.genital_penis_list, "penis"),
@@ -183,9 +183,9 @@
 				continue
 			if(isnull(accessory.icon) || accessory.icon_state in list(SPRITE_ACCESSORY_NONE, "none"))
 				continue
-			TEST_ASSERT(meta_accessory_has_art(accessory, feature_key), "[category] accessory '[name]' has no matching art for [feature_key]")
+			TEST_ASSERT(port_accessory_has_art(accessory, feature_key), "[category] accessory '[name]' has no matching art for [feature_key]")
 
-/datum/unit_test/meta_genital_organs/Run()
+/datum/unit_test/port_genital_organs/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 
 	var/static/list/genital_names = list(
@@ -227,7 +227,7 @@
 
 // The TGUI dropdown crashes on a null choice (capitalizeFirst(null)), which happens when
 // an abstract intermediate accessory type sneaks a null into the list.
-/datum/unit_test/meta_accessory_list_no_nulls/Run()
+/datum/unit_test/port_accessory_list_no_nulls/Run()
 	var/static/list/checked = list(
 		"ears" = SSaccessories.ears_list,
 		"bubber tails" = SSaccessories.tails_list_bubber,
@@ -246,30 +246,30 @@
 
 // The character preview re-runs apply_prefs_to() on every change, so genital organs must
 // add, remove and re-sync from DNA rather than only being granted once.
-/datum/unit_test/meta_genital_sync/Run()
+/datum/unit_test/port_genital_sync/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
 
 	human.dna.features["penis"] = SPRITE_ACCESSORY_NONE
-	meta_sync_genital_organs(human)
+	port_sync_genital_organs(human)
 	TEST_ASSERT(isnull(human.get_organ_by_type(/obj/item/organ/genital/penis)), "None must not grant a genital organ")
 
 	human.dna.features["penis"] = "Human"
-	meta_sync_genital_organs(human)
+	port_sync_genital_organs(human)
 	var/obj/item/organ/genital/penis = human.get_organ_by_type(/obj/item/organ/genital/penis)
 	TEST_ASSERT(!isnull(penis), "A chosen sprite must grant the genital organ")
 
 	human.dna.features["penis_size"] = 20
-	meta_sync_genital_organs(human)
+	port_sync_genital_organs(human)
 	TEST_ASSERT_EQUAL(penis.genital_size, 20, "A size change must re-sync the existing organ")
 
 	human.dna.features["penis"] = SPRITE_ACCESSORY_NONE
-	meta_sync_genital_organs(human)
+	port_sync_genital_organs(human)
 	TEST_ASSERT(isnull(human.get_organ_by_type(/obj/item/organ/genital/penis)), "None must remove the existing organ")
 
 // Per-limb body markings: the globals must be populated, every offered marking must
 // resolve to art (the DM side filters zones without art, so this catches a regression
 // in that filtering), and the render path must run.
-/datum/unit_test/meta_body_markings/Run()
+/datum/unit_test/port_body_markings/Run()
 	TEST_ASSERT(length(GLOB.body_markings), "GLOB.body_markings was not populated")
 	TEST_ASSERT(length(GLOB.body_marking_sets), "GLOB.body_marking_sets was not populated")
 
@@ -280,18 +280,18 @@
 			continue
 		for(var/name in choices)
 			var/datum/body_marking/marking = GLOB.body_markings[name]
-			if(!meta_body_marking_has_art(marking, zone))
+			if(!port_body_marking_has_art(marking, zone))
 				failures++
 				if(failures <= 5)
 					TEST_FAIL("body marking '[name]' is offered for [zone] but has no art")
 	TEST_ASSERT_EQUAL(failures, 0, "[failures] markings were offered without art")
 
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/consistent)
-	human.dna.meta_set_body_marking(BODY_ZONE_CHEST, "Plain", "#FF0000")
-	human.dna.meta_set_body_marking(BODY_ZONE_HEAD, "Flushed Cheeks", "#00FF00", TRUE)
-	TEST_ASSERT(length(human.dna.body_markings), "meta_set_body_marking stored nothing")
+	human.dna.port_set_body_marking(BODY_ZONE_CHEST, "Plain", "#FF0000")
+	human.dna.port_set_body_marking(BODY_ZONE_HEAD, "Flushed Cheeks", "#00FF00", TRUE)
+	TEST_ASSERT(length(human.dna.body_markings), "port_set_body_marking stored nothing")
 
-	meta_sync_body_markings(human)
+	port_sync_body_markings(human)
 	var/obj/item/bodypart/chest = human.get_bodypart(BODY_ZONE_CHEST)
 	TEST_ASSERT(LAZYLEN(chest.markings), "the chest bodypart did not receive its marking")
 

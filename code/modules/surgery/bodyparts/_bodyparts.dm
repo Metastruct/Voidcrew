@@ -1001,7 +1001,7 @@
 		marking.set_appearance(human_owner.dna.features[marking.dna_feature_key], species_color)
 
 	// PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
-	meta_set_markings_from_dna(human_owner)
+	port_set_markings_from_dna(human_owner)
 
 	return TRUE
 

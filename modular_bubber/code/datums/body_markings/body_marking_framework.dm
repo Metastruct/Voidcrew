@@ -13,7 +13,7 @@
 
 /// Flattens subtypesof(/datum/body_marking) and /datum/body_marking_set into globals.
 /// Called from SSaccessories::setup_ported_lists().
-/proc/meta_make_body_marking_references()
+/proc/port_make_body_marking_references()
 	GLOB.body_markings = list()
 	GLOB.body_markings_per_limb = list()
 	GLOB.body_marking_sets = list()
@@ -30,7 +30,7 @@
 				continue
 			// Several Bubber markings claim zones their art doesn't cover; don't offer
 			// them where they'd draw nothing.
-			if(!meta_body_marking_has_art(marking, zone))
+			if(!port_body_marking_has_art(marking, zone))
 				continue
 			if(!GLOB.body_markings_per_limb[zone])
 				GLOB.body_markings_per_limb[zone] = list()
@@ -76,7 +76,7 @@
 /// given features. Used by the "pick a preset" dropdown.
 /// Whether [marking] has any art for [zone]: the plain state, a gendered chest
 /// variant, or a digitigrade leg variant.
-/proc/meta_body_marking_has_art(datum/body_marking/marking, zone)
+/proc/port_body_marking_has_art(datum/body_marking/marking, zone)
 	if(isnull(marking) || isnull(marking.icon) || isnull(marking.icon_state))
 		return FALSE
 	var/list/suffixes = list("")
@@ -100,7 +100,7 @@
 	return "[icon_state]_[zone][gender_modifier]"
 
 /// Sets one marking on one zone of this dna. Used by randomisation and debug tooling.
-/datum/dna/proc/meta_set_body_marking(zone, marking_name, color = "#FFFFFF", emissive = FALSE)
+/datum/dna/proc/port_set_body_marking(zone, marking_name, color = "#FFFFFF", emissive = FALSE)
 	if(!(zone in GLOB.marking_zones) || !GLOB.body_markings[marking_name])
 		return FALSE
 	if(!islist(body_markings))
@@ -110,7 +110,7 @@
 	body_markings[zone][marking_name] = list(sanitize_hexcolor(color), emissive ? TRUE : FALSE)
 	return TRUE
 
-/proc/meta_assemble_body_markings_from_set(datum/body_marking_set/marking_set, list/features, datum/species/pref_species)
+/proc/port_assemble_body_markings_from_set(datum/body_marking_set/marking_set, list/features, datum/species/pref_species)
 	var/list/body_markings = list()
 	if(isnull(marking_set))
 		return body_markings

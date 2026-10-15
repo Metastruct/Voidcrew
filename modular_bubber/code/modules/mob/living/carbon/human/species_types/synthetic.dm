@@ -64,13 +64,13 @@
 /// Re-apply the selected chassis/head after `replace_body()` rebuilt the limbs.
 /datum/species/android/synthetic/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
-	meta_apply_synth_chassis(human_who_gained_species)
+	port_apply_synth_chassis(human_who_gained_species)
 
 /// Swap every synth bodypart to the selected chassis/head art. Chassis art sets every
 /// non-head limb; the head set covers the head. `color_src` on the accessory means the
 /// sheet is greyscale and should be tinted with the mutant colour; `dimorphic` selects
 /// the `_m`/`_f` states.
-/proc/meta_apply_synth_chassis(mob/living/carbon/human/human)
+/proc/port_apply_synth_chassis(mob/living/carbon/human/human)
 	if(!ishuman(human))
 		return
 	var/datum/species/android/synthetic/synth = human.dna?.species
@@ -92,9 +92,9 @@
 			if(head)
 				limb.change_appearance(head.icon, head.icon_state, !!head.color_src, head.dimorphic)
 				if(head.color_src && istext(head_colour) && length(head_colour))
-					limb.add_color_override(head_colour, META_LIMB_COLOR_SYNTH)
+					limb.add_color_override(head_colour, PORT_LIMB_COLOR_SYNTH)
 				else
-					limb.remove_color_override(META_LIMB_COLOR_SYNTH)
+					limb.remove_color_override(PORT_LIMB_COLOR_SYNTH)
 				limb.update_draw_color()
 			continue
 		if(chassis)
@@ -103,7 +103,7 @@
 			if(chassis.color_src && istext(chassis_colour) && length(chassis_colour))
 				limb.add_color_override(chassis_colour, META_LIMB_COLOR_SYNTH)
 			else
-				limb.remove_color_override(META_LIMB_COLOR_SYNTH)
+				limb.remove_color_override(PORT_LIMB_COLOR_SYNTH)
 			limb.update_draw_color()
 	human.update_body_parts()
 

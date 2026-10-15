@@ -36,9 +36,9 @@
 	target.emissive_eyes = value
 
 /datum/preference/toggle/eye_emissives/is_accessible(datum/preferences/preferences)
-	return ..(preferences) && meta_emissives_allowed(preferences)
+	return ..(preferences) && port_emissives_allowed(preferences)
 
-/proc/meta_emissives_allowed(datum/preferences/preferences)
+/proc/port_emissives_allowed(datum/preferences/preferences)
 	if(isnull(preferences))
 		return FALSE
 	return preferences.read_preference(/datum/preference/toggle/allow_emissives)
@@ -78,7 +78,7 @@
 	var/savefile_key_to_check
 
 /datum/preference/tri_bool/part_emissive/is_accessible(datum/preferences/preferences)
-	if(!..(preferences) || !meta_emissives_allowed(preferences))
+	if(!..(preferences) || !port_emissives_allowed(preferences))
 		return FALSE
 	if(savefile_key_to_check)
 		var/datum/preference/choiced/part_pref = GLOB.preference_entries_by_key[savefile_key_to_check]

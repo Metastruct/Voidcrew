@@ -16,7 +16,7 @@
 	return assoc_to_keys_features(SSaccessories.fluff_list)
 
 /datum/preference/choiced/fluff/icon_for(value)
-	return meta_part_pref_icon(SSaccessories.fluff_list[value], FEATURE_FLUFF, tint = null, crop = list(8, 11, 23, 26))
+	return port_part_pref_icon(SSaccessories.fluff_list[value], FEATURE_FLUFF, tint = null, crop = list(8, 11, 23, 26))
 
 /datum/preference/choiced/fluff/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features[FEATURE_FLUFF] = value

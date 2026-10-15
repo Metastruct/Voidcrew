@@ -5,7 +5,7 @@
 // never pick up a changed feature. This walks the organs and re-imprints them.
 
 /// Re-imprint each external organ's overlay from `dna.features` (skipping "None"/missing).
-/proc/meta_resync_visual_organs(mob/living/carbon/human/human)
+/proc/port_resync_visual_organs(mob/living/carbon/human/human)
 	if(!ishuman(human))
 		return
 	var/list/features = human.dna?.features

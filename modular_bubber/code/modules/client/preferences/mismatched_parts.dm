@@ -21,7 +21,7 @@
 	target.dna.features["allow_mismatched_parts"] = value
 
 /// Ported external organs mismatched parts can grant to any humanoid.
-GLOBAL_LIST_INIT(meta_mismatched_organs, list(
+GLOBAL_LIST_INIT(port_mismatched_organs, list(
 	/obj/item/organ/ears/bubber,
 	/obj/item/organ/tail/bubber,
 	/obj/item/organ/snout/bubber,
@@ -40,7 +40,7 @@ GLOBAL_LIST_INIT(meta_mismatched_organs, list(
 /// have. Native organs (the species\' own mutant_organs/mutantears) are left alone.
 /// Reads the toggle from `dna.features` so it works for the preview dummy too.
 /// Called from on_species_gain() and from apply_prefs_to().
-/proc/meta_sync_mismatched_organs(mob/living/carbon/human/human, datum/species/species_override)
+/proc/port_sync_mismatched_organs(mob/living/carbon/human/human, datum/species/species_override)
 	if(!ishuman(human))
 		return
 	if(isnull(human.dna))
@@ -55,7 +55,7 @@ GLOBAL_LIST_INIT(meta_mismatched_organs, list(
 	var/list/features = human.dna.features
 	var/mismatched = features["allow_mismatched_parts"]
 
-	for(var/obj/item/organ/organ_type as anything in GLOB.meta_mismatched_organs)
+	for(var/obj/item/organ/organ_type as anything in GLOB.port_mismatched_organs)
 		if(!ispath(organ_type))
 			continue
 		var/datum/bodypart_overlay/mutant/sample_overlay = initial(organ_type.bodypart_overlay)
@@ -85,12 +85,12 @@ GLOBAL_LIST_INIT(meta_mismatched_organs, list(
 			new_organ.Insert(human, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 		else
 			existing.bodypart_overlay?.set_appearance_from_name(feature_value)
-	meta_order_mutant_bodypart_overlays(human)
+	port_order_mutant_bodypart_overlays(human)
 
 /// Wings draw over tails (Bubber parity). Overlays sharing a layer draw in insertion
 /// order, and a non-native (mismatched) tail is inserted after a species' native wings,
 /// so without this the tail covers the wings from behind.
-/proc/meta_order_mutant_bodypart_overlays(mob/living/carbon/human/human)
+/proc/port_order_mutant_bodypart_overlays(mob/living/carbon/human/human)
 	if(!ishuman(human))
 		return
 	for(var/obj/item/bodypart/part as anything in human.bodyparts)

@@ -1,6 +1,6 @@
 # Bubberstation voice packs.
 #
-# Loaded alongside config/voidcrew/voice_packs.toml by meta_read_bubber_voice_packs()
+# Loaded alongside config/voidcrew/voice_packs.toml by port_read_bubber_voice_packs()
 # (see modular_bubber/code/modules/voice_barks/voice_packs.dm).
 # Ported from Bubberstation's config/bloopers/blooper_config.json.
 # Files live under modular_bubber/sound/voice/barks/bubber/<group>/.

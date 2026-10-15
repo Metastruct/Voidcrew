@@ -43,7 +43,7 @@
 
 /// Write one part's three layers into the shared `part_colors` map. The map stores bare
 /// hex (no '#') because the matrixed renderer prepends one; strip it here.
-/proc/meta_set_part_color(mob/living/carbon/human/target, color_key, list/colors)
+/proc/port_set_part_color(mob/living/carbon/human/target, color_key, list/colors)
 	var/list/part_colors = target.dna.features["part_colors"]
 	if(!islist(part_colors))
 		part_colors = list()
@@ -62,7 +62,7 @@
 
 /datum/preference/tri_color/part_color/apply_to_human(mob/living/carbon/human/target, value)
 	// The pref value is seeded from the import, so it is the source of truth.
-	meta_set_part_color(target, color_key, value)
+	port_set_part_color(target, color_key, value)
 
 /datum/preference/tri_color/part_color/ears
 	savefile_key = "ears_color"
@@ -96,7 +96,7 @@
 
 // Bubber gives moth (and generic) wings their own `wings_color`, independent of the
 // mutant colour. Both FEATURE_WINGS and FEATURE_MOTH_WINGS map to this key in
-// `meta_feature_color_key()`, so the same picker covers either organ.
+// `port_feature_color_key()`, so the same picker covers either organ.
 /datum/preference/tri_color/part_color/wings
 	savefile_key = "wings_color"
 	color_key = "wings_color"

@@ -23,8 +23,8 @@
 	var/markings_alpha = 255
 
 /// Copy `dna.body_markings` onto every bodypart of [human], and refresh the icon.
-/// Called from on_species_gain() and apply_prefs_to(), mirroring meta_sync_mismatched_organs.
-/proc/meta_sync_body_markings(mob/living/carbon/human/human, datum/species/species_override)
+/// Called from on_species_gain() and apply_prefs_to(), mirroring port_sync_mismatched_organs.
+/proc/port_sync_body_markings(mob/living/carbon/human/human, datum/species/species_override)
 	if(!ishuman(human) || isnull(human.dna))
 		return
 	var/list/owner_markings = human.dna.body_markings
@@ -37,7 +37,7 @@
 		part.markings_alpha = species_alpha
 
 /// Read the markings this bodypart should draw from its owner's dna.
-/obj/item/bodypart/proc/meta_set_markings_from_dna(mob/living/carbon/human/human_owner)
+/obj/item/bodypart/proc/port_set_markings_from_dna(mob/living/carbon/human/human_owner)
 	if(isnull(human_owner) || isnull(human_owner.dna))
 		return
 	var/list/owner_markings = human_owner.dna.body_markings

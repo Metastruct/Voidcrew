@@ -15,7 +15,7 @@
 	return assoc_to_keys_features(SSaccessories.synth_screen_list)
 
 /datum/preference/choiced/synth_screen/icon_for(value)
-	return meta_part_pref_icon(SSaccessories.synth_screen_list[value], FEATURE_SYNTH_SCREEN, tint = null, crop = list(11, 22, 21, 32))
+	return port_part_pref_icon(SSaccessories.synth_screen_list[value], FEATURE_SYNTH_SCREEN, tint = null, crop = list(11, 22, 21, 32))
 
 /datum/preference/choiced/synth_screen/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features[FEATURE_SYNTH_SCREEN] = value
@@ -36,7 +36,7 @@
 	return assoc_to_keys_features(SSaccessories.synth_antenna_list)
 
 /datum/preference/choiced/synth_antenna/icon_for(value)
-	return meta_part_pref_icon(SSaccessories.synth_antenna_list[value], FEATURE_SYNTH_ANTENNA, tint = null, crop = list(8, 17, 23, 32))
+	return port_part_pref_icon(SSaccessories.synth_antenna_list[value], FEATURE_SYNTH_ANTENNA, tint = null, crop = list(8, 17, 23, 32))
 
 /datum/preference/choiced/synth_antenna/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features[FEATURE_SYNTH_ANTENNA] = value
@@ -46,7 +46,7 @@
 
 // --- Chassis / head bodypart art ---------------------------------------------
 // These don't use an external organ: the species swaps the bodypart icons directly
-// (`meta_apply_synth_chassis`). Gated on the synth screen organ so only synths see them.
+// (`port_apply_synth_chassis`). Gated on the synth screen organ so only synths see them.
 
 /datum/preference/choiced/synth_chassis
 	savefile_key = "feature_synth_chassis"
@@ -64,7 +64,7 @@
 	var/datum/sprite_accessory/synth_chassis/chassis = SSaccessories.synth_chassis_list[value]
 	if(isnull(chassis))
 		return blank_pref_icon()
-	return meta_synth_part_pref_icon(chassis, BODY_ZONE_CHEST, chassis.dimorphic, crop = list(8, 8, 24, 24))
+	return port_synth_part_pref_icon(chassis, BODY_ZONE_CHEST, chassis.dimorphic, crop = list(8, 8, 24, 24))
 
 /datum/preference/choiced/synth_chassis/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features[FEATURE_SYNTH_CHASSIS] = value
@@ -88,7 +88,7 @@
 	var/datum/sprite_accessory/synth_head/head = SSaccessories.synth_head_list[value]
 	if(isnull(head))
 		return blank_pref_icon()
-	return meta_synth_part_pref_icon(head, BODY_ZONE_HEAD, head.dimorphic, crop = list(11, 22, 21, 32))
+	return port_synth_part_pref_icon(head, BODY_ZONE_HEAD, head.dimorphic, crop = list(11, 22, 21, 32))
 
 /datum/preference/choiced/synth_head/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features[FEATURE_SYNTH_HEAD] = value

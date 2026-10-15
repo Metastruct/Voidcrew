@@ -590,11 +590,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 
 		preference.apply_to_human(character, read_preference(preference.type))
 
-	meta_sync_mismatched_organs(character) // PORT EDIT - ADDITION - BUBBER_MISMATCHED_PARTS
-	meta_sync_genital_organs(character) // PORT EDIT - ADDITION - BUBBER_GENITALS
-	meta_resync_visual_organs(character) // PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
-	meta_apply_synth_chassis(character) // PORT EDIT - ADDITION - BUBBER_SYNTH
-	meta_sync_body_markings(character) // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
+	port_sync_mismatched_organs(character) // PORT EDIT - ADDITION - BUBBER_MISMATCHED_PARTS
+	port_sync_genital_organs(character) // PORT EDIT - ADDITION - BUBBER_GENITALS
+	port_resync_visual_organs(character) // PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
+	port_apply_synth_chassis(character) // PORT EDIT - ADDITION - BUBBER_SYNTH
+	port_sync_body_markings(character) // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
 
 	character.dna.real_name = character.real_name
 

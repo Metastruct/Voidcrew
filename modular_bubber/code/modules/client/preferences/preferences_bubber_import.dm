@@ -14,7 +14,7 @@
 // Translate a Bubberstation character (its preferences.json `characterN` format, the
 // source of truth for this port) into Voidcrew preference values.
 
-/// Bubber per-accessory colour keys we preserve (see meta_feature_color_key()).
+/// Bubber per-accessory colour keys we preserve (see port_feature_color_key()).
 GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 	"tail_color", "ears_color", "horns_color", "snout_color", "frills_color", "spines_color",
 	"wings_color", "taur_color", "moth_antennae_color", "moth_markings_color", "fluff_color",
@@ -23,11 +23,11 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 ))
 
 /// Lowercase, strip spaces/hyphens, for best-effort accessory name matching.
-/proc/meta_feature_key_normalize(text)
+/proc/port_feature_key_normalize(text)
 	return lowertext(replacetext(replacetext("[text]", " ", ""), "-", ""))
 
 /// Removes digits from a normalized key so "fox(alt3)" and "fox(alt2)" both -> "fox(alt)".
-/proc/meta_feature_key_strip_digits(text)
+/proc/port_feature_key_strip_digits(text)
 	var/out = ""
 	for(var/i in 1 to length(text))
 		var/char = copytext(text, i, i + 1)
@@ -38,7 +38,7 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 /// Best-effort resolution of a Bubber accessory name against a feature list: exact,
 /// then case-insensitive, then ignoring (Alt N)/digit suffixes, then substring.
 /// Returns null if nothing fits.
-/proc/meta_resolve_feature(value, list/choices)
+/proc/port_resolve_feature(value, list/choices)
 	if(!istext(value) || !length(choices))
 		return null
 	if(value in choices)
@@ -49,16 +49,16 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 		if(lowertext("[choice]") == lower)
 			return choice
 
-	var/normalized = meta_feature_key_strip_digits(meta_feature_key_normalize(value))
+	var/normalized = port_feature_key_strip_digits(port_feature_key_normalize(value))
 	for(var/choice in choices)
-		if(meta_feature_key_strip_digits(meta_feature_key_normalize(choice)) == normalized)
+		if(port_feature_key_strip_digits(port_feature_key_normalize(choice)) == normalized)
 			return choice
 
 	if(length(normalized))
 		var/best
 		var/best_extra = 1e9
 		for(var/choice in choices)
-			var/choice_key = meta_feature_key_strip_digits(meta_feature_key_normalize(choice))
+			var/choice_key = port_feature_key_strip_digits(port_feature_key_normalize(choice))
 			if(!length(choice_key) || !(findtext(choice_key, normalized) || findtext(normalized, choice_key)))
 				continue
 			// Prefer the closest-length candidate, so "Antlers" matches "Antlers" rather
@@ -101,7 +101,7 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 		value = copytext(value, 7, length(value)) // strip "Moth (" and the trailing ")"
 		if(value == "Featherful")
 			value = "Feathery"
-	var/resolved = meta_resolve_feature(value, preference.get_choices())
+	var/resolved = port_resolve_feature(value, preference.get_choices())
 	if(!resolved)
 		bubber_log_unresolved("moth wings", value, preference.get_choices())
 	return resolved || "None"
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 	var/datum/preference/choiced/preference = GLOB.preference_entries_by_key[savefile_key]
 	if(!istype(preference))
 		return fallback
-	var/resolved = meta_resolve_feature(bubber[value_key], preference.get_choices())
+	var/resolved = port_resolve_feature(bubber[value_key], preference.get_choices())
 	if(!resolved && context)
 		bubber_log_unresolved(context, bubber[value_key], preference.get_choices())
 	return resolved || fallback
@@ -163,7 +163,7 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 	// rendered `mutant_bodyparts` name (which is what the game actually shows).
 	var/value = bubber[value_key]
 	if(istext(value) && value != SPRITE_ACCESSORY_NONE)
-		var/resolved = meta_resolve_feature(value, choices)
+		var/resolved = port_resolve_feature(value, choices)
 		if(resolved)
 			return resolved
 		bubber_log_unresolved(part_key, value, choices)
@@ -173,7 +173,7 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 	if(islist(mutant_bodyparts) && islist(mutant_bodyparts[part_key]))
 		var/fallback_name = mutant_bodyparts[part_key]["name"]
 		if(istext(fallback_name) && fallback_name != SPRITE_ACCESSORY_NONE)
-			var/resolved_fallback = meta_resolve_feature(fallback_name, choices)
+			var/resolved_fallback = port_resolve_feature(fallback_name, choices)
 			if(resolved_fallback)
 				return resolved_fallback
 			bubber_log_unresolved("[part_key] (mutant_bodyparts)", fallback_name, choices)
@@ -340,7 +340,7 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 		var/blood_colour
 		var/blood_preset = bubber["select_blood_color"]
 		if(istext(blood_preset) && blood_preset != "Custom")
-			blood_colour = GLOB.meta_blood_color_presets[blood_preset]
+			blood_colour = GLOB.port_blood_color_presets[blood_preset]
 		else
 			blood_colour = bubber["input_blood_color"]
 		if(istext(blood_colour) && length(blood_colour))
@@ -465,10 +465,10 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 		to_chat(src, span_warning("No Bubber save is staged for your account ([ckey]) yet. Ask an admin to add it to data/bubber_import/."))
 		return
 
-	meta_pick_and_import(root)
+	port_pick_and_import(root)
 
 /// Character + destination-slot picker shared by the real and debug import verbs.
-/client/proc/meta_pick_and_import(list/root, verb_title = "Import Bubber Character")
+/client/proc/port_pick_and_import(list/root, verb_title = "Import Bubber Character")
 	// Gather this save's characters, labelled by slot and name.
 	var/list/choices = list()
 	var/list/choice_map = list()

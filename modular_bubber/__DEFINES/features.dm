@@ -79,8 +79,8 @@
 // --- Synthetic (IPC) chassis ---
 // Colour-override priority for a synth's chassis/head tint. Higher than every core
 // LIMB_COLOR_* priority, so it wins for the swappable greyscale chassis art.
-#ifndef META_LIMB_COLOR_SYNTH
-#define META_LIMB_COLOR_SYNTH 100
+#ifndef PORT_LIMB_COLOR_SYNTH
+#define PORT_LIMB_COLOR_SYNTH 100
 #endif
 
 // Bubber's default synth chassis/head tint (DEFAULT_SYNTH_PART_COLOR). Used when a

@@ -8,7 +8,7 @@
 // PORTED FROM: Bubberstation modular_skyrat/master_files/code/modules/client/preferences/genitals.dm
 
 /// The sprite-accessory list backing a genital slot.
-/proc/meta_genital_feature_list(slot)
+/proc/port_genital_feature_list(slot)
 	switch(slot)
 		if(ORGAN_SLOT_PENIS)
 			return SSaccessories.genital_penis_list
@@ -26,7 +26,7 @@
 			return SSaccessories.genital_butt_list
 		if(ORGAN_SLOT_BELLY)
 			return SSaccessories.genital_belly_list
-	CRASH("meta_genital_feature_list() called with unknown slot [slot]")
+	CRASH("port_genital_feature_list() called with unknown slot [slot]")
 
 GLOBAL_LIST_INIT(breast_size_translation, list(
 	"0" = BREAST_SIZE_FLATCHESTED, "1" = BREAST_SIZE_A, "2" = BREAST_SIZE_B,
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(breast_size_to_number, list(
 /// Order matters: overlays on the same limb draw in insertion order, so the belly is
 /// granted before the breasts to keep the chest on top of it (Bubber's belly layer sits
 /// below the chest one).
-GLOBAL_LIST_INIT(meta_genital_organs, list(
+GLOBAL_LIST_INIT(port_genital_organs, list(
 	/obj/item/organ/genital/penis,
 	/obj/item/organ/genital/testicles,
 	/obj/item/organ/genital/vagina,
@@ -70,13 +70,13 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 /// the character-setup preview updates live (not just on spawn). Blocked only by the
 /// server config; per-character visibility is handled by the organ's `allow_genitals`
 /// check, so previews and NPCs that lack a client still get the organs.
-/proc/meta_sync_genital_organs(mob/living/carbon/human/human)
+/proc/port_sync_genital_organs(mob/living/carbon/human/human)
 	if(!ishuman(human))
 		return
 	if(CONFIG_GET(flag/disable_erp_preferences))
 		return
 
-	for(var/obj/item/organ/organ_type as anything in GLOB.meta_genital_organs)
+	for(var/obj/item/organ/organ_type as anything in GLOB.port_genital_organs)
 		var/datum/bodypart_overlay/mutant/sample_overlay = initial(organ_type.bodypart_overlay)
 		if(isnull(sample_overlay))
 			continue
@@ -106,7 +106,7 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 	var/organ_slot
 
 /datum/preference/choiced/genital/init_possible_values()
-	return assoc_to_keys_features(meta_genital_feature_list(organ_slot))
+	return assoc_to_keys_features(port_genital_feature_list(organ_slot))
 
 /datum/preference/choiced/genital/create_default_value()
 	return SPRITE_ACCESSORY_NONE
@@ -117,7 +117,7 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 /datum/preference/choiced/genital/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))
 		return FALSE
-	return meta_genitals_enabled(preferences)
+	return port_genitals_enabled(preferences)
 
 /datum/preference/choiced/genital/penis
 	savefile_key = "feature_penis"
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 /datum/preference/toggle/genital_shape/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))
 		return FALSE
-	return meta_genitals_enabled(preferences)
+	return port_genitals_enabled(preferences)
 
 /datum/preference/toggle/genital_shape/womb
 	savefile_key = "feature_womb"
@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 /datum/preference/numeric/genital/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))
 		return FALSE
-	return meta_genitals_enabled(preferences)
+	return port_genitals_enabled(preferences)
 
 /datum/preference/numeric/genital/penis_length
 	savefile_key = "penis_length"
@@ -274,7 +274,7 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 /datum/preference/toggle/genital_skin_tone/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))
 		return FALSE
-	return meta_genitals_enabled(preferences)
+	return port_genitals_enabled(preferences)
 
 /datum/preference/toggle/genital_skin_color
 	abstract_type = /datum/preference/toggle/genital_skin_color
@@ -290,7 +290,7 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 /datum/preference/toggle/genital_skin_color/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))
 		return FALSE
-	return meta_genitals_enabled(preferences)
+	return port_genitals_enabled(preferences)
 
 /datum/preference/toggle/genital_skin_tone/penis
 	savefile_key = "penis_skin_tone"
@@ -355,7 +355,7 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 /datum/preference/toggle/breasts_lactation/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))
 		return FALSE
-	return meta_genitals_enabled(preferences)
+	return port_genitals_enabled(preferences)
 
 /datum/preference/choiced/penis_sheath
 	savefile_key = "penis_sheath"
@@ -375,7 +375,7 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 /datum/preference/choiced/penis_sheath/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))
 		return FALSE
-	return meta_genitals_enabled(preferences)
+	return port_genitals_enabled(preferences)
 
 /datum/preference/toggle/penis_taur_mode
 	savefile_key = "penis_taur_mode_toggle"
@@ -390,7 +390,7 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 /datum/preference/toggle/penis_taur_mode/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))
 		return FALSE
-	return meta_genitals_enabled(preferences)
+	return port_genitals_enabled(preferences)
 
 // --- Per-part colour picks ---------------------------------------------------
 // Bubber has tri-colour genitals; Voidcrew has no tri_color pref, so we expose a single
@@ -404,12 +404,12 @@ GLOBAL_LIST_INIT(meta_genital_organs, list(
 
 /datum/preference/tri_color/genital_color/apply_to_human(mob/living/carbon/human/target, value)
 	// The pref value is seeded from the import, so it is the source of truth.
-	meta_set_part_color(target, color_key, value)
+	port_set_part_color(target, color_key, value)
 
 /datum/preference/tri_color/genital_color/is_accessible(datum/preferences/preferences)
 	if(!..(preferences))
 		return FALSE
-	return meta_genitals_enabled(preferences)
+	return port_genitals_enabled(preferences)
 
 /datum/preference/tri_color/genital_color/penis
 	savefile_key = "penis_color"

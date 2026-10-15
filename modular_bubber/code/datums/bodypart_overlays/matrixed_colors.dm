@@ -40,7 +40,7 @@
 // Ported characters keep one colour list per part. key -> list(3 hex colours).
 
 /// Map a feature key to its per-part colour key in dna.features["part_colors"].
-/proc/meta_feature_color_key(feature_key)
+/proc/port_feature_color_key(feature_key)
 	if(!feature_key)
 		return null
 	switch(feature_key)
@@ -62,13 +62,13 @@
 	return "[feature_key]_color"
 
 /// Per-feature 3-colour list (hex without '#') from dna.features["part_colors"], or null.
-/proc/meta_get_feature_colors(list/features, feature_key)
+/proc/port_get_feature_colors(list/features, feature_key)
 	if(!islist(features) || !feature_key)
 		return null
 	var/list/part_colors = features["part_colors"]
 	if(!islist(part_colors))
 		return null
-	var/list/colors = part_colors[meta_feature_color_key(feature_key)]
+	var/list/colors = part_colors[port_feature_color_key(feature_key)]
 	if(!islist(colors) || !length(colors))
 		return null
 	return colors
@@ -157,7 +157,7 @@
 	var/list/part_emissives = features["part_emissives"]
 	if(!islist(part_emissives))
 		return null
-	var/list/emissives = part_emissives[meta_feature_color_key(feature_key)]
+	var/list/emissives = part_emissives[port_feature_color_key(feature_key)]
 	return islist(emissives) ? emissives : null
 
 /// Build a glow for one rendered layer, matching its position, offset and colour.
@@ -268,4 +268,4 @@
 
 /// The per-feature colour list this overlay should draw with, or null.
 /datum/bodypart_overlay/mutant/proc/get_feature_colors(obj/item/bodypart/limb)
-	return meta_get_feature_colors(limb?.owner?.dna?.features, feature_key)
+	return port_get_feature_colors(limb?.owner?.dna?.features, feature_key)

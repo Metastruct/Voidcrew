@@ -125,7 +125,7 @@
 	if(uses_skin_color)
 		return limb?.draw_color || "#FFFFFF"
 	var/list/features = owner?.dna?.features
-	var/list/colors = meta_get_feature_colors(features, slot)
+	var/list/colors = port_get_feature_colors(features, slot)
 	if(colors && colors[1])
 		return "#[colors[1]]"
 	if(features && features[FEATURE_MUTANT_COLOR])

@@ -10,7 +10,7 @@
 
 /// Whether this uniform design leaves the groin visible (skirts, dresses) rather
 /// than concealing it.
-/proc/meta_groin_exposing_uniform(obj/item/clothing/under/uniform)
+/proc/port_groin_exposing_uniform(obj/item/clothing/under/uniform)
 	if(istype(uniform, /obj/item/clothing/under/dress))
 		return TRUE
 	return !!findtext("[uniform.type]", "skirt")
@@ -21,7 +21,7 @@
 	for(var/obj/item/garment as anything in covering_slots)
 		if(isnull(garment))
 			continue
-		if(zone == GROIN && garment == w_uniform && meta_groin_exposing_uniform(garment))
+		if(zone == GROIN && garment == w_uniform && port_groin_exposing_uniform(garment))
 			continue
 		if(garment.body_parts_covered & zone)
 			return TRUE

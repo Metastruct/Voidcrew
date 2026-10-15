@@ -396,12 +396,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// PORT EDIT - ADDITION - BUBBER_CUSTOMIZATION
 	// A species swap resets the blood type, so re-apply the character's custom blood
 	// colour afterwards.
-	meta_apply_blood_color(human_who_gained_species)
+	port_apply_blood_color(human_who_gained_species)
 
 	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs, replace_missing = replace_missing)
-	meta_sync_mismatched_organs(human_who_gained_species, src) // PORT EDIT - ADDITION - BUBBER_MISMATCHED_PARTS
-	meta_sync_genital_organs(human_who_gained_species) // PORT EDIT - ADDITION - BUBBER_GENITALS
-	meta_sync_body_markings(human_who_gained_species, src) // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
+	port_sync_mismatched_organs(human_who_gained_species, src) // PORT EDIT - ADDITION - BUBBER_MISMATCHED_PARTS
+	port_sync_genital_organs(human_who_gained_species) // PORT EDIT - ADDITION - BUBBER_GENITALS
+	port_sync_body_markings(human_who_gained_species, src) // PORT EDIT - ADDITION - BUBBER_BODY_MARKINGS
 	// Update locked slots AFTER all organ and body stuff is handled
 	human_who_gained_species.hud_used?.update_locked_slots()
 	// Drop the items the new species can't wear

@@ -21,4 +21,4 @@
 	if(!istext(value) || !length(value))
 		return
 	target.dna.features["blood_color"] = value
-	meta_apply_blood_color(target)
+	port_apply_blood_color(target)

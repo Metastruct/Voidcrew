@@ -25,7 +25,7 @@
 		return list(voicepack.id = voicepack)
 
 	var/output = rustg_read_toml_file(VOICE_PACKS_FILE)
-	output += meta_read_bubber_voice_packs() // PORT EDIT - ADDITION - BUBBER_VOICE_PACKS
+	output += port_read_bubber_voice_packs() // PORT EDIT - ADDITION - BUBBER_VOICE_PACKS
 
 	var/list/voice_pack_list = list()
 

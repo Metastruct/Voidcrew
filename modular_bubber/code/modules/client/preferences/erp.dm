@@ -51,7 +51,7 @@
 	return preferences.read_preference(/datum/preference/toggle/master_erp_preferences)
 
 /// Whether the given preferences should show genitals at all.
-/proc/meta_genitals_enabled(datum/preferences/preferences)
+/proc/port_genitals_enabled(datum/preferences/preferences)
 	if(CONFIG_GET(flag/disable_erp_preferences))
 		return FALSE
 	if(isnull(preferences))

@@ -23,7 +23,7 @@
 
 /datum/preference/choiced/bubber_ears/icon_for(value)
 	// Crop to the head region (same as the core hair preview) so the ears fill the cell.
-	return meta_part_pref_icon(SSaccessories.ears_list[value], FEATURE_EARS, crop = list(10, 19, 22, 31))
+	return port_part_pref_icon(SSaccessories.ears_list[value], FEATURE_EARS, crop = list(10, 19, 22, 31))
 
 /datum/preference/choiced/bubber_ears/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features[FEATURE_EARS] = value
@@ -51,7 +51,7 @@
 // Tail art is drawn on the BEHIND layer (with an empty same-named FRONT state), so prefer it.
 // East (side) profile so the tail's shape reads clearly.
 /datum/preference/choiced/bubber_tail/icon_for(value)
-	return meta_part_pref_icon(SSaccessories.tails_list_bubber[value], FEATURE_TAIL_GENERIC, layer_order = list("BEHIND", "FRONT", "ADJ"), crop = list(0, 0, 24, 24), dir = EAST)
+	return port_part_pref_icon(SSaccessories.tails_list_bubber[value], FEATURE_TAIL_GENERIC, layer_order = list("BEHIND", "FRONT", "ADJ"), crop = list(0, 0, 24, 24), dir = EAST)
 
 /datum/preference/choiced/bubber_tail/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features[FEATURE_TAIL_GENERIC] = value

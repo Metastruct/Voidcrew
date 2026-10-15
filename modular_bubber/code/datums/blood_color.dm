@@ -7,11 +7,11 @@
 // The player-facing picker/quirk isn't ported yet - for now this is driven by the Bubber
 // importer through the hidden `blood_color` preference.
 
-GLOBAL_LIST_EMPTY(meta_recolored_blood_types)
+GLOBAL_LIST_EMPTY(port_recolored_blood_types)
 
 /// Bubber's "Blood Pigmentation" preset colours, keyed by their display name. Voidcrew
 /// only defines a few of these, so the rest are inlined here.
-GLOBAL_LIST_INIT(meta_blood_color_presets, list(
+GLOBAL_LIST_INIT(port_blood_color_presets, list(
 	"Red/Human" = "#AA1010",
 	"D.Green/Lizard" = "#035A00",
 	"Green" = "#339933",
@@ -25,7 +25,7 @@ GLOBAL_LIST_INIT(meta_blood_color_presets, list(
 
 /// A blood type cloned from [base_type] with a different colour.
 /datum/blood_type/recolored
-	// Instantiated on demand by meta_apply_blood_color(), not as a boot singleton.
+	// Instantiated on demand by port_apply_blood_color(), not as a boot singleton.
 	root_abstract_type = /datum/blood_type/recolored
 	var/datum/blood_type/base_type
 	var/recolor
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(meta_blood_color_presets, list(
 
 /// Recolour [human]'s blood from the `blood_color` feature, if set. Recreates the type
 /// when the base changes (e.g. species swap), so it can be called from on_species_gain.
-/proc/meta_apply_blood_color(mob/living/carbon/human/human)
+/proc/port_apply_blood_color(mob/living/carbon/human/human)
 	if(!ishuman(human))
 		return
 	var/colour = human.dna?.features?["blood_color"]
@@ -71,9 +71,9 @@ GLOBAL_LIST_INIT(meta_blood_color_presets, list(
 		base = current.base_type
 
 	var/cache_key = "[base.id]__[colour]"
-	var/datum/blood_type/recolored/stored = GLOB.meta_recolored_blood_types[cache_key]
+	var/datum/blood_type/recolored/stored = GLOB.port_recolored_blood_types[cache_key]
 	if(isnull(stored))
 		stored = new /datum/blood_type/recolored(colour, base)
-		GLOB.meta_recolored_blood_types[cache_key] = stored
+		GLOB.port_recolored_blood_types[cache_key] = stored
 		GLOB.blood_types[stored.id] = stored
 	human.set_blood_type(stored)
