@@ -18,7 +18,7 @@
 GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 	"tail_color", "ears_color", "horns_color", "snout_color", "frills_color", "spines_color",
 	"wings_color", "taur_color", "moth_antennae_color", "moth_markings_color", "fluff_color",
-	"caps_color", "penis_color", "testicles_color", "vagina_color", "breasts_color",
+	"caps_color", "ipc_antenna_color", "penis_color", "testicles_color", "vagina_color", "breasts_color",
 	"butt_color", "belly_color",
 ))
 

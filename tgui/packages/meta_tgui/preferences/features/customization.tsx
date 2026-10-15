@@ -135,6 +135,7 @@ export const feature_frills_emissive = triBool('Frills glow');
 export const feature_spines_emissive = triBool('Spines glow');
 export const feature_moth_antennae_emissive = triBool('Antennae glow');
 export const feature_moth_wings_emissive = triBool('Moth wings glow');
+export const feature_synth_antenna_emissive = triBool('Synth antenna glow');
 export const feature_penis_emissive = triBool('Penis glow');
 export const feature_testicles_emissive = triBool('Testicles glow');
 export const feature_vagina_emissive = triBool('Vagina glow');
@@ -160,6 +161,13 @@ export const feature_synth_screen = dropdown('Screen');
 export const feature_synth_antenna = dropdown('Antenna');
 export const feature_synth_chassis = dropdown('Chassis');
 export const feature_synth_head = dropdown('Head');
+
+// Chassis/head are single-tone (Bubber's ipc_chassis_color/ipc_head_color); the antenna
+// is three-tone (ipc_antenna_color). Screens are pre-coloured and not tintable in Bubber
+// either, so there is deliberately no screen colour picker.
+export const synth_chassis_color = color('Chassis colour');
+export const synth_head_color = color('Head colour');
+export const ipc_antenna_color = triColor('Antenna colour');
 
 // --- Mushroom cap (core pref that ships without a UI entry) -------------------
 

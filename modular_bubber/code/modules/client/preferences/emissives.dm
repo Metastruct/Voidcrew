@@ -135,6 +135,11 @@
 	color_key = "wings_color"
 	savefile_key_to_check = "feature_moth_wings"
 
+/datum/preference/tri_bool/part_emissive/synth_antenna
+	savefile_key = "feature_synth_antenna_emissive"
+	color_key = "ipc_antenna_color"
+	savefile_key_to_check = "feature_synth_antenna"
+
 // Genitals.
 /datum/preference/tri_bool/part_emissive/penis
 	savefile_key = "feature_penis_emissive"

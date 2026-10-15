@@ -102,6 +102,14 @@
 	color_key = "wings_color"
 	relevant_external_organ = /obj/item/organ/wings/moth
 
+// Synth antennas are three-tone (`USE_MATRIXED_COLORS`) or single-tone; either way the
+// overlay reads this list via `port_feature_color_key(FEATURE_SYNTH_ANTENNA)`.
+// Bubber stores it as `ipc_antenna_color`, so the savefile key matches the import.
+/datum/preference/tri_color/part_color/synth_antenna
+	savefile_key = "ipc_antenna_color"
+	color_key = "ipc_antenna_color"
+	relevant_external_organ = /obj/item/organ/synth_antenna
+
 // --- Menu picker middleware --------------------------------------------------
 
 /datum/preference_middleware/tri_color

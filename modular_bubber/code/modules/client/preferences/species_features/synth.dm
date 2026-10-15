@@ -96,18 +96,18 @@
 /datum/preference/choiced/synth_head/create_default_value()
 	return "Default Head"
 
-// Hidden single-colour tints for the chassis/head (Bubber's ipc_chassis_color/ipc_head_color).
+// Single-colour tints for the chassis/head (Bubber's ipc_chassis_color/ipc_head_color),
+// applied by `port_apply_synth_chassis()`. Gated on the synth screen organ like the
+// chassis/head dropdowns, so they only show for synths (or with mismatched parts on).
 /datum/preference/color/synth_chassis_color
 	savefile_key = "synth_chassis_color"
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	priority = PREFERENCE_PRIORITY_NAME_MODIFICATIONS
+	relevant_external_organ = /obj/item/organ/synth_screen
 
 /datum/preference/color/synth_chassis_color/create_default_value()
 	return DEFAULT_SYNTH_PART_COLOR
-
-/datum/preference/color/synth_chassis_color/is_accessible(datum/preferences/preferences)
-	return FALSE
 
 /datum/preference/color/synth_chassis_color/apply_to_human(mob/living/carbon/human/target, value)
 	if(istext(value) && length(value))
@@ -118,12 +118,10 @@
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	priority = PREFERENCE_PRIORITY_NAME_MODIFICATIONS
+	relevant_external_organ = /obj/item/organ/synth_screen
 
 /datum/preference/color/synth_head_color/create_default_value()
 	return DEFAULT_SYNTH_PART_COLOR
-
-/datum/preference/color/synth_head_color/is_accessible(datum/preferences/preferences)
-	return FALSE
 
 /datum/preference/color/synth_head_color/apply_to_human(mob/living/carbon/human/target, value)
 	if(istext(value) && length(value))
