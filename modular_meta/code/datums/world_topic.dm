@@ -12,9 +12,8 @@
 // The image is the full standing sprite, so the consumer crops to the head/shoulders
 // (the head sits in the top ~half of the 32x32 sprite).
 
-/// Cache lifetime for a generated mugshot, so frequent topic polls don't rebuild the
-/// flat icon on every request.
-#define META_HEADSHOT_CACHE_TIME 15 SECONDS
+/// Cache lifetime for a generated mugshot
+#define META_HEADSHOT_CACHE_TIME 2 MINUTES
 
 /mob/living
 	/// Cached `data:image/png;base64,...` mugshot for the player list.
