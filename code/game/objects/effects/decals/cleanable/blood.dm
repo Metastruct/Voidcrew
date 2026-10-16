@@ -236,6 +236,11 @@
 	// We want a fixed offset for a fixed drop in color intensity, plus a scaling offset based on our strongest color
 	// The scaling offset helps keep dark colors from turning black, while also ensurse bright colors don't stay super bright
 	var/max_color = max(starting_color[1], starting_color[2], starting_color[3])
+	// META EDIT - ADDITION - START - BLOOD_DRIED_COLOR_DIV_ZERO
+	// All-zero colors (e.g. "#000000") divide by zero below.
+	if(max_color <= 0)
+		return base_color
+	// META EDIT - ADDITION - END - BLOOD_DRIED_COLOR_DIV_ZERO
 	var/red_offset = 50 + (75 * (starting_color[1] / max_color))
 	var/green_offset = 50 + (75 * (starting_color[2] / max_color))
 	var/blue_offset = 50 + (75 * (starting_color[3] / max_color))
