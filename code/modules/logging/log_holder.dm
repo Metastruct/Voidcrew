@@ -371,6 +371,10 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 /// Recursively converts an associative list of datums into their jsonified(list) form
 // VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/log_holder/proc/recursive_jsonify(list/data_list, list/semvers)
+	// META EDIT - ADDITION - START - RECURSIVE_JSONIFY_EMPTY_LIST
+	// Some log payloads legitimately serialize to empty lists, so only warn once.
+	var/static/empty_list_warned = FALSE
+	// META EDIT - ADDITION - END - RECURSIVE_JSONIFY_EMPTY_LIST
 	if(isnull(data_list))
 		return null
 
@@ -402,7 +406,12 @@ ADMIN_VERB(log_viewer_new, R_ADMIN|R_DEBUG, "View Round Logs", "View the rounds 
 			data = recursive_jsonify(serialization_data, semvers)
 
 		if(islist(data) && !length(data))
-			stack_trace("recursive_jsonify got an empty list after serialization")
+			// META EDIT - ADDITION - START - RECURSIVE_JSONIFY_EMPTY_LIST
+			// Suppress the per-entry spam; one trace per round is enough signal.
+			if(!empty_list_warned)
+				empty_list_warned = TRUE
+				stack_trace("recursive_jsonify got an empty list after serialization (further occurrences suppressed)")
+			// META EDIT - ADDITION - END - RECURSIVE_JSONIFY_EMPTY_LIST
 			continue
 
 		jsonified_list[key] = data
