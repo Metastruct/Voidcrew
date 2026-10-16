@@ -7698,6 +7698,7 @@
 #include "voidcrew\objects\structures\flora.dm"
 #include "voidcrew\objects\structures\planet_ladders.dm"
 #include "voidcrew\objects\structures\radioactive.dm"
+#include "voidcrew\objects\structures\shelf.dm"
 #include "voidcrew\objects\structures\spawner.dm"
 #include "voidcrew\objects\structures\icemoon\cave_entrance.dm"
 #include "voidcrew\turfs\cult_ship.dm"
