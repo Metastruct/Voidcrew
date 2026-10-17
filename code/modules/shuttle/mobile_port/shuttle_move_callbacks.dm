@@ -410,13 +410,13 @@ All ShuttleMove procs go here
 
 	// VOIDCREW EDIT END
 
-// VOIDCREW EDIT: shuttle rotates cable direction bits with the hull; implementation in voidcrew/modules/shuttle/shuttle_move_helpers.dm.
+// VOIDCREW EDIT: shuttle rotates cable direction bits with the hull; implementation in voidcrew/edits/modules/shuttle/mobile_port/shuttle_move_callbacks.dm.
 
 /obj/structure/cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
 	. = ..()
 	Connect_cable(TRUE)
 
-// VOIDCREW EDIT: shuttle rebuilds power after every cable has landed; implementation in voidcrew/modules/shuttle/shuttle_move_helpers.dm.
+// VOIDCREW EDIT: shuttle rebuilds power after every cable has landed; implementation in voidcrew/edits/modules/shuttle/mobile_port/shuttle_move_callbacks.dm.
 
 /obj/machinery/power/shuttle_engine/hypotheticalShuttleMove(move_mode)
 	. = ..()

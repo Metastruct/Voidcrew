@@ -103,6 +103,7 @@
 	data["cameras"] = GLOB.cameranet.get_available_cameras_data(network)
 	return data
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/machinery/computer/security/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -122,6 +123,7 @@
 
 		return TRUE
 
+// VOIDCREW EDIT END
 /obj/machinery/computer/security/proc/update_active_camera_screen()
 	// VOIDCREW: a stale/forged reference must not bypass the local camera network.
 	// VOIDCREW EDIT START - ship camera integration: validate camera access and clear stale views (voidcrew/edits/machinery/camera.dm)

@@ -58,7 +58,7 @@
 
 	return FALSE
 
-// VOIDCREW EDIT: cargo refuses station supply apps without a supply shuttle; implementation in voidcrew/modules/cargo/budget_order_program.dm.
+// VOIDCREW EDIT: cargo refuses station supply apps without a supply shuttle; implementation in voidcrew/edits/modules/modular_computers/file_system/programs/budgetordering.dm.
 
 /datum/computer_file/program/budgetorders/ui_data(mob/user)
 	var/list/data = list()

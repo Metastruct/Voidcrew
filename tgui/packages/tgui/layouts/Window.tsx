@@ -1,3 +1,4 @@
+// VOIDCREW EDIT START - Restore pooled browser geometry on resume and coerce numeric display flags.
 /**
  * @file
  * @copyright 2020 Aleksej Komarov
@@ -181,3 +182,4 @@ const WindowContent = (props: ContentProps) => {
 };
 
 Window.Content = WindowContent;
+// VOIDCREW EDIT END

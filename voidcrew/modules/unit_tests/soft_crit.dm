@@ -1,4 +1,5 @@
 /// Exercise both ways of self-injecting after actually falling into soft crit and picking the pen back up.
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /datum/unit_test/soft_crit_medipen/Run()
 	for(var/use_hotkey in list(FALSE, TRUE))
 		var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
@@ -22,6 +23,8 @@
 		TEST_ASSERT(patient.reagents.has_reagent(/datum/reagent/medicine/epinephrine), "Self-injection did not deliver epinephrine")
 
 /// A new incapacitation source must block clicks even when the cached incapacitation value does not change.
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /datum/unit_test/soft_crit_incapacitation/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/reagent_containers/hypospray/medipen/pen = allocate(/obj/item/reagent_containers/hypospray/medipen)
@@ -42,6 +45,8 @@
 	TEST_ASSERT(pen.used_up, "Removing the extra blocker did not restore item use in soft crit")
 
 /// Losing consciousness must block hands again, including when recovering from hard crit into soft crit.
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /datum/unit_test/soft_crit_transitions/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/reagent_containers/hypospray/medipen/pen = allocate(/obj/item/reagent_containers/hypospray/medipen)
@@ -63,12 +68,18 @@
 	TEST_ASSERT(!HAS_TRAIT(patient, TRAIT_HANDS_BLOCKED), "Full recovery left the patient's hands blocked")
 
 /// Replace only client rendering so the real storage access checks can run without a connected player.
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /datum/storage/soft_crit_test/show_contents(mob/to_show)
 	return TRUE
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /obj/item/storage/soft_crit_test
 	storage_type = /datum/storage/soft_crit_test
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /datum/unit_test/soft_crit_storage/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/storage/bag = allocate(/obj/item/storage/soft_crit_test)
@@ -91,6 +102,8 @@
 	grabber.stop_pulling()
 	TEST_ASSERT(bag.atom_storage.open_storage(patient), "Releasing the grab did not restore storage access")
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /datum/unit_test/soft_crit_action_delay/Run()
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 	patient.next_move_modifier = 2
@@ -103,3 +116,4 @@
 	patient.set_stat(CONSCIOUS)
 	patient.changeNext_move(10)
 	TEST_ASSERT_EQUAL(patient.next_move - world.time, normal_delay, "Recovery did not restore normal action speed")
+// VOIDCREW EDIT END

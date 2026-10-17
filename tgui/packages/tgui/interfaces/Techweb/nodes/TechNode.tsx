@@ -1,3 +1,4 @@
+// VOIDCREW EDIT START - Use stable experiment IDs as React keys.
 import {
   Box,
   Button,
@@ -236,3 +237,4 @@ export function TechNode(props: Props) {
     </Section>
   );
 }
+// VOIDCREW EDIT END

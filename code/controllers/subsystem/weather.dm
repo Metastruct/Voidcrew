@@ -8,11 +8,15 @@ SUBSYSTEM_DEF(weather)
 	wait = 10
 	runlevels = RUNLEVEL_GAME
 	var/list/processing = list()
-	// VOIDCREW EDIT REMOVAL: Per-z scheduler maps are replaced by the site registry in voidcrew/edits/subsystem/weather_sites.dm.
+	// VOIDCREW EDIT REMOVAL START - the four "[z]"-keyed scheduler maps (eligible_zlevels,
+	// weather_types_by_zlevel, next_hit_by_zlevel, random_weather_by_zlevel) are replaced by
+	// the registry in voidcrew/edits/controllers/subsystem/weather.dm, so several places can share a z-level and each
+	// keep its own climate, storm and cooldown. See voidcrew/datums/weather_site.dm.
+	// VOIDCREW EDIT REMOVAL END
 
 /datum/controller/subsystem/weather/fire(resumed = FALSE)
 	// process active weather
-	// VOIDCREW EDIT START: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/subsystem/weather_sites.dm).
+	// VOIDCREW EDIT START: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/controllers/subsystem/weather.dm).
 	if(!resumed)
 		currentrun = processing.Copy()
 	var/list/currentrun_cache = currentrun
@@ -28,7 +32,7 @@ SUBSYSTEM_DEF(weather)
 			if(!resumed)
 				// Only collect mobs on the impacted z-levels, the whole world's mob list gets very large with populated planets.
 				// The z index is built once per fire cycle and shared by every storm processing this fire.
-				// VOIDCREW EDIT START: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/subsystem/weather_sites.dm).
+				// VOIDCREW EDIT START: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/controllers/subsystem/weather.dm).
 				if(mobs_by_z_cache_fire != times_fired)
 					mobs_by_z_cache = list()
 					mobs_by_z_cache_fire = times_fired
@@ -97,7 +101,7 @@ SUBSYSTEM_DEF(weather)
 
 		// Do not remove an event before all of its tasks complete. If MC_TICK_CHECK
 		// returns above, this remains the last entry and the next fire resumes it.
-		// VOIDCREW EDIT START: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/subsystem/weather_sites.dm).
+		// VOIDCREW EDIT START: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/controllers/subsystem/weather.dm).
 		currentrun_cache.len--
 		resumed = FALSE
 		// VOIDCREW EDIT END
@@ -154,7 +158,6 @@ SUBSYSTEM_DEF(weather)
 	// VOIDCREW EDIT REPLACEMENT END
 	return SS_INIT_SUCCESS
 
-
 /datum/controller/subsystem/weather/proc/update_z_level(datum/space_level/level)
 	// VOIDCREW EDIT REPLACEMENT START - drives the level-wide site instead of the "[z]" maps.
 	var/z = level.z_value
@@ -168,7 +171,6 @@ SUBSYSTEM_DEF(weather)
 
 	register_level_weather_site(z, possible_weather)
 	// VOIDCREW EDIT REPLACEMENT END
-
 
 /datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels, list/weather_data, datum/weather_site/site) // VOIDCREW EDIT - trailing `site` arg lets a site hand its own area instances to the storm
 	if (istext(weather_datum_type))
@@ -190,22 +192,15 @@ SUBSYSTEM_DEF(weather)
 
 	var/datum/weather/W = new weather_datum_type(z_levels, weather_data, site) // VOIDCREW EDIT - pass the scheduling site through
 	W.telegraph()
-	// VOIDCREW EDIT: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/subsystem/weather_sites.dm).
+	// VOIDCREW EDIT: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/controllers/subsystem/weather.dm).
 	return W
 
-// VOIDCREW EDIT REMOVAL: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/subsystem/weather_sites.dm).
-
+// VOIDCREW EDIT ADDITION START - the cooldown callback is per site now.
 /// VOIDCREW EDIT: kept for z-level-minded callers; addresses the level's own site.
 /datum/controller/subsystem/weather/proc/make_eligible(z)
-	// VOIDCREW EDIT: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/subsystem/weather_sites.dm).
+	// VOIDCREW EDIT: Schedule storms per site and resume bounded weather work across ticks (voidcrew/edits/controllers/subsystem/weather.dm).
 	make_site_eligible(get_level_weather_site(z))
-
-
-// VOIDCREW EDIT REMOVAL: get_weather(z, active_area) deleted. It matched a storm by
-// z-level plus area TYPE, which on a packed level answers with a co-tenant's storm - every
-// voidcrew planet storm shares area_type = /area/overmap_encounter/planetoid. It had zero
-// callers in the tree, so it was a trap rather than a bug. Anything that needs this should
-// resolve the site's own /datum/weather_site and read active_weather off it.
+// VOIDCREW EDIT ADDITION END
 
 ///Returns an active storm by its type
 /datum/controller/subsystem/weather/proc/get_weather_by_type(type)

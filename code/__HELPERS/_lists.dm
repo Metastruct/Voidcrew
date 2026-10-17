@@ -308,7 +308,6 @@
 ///Checks for specific types in specifically structured (Assoc "type" = TRUE|FALSE) lists ('typecaches')
 #define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
 
-
 ///returns a new list with only atoms that are in the typecache list
 /proc/typecache_filter_list(list/atoms, list/typecache)
 	RETURN_TYPE(/list)
@@ -316,7 +315,7 @@
 	// VOIDCREW EDIT: degrade to an empty result rather than throwing. Every caller reads
 	// the result as "the atoms this operation applies to", so an empty list is the no-op.
 	if(!islist(atoms) || !islist(typecache))
-		// VOIDCREW EDIT START: Reject malformed typecache inputs without unsafe mass deletion; diagnostics live in voidcrew/_HELPERS/typecache.dm.
+		// VOIDCREW EDIT START: Reject malformed typecache inputs without unsafe mass deletion; diagnostics live in voidcrew/edits/__HELPERS/_lists.dm.
 		warn_bad_typecache_filter("typecache_filter_list", atoms, typecache)
 		return
 		// VOIDCREW EDIT END
@@ -332,7 +331,7 @@
 	// everything this returns, so a missing typecache must never be read as "nothing is
 	// excluded". Empty means nothing gets deleted, which is the recoverable direction.
 	if(!islist(atoms) || !islist(typecache))
-		// VOIDCREW EDIT START: Reject malformed typecache inputs without unsafe mass deletion; diagnostics live in voidcrew/_HELPERS/typecache.dm.
+		// VOIDCREW EDIT START: Reject malformed typecache inputs without unsafe mass deletion; diagnostics live in voidcrew/edits/__HELPERS/_lists.dm.
 		warn_bad_typecache_filter("typecache_filter_list_reverse", atoms, typecache)
 		return
 		// VOIDCREW EDIT END
@@ -345,7 +344,7 @@
 	. = list()
 	// VOIDCREW EDIT: as above.
 	if(!islist(atoms) || !islist(typecache_include) || !islist(typecache_exclude))
-		// VOIDCREW EDIT START: Reject malformed typecache inputs without unsafe mass deletion; diagnostics live in voidcrew/_HELPERS/typecache.dm.
+		// VOIDCREW EDIT START: Reject malformed typecache inputs without unsafe mass deletion; diagnostics live in voidcrew/edits/__HELPERS/_lists.dm.
 		warn_bad_typecache_filter("typecache_filter_multi_list_exclusion", atoms, typecache_include)
 		return
 		// VOIDCREW EDIT END

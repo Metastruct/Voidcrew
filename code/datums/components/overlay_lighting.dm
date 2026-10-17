@@ -266,6 +266,7 @@
 
 
 ///Used to determine the new valid current_holder from the parent's loc.
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/component/overlay_lighting/proc/check_holder()
 	var/atom/movable/movable_parent = GET_PARENT
 	if(QDELETED(movable_parent))
@@ -287,8 +288,8 @@
 		return
 	set_holder(null)
 
-
 ///Called when the current_holder is qdeleted, to remove the light effect.
+// VOIDCREW EDIT END
 /datum/component/overlay_lighting/proc/on_holder_qdel(atom/movable/source, force)
 	SIGNAL_HANDLER
 	if(QDELETED(current_holder))
@@ -455,13 +456,14 @@
 
 
 ///Toggles the light on.
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/component/overlay_lighting/proc/turn_on()
 	if(overlay_lighting_flags & LIGHTING_ON)
 		return
 	// Our holder can be stale: whatever the parent is inside can move without the parent
 	// itself moving, and only the parent moving re-runs this. Must happen before we set
 	// LIGHTING_ON, or set_holder() applies the light and we then apply it a second time.
-	// VOIDCREW EDIT: Refresh contained light holders before enabling the overlay (voidcrew/edits/components/overlay_lighting_holder.dm).
+	// VOIDCREW EDIT: Refresh contained light holders before enabling the overlay (voidcrew/edits/datums/components/overlay_lighting.dm).
 	check_holder()
 	overlay_lighting_flags |= LIGHTING_ON
 	if(current_holder)
@@ -474,6 +476,7 @@
 
 
 ///Toggles the light off.
+// VOIDCREW EDIT END
 /datum/component/overlay_lighting/proc/turn_off()
 	if(!(overlay_lighting_flags & LIGHTING_ON))
 		return

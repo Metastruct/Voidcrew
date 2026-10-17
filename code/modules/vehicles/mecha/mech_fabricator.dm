@@ -19,8 +19,6 @@
 
 	/// The current design datum that the machine is building.
 	var/datum/design/being_built
-	/// Materials paid for the current job, retained even if parts change mid-print.
-	var/list/being_built_materials // VOIDCREW EDIT: research retains paid fabrication materials and permits local designs without a disk.
 
 	/// World time when the build will finish.
 	var/build_finish = 0
@@ -342,7 +340,7 @@
 
 	return TRUE
 
-// VOIDCREW EDIT: research allocates only the paid fabrication materials; implementation in voidcrew/modules/research/fabrication_materials.dm.
+// VOIDCREW EDIT: research allocates only the paid fabrication materials; implementation in voidcrew/edits/modules/vehicles/mecha/mech_fabricator.dm.
 
 /**
  * Adds a datum design to the build queue.

@@ -228,7 +228,7 @@
 		SStgui.update_uis(parent)
 	return null //explicitly set the port to null if used like this: `port = remove_output_port(port)`
 
-// VOIDCREW EDIT: circuits provides chemistry trigger cleanup and power hooks; implementation in voidcrew/modules/circuits/component_hooks.dm.
+// VOIDCREW EDIT: circuits provides chemistry trigger cleanup and power hooks; implementation in voidcrew/edits/modules/wiremod/core/component.dm.
 
 /**
  * Called whenever an input is received from one of the ports.

@@ -35,7 +35,7 @@
 	// The skull is thrown, so it has to be able to physically get there. Targeting only
 	// needs line of sight, and glass is transparent but solid - without this a legion
 	// stood outside a window drops brood on the far side of the hull.
-	// VOIDCREW EDIT START - Voidcrew legion reach integration: skulls must stop at solid hull obstacles (voidcrew/edits/mobs/legion_reach.dm)
+	// VOIDCREW EDIT START - Voidcrew legion reach integration: skulls must stop at solid hull obstacles (voidcrew/edits/modules/mob/living/basic/lavaland/legion/spawn_legions.dm)
 	target_turf = clamp_to_reachable_turf(target_turf)
 	if (isnull(target_turf))
 		owner.balloon_alert(owner, "no room!")
@@ -48,7 +48,7 @@
 	if (target_turf.is_blocked_turf())
 		var/list/near_turfs = RANGE_TURFS(1, target_turf) - target_turf
 		for (var/turf/check_turf as anything in near_turfs)
-			if (check_turf.is_blocked_turf() || clamp_to_reachable_turf(check_turf) != check_turf) // VOIDCREW EDIT: Voidcrew legion reach integration: skulls must stop at solid hull obstacles (voidcrew/edits/mobs/legion_reach.dm)
+			if (check_turf.is_blocked_turf() || clamp_to_reachable_turf(check_turf) != check_turf) // VOIDCREW EDIT: Voidcrew legion reach integration: skulls must stop at solid hull obstacles (voidcrew/edits/modules/mob/living/basic/lavaland/legion/spawn_legions.dm)
 				near_turfs -= check_turf
 		if (length(near_turfs))
 			target_turf = pick(near_turfs)

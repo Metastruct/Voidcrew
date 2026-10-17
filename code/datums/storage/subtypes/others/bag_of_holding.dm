@@ -15,6 +15,7 @@
 
 	return ..()
 
+// VOIDCREW EDIT: PR #380: Protect trader outposts from singularities and destructive hazards.
 /datum/storage/bag_of_holding/proc/recursive_insertion(obj/item/to_insert, mob/living/user)
 	// VOIDCREW: Check the bag's current location, including after the dialog.
 	// VOIDCREW EDIT START: Check the receiving bag location before and after the nesting dialog (voidcrew/modules/trade/bag_rift_protection.dm).

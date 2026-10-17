@@ -6,6 +6,7 @@
  *
  * Has a lot of the creature game world logic, such as health etc
  */
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /mob
 	density = TRUE
 	layer = MOB_LAYER
@@ -215,3 +216,4 @@
 
 	/// A ref of the area we're taking our ambient loop from.
 	var/area/ambience_tracked_area
+// VOIDCREW EDIT END

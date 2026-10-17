@@ -71,7 +71,7 @@
 	// alone and cannot be reached by anyone else, so block() over them stays the
 	// authoritative answer to "what did we take" no matter who mutates our lists.
 	var/list/released = list()
-	// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/mapping/reservation_bounds.dm).
+	// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/modules/mapping/space_management/space_reservation.dm).
 	for(var/z_idx in 1 to min(length(bottom_left_turfs), length(top_right_turfs)))
 		var/turf/bottom_left = bottom_left_turfs[z_idx]
 		var/turf/top_right = top_right_turfs[z_idx]
@@ -91,9 +91,9 @@
 
 	bottom_left_turfs.Cut()
 	top_right_turfs.Cut()
-	// VOIDCREW EDIT REMOVAL: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/mapping/reservation_bounds.dm).
+	// VOIDCREW EDIT REMOVAL: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/modules/mapping/space_management/space_reservation.dm).
 	reserved_turfs = list()
-	// VOIDCREW EDIT REMOVAL: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/mapping/reservation_bounds.dm).
+	// VOIDCREW EDIT REMOVAL: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/modules/mapping/space_management/space_reservation.dm).
 	cordon_turfs = list()
 
 	// VOIDCREW EDIT START: Bound long site releases while preserving atomic teardown for small reservations.
@@ -125,7 +125,7 @@
 		// immediately disconnect from atmos
 		reserved_turf.blocks_air = TRUE
 		CALCULATE_ADJACENT_TURFS(reserved_turf, KILL_EXCITED)
-		// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/mapping/reservation_bounds.dm).
+		// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/modules/mapping/space_management/space_reservation.dm).
 		if(can_yield)
 			CHECK_TICK
 		// VOIDCREW EDIT END
@@ -171,10 +171,10 @@
 		// per-turf removal is not; see _reserve_area())
 		cordon_turf.turf_flags &= ~UNUSED_RESERVATION_TURF
 		cordon_turf.empty(/turf/cordon, /turf/cordon)
-		// VOIDCREW EDIT REMOVAL: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/mapping/reservation_bounds.dm).
+		// VOIDCREW EDIT REMOVAL: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/modules/mapping/space_management/space_reservation.dm).
 		// still gets linked to us though
 		SSmapping.used_turfs[cordon_turf] = src
-		// VOIDCREW EDIT: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/mapping/reservation_bounds.dm).
+		// VOIDCREW EDIT: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/modules/mapping/space_management/space_reservation.dm).
 		CHECK_TICK
 
 	//swap the area with the pre-cordoning area
@@ -280,13 +280,13 @@
 	// of hard freeze for big reservations). The reserve scan above already skips
 	// anything without UNUSED_RESERVATION_TURF, and the unused_turfs lists are assoc
 	// keyed by turf, so handing a turf back later just updates its existing key.
-	// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/mapping/reservation_bounds.dm).
+	// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/modules/mapping/space_management/space_reservation.dm).
 	reserved_turfs += final
 	for(var/turf/T as anything in final)
 	// VOIDCREW EDIT END
 		SSmapping.used_turfs[T] = src
 		T.turf_flags = (T.turf_flags | RESERVATION_TURF) & ~UNUSED_RESERVATION_TURF
-	// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/mapping/reservation_bounds.dm).
+	// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/modules/mapping/space_management/space_reservation.dm).
 	for(var/turf/cordon_turf as anything in cordon_turfs)
 		cordon_turf.turf_flags &= ~UNUSED_RESERVATION_TURF
 		SSmapping.used_turfs[cordon_turf] = src
@@ -302,7 +302,7 @@
 
 	// The actual turf conversion is by far the expensive part (a full ChangeTurf per
 	// turf) - now that everything is claimed it can safely spread over multiple ticks
-	// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/mapping/reservation_bounds.dm).
+	// VOIDCREW EDIT START: Keep reservation claims atomic and release large site footprints across ticks (voidcrew/edits/modules/mapping/space_management/space_reservation.dm).
 	for(var/turf/T as anything in final)
 		T.empty(turf_type, turf_type_is_baseturf ? turf_type : null)
 		CHECK_TICK

@@ -82,6 +82,7 @@
 
 
 /// Initializes a new domain if the given key is valid and the user has enough points
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/machinery/quantum_server/proc/load_domain(map_key)
 	var/datum/lazy_template/virtual_domain/target_domain // VOIDCREW EDIT: research locks each virtual domain to one server.
 	for(var/datum/lazy_template/virtual_domain/available in SSbitrunning.all_domains)
@@ -137,6 +138,8 @@
 	return TRUE
 
 /// Loads in necessary map items like hololadder spawns, caches, etc
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/machinery/quantum_server/proc/load_map_items()
 	var/turf/goal_turfs = list()
 	var/turf/cache_turfs = list()
@@ -219,6 +222,7 @@
 
 
 /// Stops the current virtual domain and disconnects all users
+// VOIDCREW EDIT END
 /obj/machinery/quantum_server/proc/reset(fast = FALSE)
 	is_ready = FALSE
 
@@ -241,6 +245,7 @@
 
 
 /// Tries to clean up everything in the domain
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/machinery/quantum_server/proc/scrub_vdom()
 	sever_connections() /// just in case someone's connected
 	SEND_SIGNAL(src, COMSIG_BITRUNNER_DOMAIN_SCRUBBED) // avatar cleanup just in case
@@ -280,3 +285,4 @@
 	spawned_threat_refs.Cut()
 
 #undef POLLING_COOLDOWN_TIME
+// VOIDCREW EDIT END

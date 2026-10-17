@@ -39,6 +39,7 @@
 	fire = 70
 	acid = 100
 
+// VOIDCREW EDIT START - PR #423: Initialize windoor atmos seals with the requested direction.
 /obj/machinery/door/window/Initialize(mapload, set_dir, unres_sides)
 	// The parent publishes atmos adjacency, which must use the edge we actually seal.
 	// VOIDCREW EDIT START - ship access and atmos integration: initialize the sealing edge before adjacency and preserve empty access lists (voidcrew/edits/ship_access.dm)
@@ -72,6 +73,7 @@
 	AddElement(/datum/element/connect_loc, loc_connections)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 
+// VOIDCREW EDIT END
 /obj/machinery/door/window/Destroy()
 	set_density(FALSE)
 	electronics = null
@@ -406,6 +408,7 @@
 	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the maintenance panel."))
 	return TRUE
 
+// VOIDCREW EDIT START - PR #423: Initialize windoor atmos seals with the requested direction.
 /obj/machinery/door/window/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(!panel_open || density || operating)
@@ -458,6 +461,7 @@
 	qdel(src)
 	return TRUE
 
+// VOIDCREW EDIT END
 /obj/machinery/door/window/interact(mob/user) //for sillycones
 	try_to_activate_door(user)
 

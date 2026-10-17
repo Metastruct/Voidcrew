@@ -18,6 +18,11 @@
 		return
 	if(tgui_alert(usr,question,name,list("Yes","No")) == "Yes" && Adjacent(user))
 		var/turf/T = get_destination_turf(user) // VOIDCREW EDIT: mining resolves signpost destinations through the crew ship.
+		// VOIDCREW EDIT ADDITION START: signposts respect zone boundaries.
+		if(T && teleport_crosses_zone(user, T))
+			to_chat(user, span_warning("Nothing happens. The way home is past the zone boundary."))
+			return
+		// VOIDCREW EDIT ADDITION END
 
 		if(T)
 			var/atom/movable/AM = user.pulling
@@ -30,7 +35,7 @@
 		else
 			to_chat(user, "Nothing happens. You feel that this is a bad sign.")
 
-// VOIDCREW EDIT: mining returns explorers to their own crew ship; implementation in voidcrew/modules/mining/signpost_destinations.dm.
+// VOIDCREW EDIT: mining returns explorers to their own crew ship; implementation in voidcrew/edits/modules/awaymissions/signpost.dm.
 
 /obj/structure/signpost/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
 	return interact(user)
@@ -71,4 +76,4 @@
 	// also, could you think of the horror if they ended up in a holodeck
 	// template or something
 
-// VOIDCREW EDIT: mining preserves the exit signpost random destination; implementation in voidcrew/modules/mining/signpost_destinations.dm.
+// VOIDCREW EDIT: mining preserves the exit signpost random destination; implementation in voidcrew/edits/modules/awaymissions/signpost.dm.

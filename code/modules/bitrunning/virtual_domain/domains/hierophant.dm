@@ -1,3 +1,4 @@
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/lazy_template/virtual_domain/hierophant
 	name = "Zealot Arena"
 	cost = BITRUNNER_COST_APEX_BOSS // VOIDCREW EDIT: research prices virtual boss domains and supplies their domain briefing.
@@ -14,3 +15,4 @@
 	key = "hierophant"
 	map_name = "hierophant"
 	reward_points = BITRUNNER_REWARD_HIGH
+// VOIDCREW EDIT END

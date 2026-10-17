@@ -450,6 +450,7 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 
 	return mobile_port
 
+// VOIDCREW EDIT START - PR #290: Stop announcing ship expansions to admins.
 /proc/expand_shuttle(mob/user, obj/docking_port/mobile/shuttle, list/turfs, list/areas)
 	var/list/default_area_turfs = turfs.Copy()
 	// Convert each custom area into a shuttle area, then remove the affected turfs from the list of turfs to add to the default area
@@ -510,6 +511,8 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 	// VOIDCREW EDIT REMOVAL: Keep routine player hull expansions in the shuttle log without per-expansion admin announcements (voidcrew/modules/shuttle).
 	log_shuttle("[key_name(user)] expanded [shuttle] at [get_area(user)].")
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #290: Stop announcing ship expansions to admins.
 /proc/clear_empty_shuttle_turfs(obj/docking_port/mobile/shuttle)
 	var/shuttle_z = shuttle.z
 	var/bounds_need_recalculation
@@ -566,3 +569,4 @@ GLOBAL_LIST_EMPTY(shuttle_frames_by_turf)
 		// VOIDCREW EDIT: Release the transit reservation before recalculating changed hull bounds (voidcrew/modules/shuttle).
 		release_assigned_transit(shuttle) //VOID EDIT - was QDEL_NULL, which leaks the reservation
 		shuttle.calculate_docking_port_information()
+// VOIDCREW EDIT END

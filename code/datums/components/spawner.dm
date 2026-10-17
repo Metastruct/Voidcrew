@@ -41,7 +41,6 @@
 	RegisterSignal(parent, COMSIG_VENT_WAVE_CONCLUDED, PROC_REF(stop_spawning))
 	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
 
-
 /datum/component/spawner/process()
 	try_spawn_mob()
 
@@ -53,13 +52,13 @@
 	spawned_things = list()
 
 /// Try to create a new mob
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/component/spawner/proc/try_spawn_mob()
 	if(!length(spawn_types))
 		return
 	if(!COOLDOWN_FINISHED(src, spawn_delay))
 		return
 
-	// VOIDCREW EDIT START: don't spawn where nobody is standing.
 	// Spawned mobs die unattended out there (vacuum, weather, each other) and
 	// validate_references() frees the slot the instant one is DEAD, so a bone pit or
 	// monster den on a loaded-but-unvisited level emits a fresh corpse every spawn_time
@@ -95,7 +94,6 @@
 		cached_footprint = map_footprint_at_turf(spawner_turf)
 	if(cached_footprint && !footprint_holds_any_client(cached_footprint, clients_here))
 		return
-	// END VOIDCREW EDIT
 
 	validate_references()
 	var/spawned_total = length(spawned_things)
@@ -133,7 +131,7 @@
 			created_mob.faction = src.faction
 			// The assignment above deliberately replaces the mob's initialized faction list,
 			// so restore any native-planet token it received during Initialize().
-			// VOIDCREW EDIT: Spawn only near players in the same footprint and preserve native planetary factions (voidcrew/edits/components/spawner_lifecycle.dm).
+			// VOIDCREW EDIT: Spawn only near players in the same footprint and preserve native planetary factions (voidcrew/edits/datums/components/spawner.dm).
 			inherit_planetary_faction(created_mob)
 			RegisterSignal(created, COMSIG_MOB_STATCHANGE, PROC_REF(mob_stat_changed))
 
@@ -147,6 +145,7 @@
 
 
 /// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow
+// VOIDCREW EDIT END
 /datum/component/spawner/proc/validate_references()
 	for (var/datum/weakref/weak_thing as anything in spawned_things)
 		var/atom/previously_spawned = weak_thing?.resolve()

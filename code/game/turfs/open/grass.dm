@@ -53,8 +53,6 @@
 		GLOB.station_turfs += src
 	// VOIDCREW EDIT END
 
-
-
 /turf/open/misc/grass/get_smooth_underlay_icon(mutable_appearance/underlay_appearance, turf/asking_turf, adjacency_dir)
 	. = ..()
 	if (!.)

@@ -9,7 +9,7 @@
 	export_types = list(/obj/item/paper/fluff/jobs/cargo/manifest)
 	scannable = FALSE
 
-// VOIDCREW EDIT: cargo caps manifest refunds against the paid order; implementation in voidcrew/modules/cargo/export_values.dm.
+// VOIDCREW EDIT: cargo caps manifest refunds against the paid order; implementation in voidcrew/edits/modules/cargo/exports/manifest.dm.
 
 /datum/export/manifest_correct/applies_to(obj/O)
 	if(!..())

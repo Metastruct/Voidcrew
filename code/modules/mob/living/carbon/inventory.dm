@@ -252,7 +252,7 @@
 
 	// Not an else-if because we're probably equipped in another slot
 	if(item_dropping == internal && (QDELETED(src) || QDELETED(item_dropping) || item_dropping.loc != src))
-		cutoff_internals("tank unequipped from slot, newloc=[item_dropping.loc]") // VOIDCREW EDIT: shuttle internals diagnostics: identify the disconnect call site (voidcrew/edits/mobs/internals_logging.dm)
+		cutoff_internals("tank unequipped from slot, newloc=[item_dropping.loc]") // VOIDCREW EDIT: shuttle internals diagnostics: identify the disconnect call site (voidcrew/edits/modules/mob/living/carbon/inventory.dm)
 		if(!QDELETED(src))
 			update_mob_action_buttons(UPDATE_BUTTON_STATUS)
 
@@ -385,10 +385,10 @@
 
 /// Prepares emergency disconnect from open air tanks and notifies in chat. Usually called after mob suddenly unequips breathing apparatus.
 /// reason names the call site so intermittent cutoffs can be traced - see log_internals_cutoff().
-/mob/living/carbon/proc/cutoff_internals(reason = "unspecified") // VOIDCREW EDIT: shuttle internals diagnostics: identify the disconnect call site (voidcrew/edits/mobs/internals_logging.dm)
+/mob/living/carbon/proc/cutoff_internals(reason = "unspecified") // VOIDCREW EDIT: shuttle internals diagnostics: identify the disconnect call site (voidcrew/edits/modules/mob/living/carbon/inventory.dm)
 	if (!external && !internal)
 		return
-	log_internals_cutoff(reason) // VOIDCREW EDIT: shuttle internals diagnostics: identify the disconnect call site (voidcrew/edits/mobs/internals_logging.dm)
+	log_internals_cutoff(reason) // VOIDCREW EDIT: shuttle internals diagnostics: identify the disconnect call site (voidcrew/edits/modules/mob/living/carbon/inventory.dm)
 	to_chat(src, span_notice("Your internals disconnect from [external || internal] and the valve closes."))
 	close_all_airtanks()
 

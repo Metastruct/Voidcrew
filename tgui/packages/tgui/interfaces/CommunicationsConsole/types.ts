@@ -1,3 +1,4 @@
+// VOIDCREW EDIT START - Ship communications do not offer nuclear-code requests.
 import type { BooleanLike } from 'tgui-core/react';
 
 export enum ShuttleState {
@@ -72,3 +73,4 @@ export type CommsConsoleData = {
   maxMessageLength: number;
   maxStatusLineLength: number;
 };
+// VOIDCREW EDIT END

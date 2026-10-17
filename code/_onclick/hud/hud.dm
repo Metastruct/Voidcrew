@@ -187,6 +187,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 		var/datum/plane_master_group/group = master_groups[group_key]
 		group.build_planes_offset(src, current_plane_offset)
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/hud/proc/should_use_scale()
 	// A hud can outlive its mob (and plane groups can be rebuilt while detached), and this
 	// runs at the very top of build_planes_offset() - runtiming here skips the whole
@@ -194,6 +195,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	// VOIDCREW EDIT: Tolerate a HUD that outlives its mob during plane offset rebuilding.
 	return should_sight_scale(mymob?.sight)
 
+// VOIDCREW EDIT END
 /datum/hud/proc/should_sight_scale(sight_flags)
 	return (sight_flags & (SEE_TURFS | SEE_OBJS)) != SEE_TURFS
 
@@ -215,7 +217,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	for(var/group_key as anything in master_groups)
 		var/datum/plane_master_group/group = master_groups[group_key]
 		group.build_planes_offset(src, new_offset)
-
 
 /datum/hud/Destroy()
 	if(mymob.hud_used == src)

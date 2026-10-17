@@ -1,3 +1,4 @@
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather/snow_storm
 	name = "snow storm"
 	desc = "Harsh snowstorms roam the topside of this arctic planet, burying any area unfortunate enough to be in its path."
@@ -30,24 +31,25 @@
 	// snowstorms temperature ignores any clothing insulation
 	weather_flags = (WEATHER_MOBS | WEATHER_BAROMETER | WEATHER_TEMPERATURE_BYPASS_CLOTHING)
 
-	// VOIDCREW EDIT: Preserve independent snow storm sounds across sites.
-	var/list/active_sounds = list()
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather/snow_storm/start()
 	// VOIDCREW EDIT REMOVAL: Preserve independent snow storm sounds across sites.
 	for(var/area/impacted_area as anything in impacted_areas)
-		// VOIDCREW EDIT START: Preserve independent snow storm sounds across sites.
 		active_sounds[impacted_area] = /datum/looping_sound/snowstorm
 	GLOB.snowstorm_sounds += active_sounds
-		// VOIDCREW EDIT END
 	return ..()
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather/snow_storm/end()
 	// VOIDCREW EDIT: Preserve independent snow storm sounds across sites.
 	GLOB.snowstorm_sounds -= active_sounds
 	return ..()
 
 // since snowstorm is on a station z level, add extra checks to not annoy everyone
+// VOIDCREW EDIT END
 /datum/weather/snow_storm/can_get_alert(mob/player)
 	if(!..())
 		return FALSE

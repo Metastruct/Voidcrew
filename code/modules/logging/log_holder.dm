@@ -33,9 +33,6 @@ GLOBAL_REAL(logger, /datum/log_holder)
 	var/initialized = FALSE
 	var/shutdown = FALSE
 
-	/// VOIDCREW EDIT ADDITION: world.time until which Log() skips the structured path and writes
-	/// flat world.log lines instead. Set by logging_failed().
-	var/structured_logging_broken_until = 0
 
 GENERAL_PROTECT_DATUM(/datum/log_holder)
 

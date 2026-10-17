@@ -276,13 +276,13 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		. += zlevel_turfs
 
 /// Ensures that the contained_turfs list properly represents the turfs actually inside us
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /area/proc/cannonize_contained_turfs_by_zlevel(zlevel_to_clean, _autoclean = TRUE)
 	// Try and keep the mass removal as low as you can. We'll do this by ensuring
 	// We only actually add to contained turfs after large changes (Also the management subsystem)
 	// Do your damndest to keep turfs out of /area/space as a stepping stone
 	// That sucker gets HUGE and will make this take actual seconds
 	if (zlevel_to_clean <= length(turfs_by_zlevel) && zlevel_to_clean <= length(turfs_to_uncontain_by_zlevel))
-		// VOIDCREW EDIT START - overmap: keep recycled area turf bookkeeping bounded and lighting compatible with encounter areas
 		var/list/contained_turfs = turfs_by_zlevel[zlevel_to_clean]
 		var/list/turfs_to_cut = turfs_to_uncontain_by_zlevel[zlevel_to_clean]
 		var/cut_count = length(turfs_to_cut)
@@ -315,7 +315,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 			contained_turfs += kept_turfs
 		else
 			turfs_by_zlevel[zlevel_to_clean] -= turfs_to_cut
-		// VOIDCREW EDIT END
 
 	if (!_autoclean) // Removes empty lists from the end of this list
 		turfs_to_uncontain_by_zlevel[zlevel_to_clean] = list()
@@ -336,6 +335,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 
 /// Ensures that the contained_turfs list properly represents the turfs actually inside us
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /area/proc/cannonize_contained_turfs()
 	for (var/area_zlevel in 1 to length(turfs_to_uncontain_by_zlevel))
 		cannonize_contained_turfs_by_zlevel(area_zlevel, _autoclean = FALSE)
@@ -343,10 +344,10 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	// get_zlevel_turf_lists() tests exactly that length to decide whether it has to come
 	// back here at all. Without this, every later call re-walks every z of an area with
 	// nothing pending. See trim_trailing_empty_uncontain_lists().
-	trim_trailing_empty_uncontain_lists() // VOIDCREW EDIT: overmap: keep recycled area turf bookkeeping bounded and lighting compatible with encounter areas
-
+	trim_trailing_empty_uncontain_lists()
 
 /// Returns TRUE if we have contained turfs, FALSE otherwise
+// VOIDCREW EDIT END
 /area/proc/has_contained_turfs()
 	for (var/area_zlevel in 1 to length(turfs_by_zlevel))
 		if (length(turfs_to_uncontain_by_zlevel) >= area_zlevel)
@@ -372,7 +373,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		return
 	if(!areas_in_z["[z]"])
 		areas_in_z["[z]"] = list()
-	areas_in_z["[z]"] += src
+	areas_in_z["[z]"] |= src // VOIDCREW EDIT: was +=. A template load registers its areas and each new one registers again in Initialize(); Destroy() removes one entry, so the duplicate kept every reaped template area (player_outposts) from being collected.
 
 /**
  * Destroy an area and clean it up

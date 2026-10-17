@@ -60,12 +60,6 @@
 	var/manifest_can_fail = TRUE
 	///Boolean on whether the manifest can be cancelled through cargo consoles.
 	var/can_be_cancelled = TRUE
-	/// Actual ship-account payment, also used by its manifest. Null until settled.
-	// VOIDCREW EDIT START: cargo tracks the settled ship payment on crates and manifests.
-	var/ship_paid_cost
-	/// Last refusal from ship settlement, for delivery feedback.
-	var/ship_settlement_error
-	// VOIDCREW EDIT END
 
 /datum/supply_order/New(
 	datum/supply_pack/pack,
@@ -108,7 +102,7 @@
 		cost *= 1.1
 	return round(cost)
 
-// VOIDCREW EDIT: cargo settles ship orders before goods are generated; implementation in voidcrew/modules/cargo/ship_order_settlement.dm.
+// VOIDCREW EDIT: cargo settles ship orders before goods are generated; implementation in voidcrew/edits/modules/cargo/order.dm.
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/requisition/requisition_paper = new(T)

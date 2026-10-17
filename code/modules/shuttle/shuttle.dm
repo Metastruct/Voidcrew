@@ -176,4 +176,4 @@
 	// VOIDCREW EDIT: shuttle separates geometric hull bounds from area membership.
 	return is_in_shuttle_bounds_geometric(A)
 
-// VOIDCREW EDIT: shuttle exposes geometric hull bounds for engine membership; implementation in voidcrew/modules/shuttle/shuttle_move_helpers.dm.
+// VOIDCREW EDIT: shuttle exposes geometric hull bounds for engine membership; implementation in voidcrew/edits/modules/shuttle/shuttle.dm.

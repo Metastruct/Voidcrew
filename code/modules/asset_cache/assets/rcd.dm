@@ -9,5 +9,5 @@
 		draw_design_tree(design_tree)
 	// VOIDCREW EDIT END
 
-// VOIDCREW EDIT: shuttle draws icons for construction design trees; implementation in voidcrew/modules/shuttle/construction/rcd_spritesheet.dm.
-// VOIDCREW EDIT REMOVAL: shuttle draws the original design loop in voidcrew/modules/shuttle/construction/rcd_spritesheet.dm.
+// VOIDCREW EDIT: shuttle draws icons for construction design trees; implementation in voidcrew/edits/modules/asset_cache/assets/rcd.dm.
+// VOIDCREW EDIT REMOVAL: shuttle draws the original design loop in voidcrew/edits/modules/asset_cache/assets/rcd.dm.

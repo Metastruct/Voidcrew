@@ -41,7 +41,7 @@
 		var/height_border = TRANSITIONEDGE + SPACERUIN_MAP_EDGE_PAD + round(height / 2)
 		// VOIDCREW EDIT: sample from the placement rect when one was given, from the whole z otherwise
 		var/turf/central_turf
-		// VOIDCREW EDIT START: Sample ruins inside the tenant bounds and whitelist owned area instances (voidcrew/_HELPERS/ruin_placement.dm).
+		// VOIDCREW EDIT START: Sample ruins inside the tenant bounds and whitelist owned area instances (voidcrew/edits/modules/mapping/ruins.dm).
 		if(forced_turf)
 			central_turf = forced_turf
 		else if(sample_bounds)
@@ -63,7 +63,7 @@
 
 		// This is faster yes. Only BARELY but it is faster
 		if(length(allowed_area_instances)) // VOIDCREW EDIT: instance whitelist wins over the type one
-			// VOIDCREW EDIT START: Sample ruins inside the tenant bounds and whitelist owned area instances (voidcrew/_HELPERS/ruin_placement.dm).
+			// VOIDCREW EDIT START: Sample ruins inside the tenant bounds and whitelist owned area instances (voidcrew/edits/modules/mapping/ruins.dm).
 			for(var/area/affct_area as anything in affected_areas)
 				if(!allowed_area_instances[affct_area])
 					valid = FALSE
@@ -138,7 +138,7 @@
 	var/list/whitelist_typecache = typecacheof(whitelist)
 	// VOIDCREW EDIT: built once here rather than per placement sample
 	var/list/whitelist_instances
-	// VOIDCREW EDIT START: Sample ruins inside the tenant bounds and whitelist owned area instances (voidcrew/_HELPERS/ruin_placement.dm).
+	// VOIDCREW EDIT START: Sample ruins inside the tenant bounds and whitelist owned area instances (voidcrew/edits/modules/mapping/ruins.dm).
 	if(length(area_whitelist_instances))
 		whitelist_instances = list()
 		for(var/area/whitelisted_area as anything in area_whitelist_instances)

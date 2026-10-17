@@ -24,8 +24,6 @@
 	var/list/initial_contents
 	/// If the machine shows an approximate number of its contents on its sprite
 	var/visible_contents = TRUE
-	/// Whether the sprite has a separate glass overlay layer
-	var/has_glass_overlay = TRUE // VOIDCREW EDIT: research disk storage omits the separate glass overlay.
 	/// Is this smartfridge going to have a glowing screen? (Drying Racks are not)
 	var/has_emissive = TRUE
 	/// Whether the smartfridge is welded down to the floor disabling unwrenching

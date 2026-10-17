@@ -132,7 +132,6 @@
 	var/mob/living/navigator = usr
 	navigator.navigate()
 
-
 /atom/movable/screen/craft
 	name = "crafting menu"
 	icon = 'icons/hud/screen_midnight.dmi'
@@ -180,6 +179,7 @@
 	var/image/object_overlay
 	plane = HUD_PLANE
 
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /atom/movable/screen/inventory/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
@@ -201,6 +201,7 @@
 		usr.update_held_items()
 	return TRUE
 
+// VOIDCREW EDIT END
 /atom/movable/screen/inventory/MouseEntered(location, control, params)
 	. = ..()
 	add_overlays()
@@ -269,6 +270,7 @@
 	if(held_index == hud.mymob.active_hand_index)
 		. += IS_LEFT_INDEX(held_index) ? "lhandactive" : "rhandactive"
 
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
@@ -291,6 +293,7 @@
 		user.swap_hand(held_index)
 	return TRUE
 
+// VOIDCREW EDIT END
 /atom/movable/screen/close
 	name = "close"
 	plane = ABOVE_HUD_PLANE
@@ -515,6 +518,7 @@
 	. = ..()
 	master_ref = WEAKREF(new_master)
 
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /atom/movable/screen/storage/Click(location, control, params)
 	var/datum/storage/storage_master = master_ref?.resolve()
 	if(!istype(storage_master))
@@ -534,6 +538,7 @@
 
 	return TRUE
 
+// VOIDCREW EDIT END
 /atom/movable/screen/storage/cell
 
 /atom/movable/screen/storage/cell/mouse_drop_receive(atom/target, mob/living/user, params)
@@ -639,6 +644,7 @@
 	anchored = TRUE
 	plane = ABOVE_HUD_PLANE
 
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /atom/movable/screen/zone_sel/MouseExited(location, control, params)
 	// VOIDCREW EDIT: Allow inventory interaction in soft crit via incapacitated_except_softcrit().
 	. = ..()
@@ -646,6 +652,7 @@
 		vis_contents -= hover_overlays_cache[hovering]
 		hovering = null
 
+// VOIDCREW EDIT END
 /atom/movable/screen/zone_sel/proc/get_zone_at(icon_x, icon_y)
 	switch(icon_y)
 		if(1 to 9) //Legs
@@ -797,13 +804,12 @@
 	update_body_zones()
 	update_appearance()
 
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /atom/movable/screen/healthdoll/human/update_body_zones()
 	// VOIDCREW EDIT REMOVAL: Allow inventory interaction in soft crit via incapacitated_except_softcrit().
 	vis_contents.Cut()
-	// VOIDCREW EDIT START: Allow inventory interaction in soft crit via incapacitated_except_softcrit().
 	QDEL_LIST_ASSOC_VAL(limbs)
 	limbs ||= list()
-	// VOIDCREW EDIT END
 	var/mob/living/carbon/human/owner = hud.mymob
 	for(var/body_zone in owner.get_all_limbs())
 		var/atom/movable/screen/healthdoll_limb/limb = new(src, null)
@@ -813,11 +819,13 @@
 		// why viscontents? why not overlays? - because i want to animate filters
 		vis_contents += limb
 
+// VOIDCREW EDIT END
 /atom/movable/screen/healthdoll/human/Destroy()
 	QDEL_LIST_ASSOC_VAL(limbs)
 	vis_contents.Cut()
 	return ..()
 
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /atom/movable/screen/healthdoll/human/update_icon_state()
 	. = ..()
 	var/mob/living/carbon/human/owner = hud?.mymob
@@ -834,10 +842,8 @@
 		var/icon_key = 0
 		var/part_zone = body_part.body_zone
 		// I hate that we "allow" support for more than 2 hands in the codebase
-		// VOIDCREW EDIT START: Allow inventory interaction in soft crit via incapacitated_except_softcrit().
 		if(!limbs[part_zone])
 			continue
-		// VOIDCREW EDIT END
 
 		var/list/overridable_key = list(icon_key)
 		if(body_part.bodypart_disabled)
@@ -877,6 +883,7 @@
 				limbs[lost_zone].remove_filter("wound_outline")
 
 // Basically just holds an icon we can put a filter on
+// VOIDCREW EDIT END
 /atom/movable/screen/healthdoll_limb
 	screen_loc = ui_living_healthdoll
 	vis_flags = VIS_INHERIT_ID | VIS_INHERIT_PLANE

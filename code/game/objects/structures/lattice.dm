@@ -140,7 +140,7 @@
 		return list("mode" = RCD_DECONSTRUCT, "delay" = 1 SECONDS, "cost" = 5)
 	return FALSE
 
-// VOIDCREW EDIT START - shuttle construction: read the captured RCD action from the current list signature
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/structure/lattice/catwalk/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	if(rcd_data["[RCD_DESIGN_MODE]"] == RCD_DECONSTRUCT)
 // VOIDCREW EDIT END

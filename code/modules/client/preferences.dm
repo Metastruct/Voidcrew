@@ -337,7 +337,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	return preview
 	// VOIDCREW EDIT END
 
-// VOIDCREW EDIT: preferences rebuilds character previews lost during UI opening; implementation in voidcrew/modules/preferences/character_preview_recovery.dm.
+// VOIDCREW EDIT: preferences rebuilds character previews lost during UI opening; implementation in voidcrew/edits/modules/client/preferences.dm.
 
 /datum/preferences/proc/compile_character_preferences(mob/user)
 	var/list/preferences = list()

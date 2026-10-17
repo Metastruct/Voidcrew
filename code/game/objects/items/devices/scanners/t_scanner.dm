@@ -40,6 +40,7 @@
 		return PROCESS_KILL
 	scan()
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/t_scanner/proc/scan()
 	t_ray_scan(loc)
 
@@ -51,13 +52,13 @@
  * doing the looking, or the sweep lands around the operator sat at the console instead of
  * around the camera they are actually watching.
  */
-/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 3, atom/centre) // VOIDCREW EDIT: shuttle construction: scan around the remote drone while retaining the handheld default
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
+/proc/t_ray_scan(mob/viewer, flick_time = 8, distance = 3, atom/centre)
 	if(!ismob(viewer) || !viewer.client)
 		return
-	// VOIDCREW EDIT START - shuttle construction: scan around the remote drone while retaining the handheld default
 	if(isnull(centre))
 		centre = viewer
-	// VOIDCREW EDIT END
 	var/list/t_ray_images = list()
 	for(var/obj/O in orange(distance, centre) ) // VOIDCREW EDIT: shuttle construction: scan around the remote drone while retaining the handheld default
 		if(HAS_TRAIT(O, TRAIT_T_RAY_VISIBLE))
@@ -69,3 +70,4 @@
 			t_ray_images += I
 	if(t_ray_images.len)
 		flick_overlay_global(t_ray_images, list(viewer.client), flick_time)
+// VOIDCREW EDIT END

@@ -1,3 +1,4 @@
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/lazy_template/virtual_domain/ash_drake
 	name = "Ashen Inferno"
 	cost = BITRUNNER_COST_BOSS // VOIDCREW EDIT: research prices virtual boss domains and supplies their domain briefing.
@@ -14,3 +15,4 @@
 	key = "ash_drake"
 	map_name = "ash_drake"
 	reward_points = BITRUNNER_REWARD_MEDIUM
+// VOIDCREW EDIT END

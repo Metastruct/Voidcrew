@@ -15,7 +15,7 @@
 	if(. && notes)
 		. += " Thanks for participating in Nanotrasen Crates Recycling Program."
 
-// VOIDCREW EDIT: cargo caps crate resale against the settled shipment; implementation in voidcrew/modules/cargo/export_values.dm.
+// VOIDCREW EDIT: cargo caps crate resale against the settled shipment; implementation in voidcrew/edits/modules/cargo/exports/large_objects.dm.
 
 /datum/export/large/crate/wooden
 	cost = CARGO_CRATE_VALUE/5

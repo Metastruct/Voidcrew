@@ -123,4 +123,4 @@
 	if(!message_shown)
 		new_wall.visible_message(span_warning("\A [new_wall] [rises_message]!"))
 
-// VOIDCREW EDIT REMOVAL - rust spell: cosmetic expiry runs independently of the action (voidcrew/edits/spells/rust_filters.dm).
+// VOIDCREW EDIT REMOVAL - rust spell: cosmetic expiry runs independently of the action (voidcrew/edits/modules/antagonists/heretic/magic/rust_construction.dm).

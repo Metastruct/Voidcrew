@@ -97,7 +97,6 @@
 #include "area_contents.dm"
 #include "armor_verification.dm"
 #include "asset_smart_cache.dm"
-#include "../../../voidcrew/modules/unit_tests/atmos_component_pipeline.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "atmospherics_sanity.dm"
 #include "autowiki.dm"
 #include "bake_a_cake.dm"
@@ -167,12 +166,9 @@
 #include "font_awesome_icons.dm"
 #include "food_edibility_check.dm"
 #include "full_heal.dm"
-#include "../../../voidcrew/modules/unit_tests/gas_connector_lifecycle.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "gas_transfer.dm"
-#include "../../../voidcrew/modules/unit_tests/pipeline_reconciliation.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "get_turf_pixel.dm"
 #include "geyser.dm"
-#include "../../../voidcrew/modules/unit_tests/glass_floor_baseturfs.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "gloves_and_shoes_armor.dm"
 #include "greyscale_config.dm"
 #include "hallucination_icons.dm"
@@ -198,7 +194,6 @@
 #include "kinetic_crusher.dm"
 #include "knockoff_component.dm"
 #include "language_transfer.dm"
-#include "../../../voidcrew/modules/unit_tests/late_initialization_reentry.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "leash.dm"
 #include "lesserform.dm"
 #include "limbsanity.dm"
@@ -210,7 +205,6 @@
 #include "machine_disassembly.dm"
 #include "mafia.dm"
 #include "map_landmarks.dm"
-#include "../../../voidcrew/modules/unit_tests/map_parser_attributes.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "mapload_space_verification.dm"
 #include "mapping.dm"
 #include "mapping_nearstation_test.dm"
@@ -227,19 +221,16 @@
 #include "mob_spawn.dm"
 #include "modify_fantasy_variable.dm"
 #include "modsuit.dm"
-#include "../../../voidcrew/modules/unit_tests/mod_night_vision_traits.dm" // VOIDCREW EDIT: keep extracted fork cases beside their upstream test definitions.
 #include "modular_map_loader.dm"
 #include "monkey_business.dm"
 #include "mouse_bite_cable.dm"
 #include "movement_order_sanity.dm"
-#include "../../../voidcrew/modules/unit_tests/drift_vectors.dm" // VOIDCREW EDIT ADDITION
 #include "mutant_hands_consistency.dm"
 #include "mutant_organs.dm"
 #include "novaflower_burn.dm"
 #include "nuke_cinematic.dm"
 #include "omnitools.dm"
 #include "operating_table.dm"
-#include "../../../voidcrew/modules/unit_tests/operating_table_movement.dm" // VOIDCREW EDIT: keep extracted fork cases beside their upstream test definitions.
 #include "orderable_items.dm"
 #include "organ_bodypart_shuffle.dm"
 #include "organs.dm"
@@ -254,14 +245,12 @@
 #include "plantgrowth_tests.dm"
 #include "preference_species.dm"
 #include "preferences.dm"
-#include "../../../voidcrew/modules/unit_tests/prisoner_photos.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "projectiles.dm"
 #include "quirks.dm"
 #include "range_return.dm"
 #include "rcd.dm"
 #include "reagent_container_defaults.dm"
 #include "reagent_id_typos.dm"
-#include "../../../voidcrew/modules/unit_tests/reagent_holder_teardown.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "reagent_mob_expose.dm"
 #include "reagent_mod_procs.dm"
 #include "reagent_names.dm"
@@ -282,14 +271,10 @@
 #include "security_levels.dm"
 #include "security_officer_distribution.dm"
 #include "serving_tray.dm"
-#include "../../../voidcrew/modules/unit_tests/shuttle_cling_lifecycle.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/shuttle_cling_rethrow.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/shuttle_load_ownership.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "simple_animal_freeze.dm"
 #include "siunit.dm"
 #include "slime_mood.dm"
 #include "slips.dm"
-#include "../../../voidcrew/modules/unit_tests/soft_crit.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "spawn_humans.dm"
 #include "spawn_mobs.dm"
 #include "species_change_clothing.dm"
@@ -299,7 +284,6 @@
 #include "species_whitelists.dm"
 #include "spell_invocations.dm"
 #include "spell_jaunt.dm"
-#include "../../../voidcrew/modules/unit_tests/blood_jaunt_destinations.dm" // VOIDCREW EDIT: keep extracted fork cases beside their upstream test definitions.
 #include "spell_mindswap.dm"
 #include "spell_names.dm"
 #include "spell_shapeshift.dm"
@@ -321,8 +305,6 @@
 #include "syringe_gun.dm"
 #include "tail_wag.dm"
 #include "teleporters.dm"
-#include "../../../voidcrew/modules/unit_tests/throw_cleanup.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/throw_rethrow.dm" // VOIDCREW EDIT ADDITION
 #include "text.dm"
 #include "tgui_create_message.dm"
 #include "timer_sanity.dm"
@@ -335,128 +317,14 @@
 #include "unit_test.dm"
 #include "verify_config_tags.dm"
 #include "verify_emoji_names.dm"
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ammo_box_materials.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_assault_pod.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_autopilot_course.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_autotranslate_morph.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_autotranslate_output.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_bitrunning.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_blueprint_guns.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_colosseum.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_combat_metrics.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/voidcrew_construction_refunds.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_combat_camera_breaches.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/voidcrew_construction_automation.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_pandora_links.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_repair_robotics.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_cordon_teleport.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_crew_antag_gc.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_crew_hud.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_cyberware.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_dissection_tiers.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_drug_lab.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_drug_recipe.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_dynamic_events.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_economy_metrics.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/voidcrew_fleet_waypoints.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_helpers.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_hull_containment.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_hull_survey.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_round_metrics.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/voidcrew_windoor_survey.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_lich.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_launch_access.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_launch_cargo.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_bank_deposits.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_cargo_cart.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_cargo_docking.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_cargo_load_queue.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_launch_fabrication.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_launch_progression.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_legion_cleanup.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_loot.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_map_packing.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_mapload_floor_dir.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_planetary_factions.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_overmap_management.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_planet_cleanup.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_planet_definitions.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_planet_shared_air.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/voidcrew_plumbing_shuttle_move.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_missions.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_mining_input.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_mission_gps.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_mission_metrics.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/voidcrew_npc_boarding_docking.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_npc_disarm.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_player_outpost.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_outpost_management.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_outpost_admin.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_outpost_management_lifecycle.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_outpost_services.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_outpost_self_defense.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_outpost_protection.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_outpost_founding.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_outpost_turret_targeting.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_medical_research_links.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_megafauna_aggro.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_nanite_research.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_research_lifecycle.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_research_movement.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_respawn_timer.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_rnd_kit.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_science_program.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_survey_research_links.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_survey_archive.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_survey_identity.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_survey_capabilities.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_camera_scope.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ruin_bounds.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ruin_cleanup.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ruin_reservation.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ship_abandonment.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ship_access.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_helm_access.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ship_assembly.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ship_communications.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ship_hulls.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ship_silicons.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ship_integrity.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ship_modules.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_ship_turret_targeting.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_shop_catalog.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_silicon_ship_systems.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_simple_mob_ai.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_slime_extract_piles.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/voidcrew_smart_locker.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_abductor.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_ascension.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_biology_routes.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_changeling.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_confiscation.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_field.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_hunts.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_lifecycle.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_morph.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_morph_routes.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_rites.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_rites_routes.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_routes.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_status.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_vestige_visuals.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_wall_break_atmos.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_weather_sites.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
-#include "../../../voidcrew/modules/unit_tests/voidcrew_zone_logging.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "washing.dm"
-#include "../../../voidcrew/modules/unit_tests/weather_mob_targeting.dm" // VOIDCREW EDIT: keep fork tests in the unit_tests module.
 #include "weird_food.dm"
 #include "wizard_loadout.dm"
 #include "worn_icons.dm"
-#include "../../../voidcrew/modules/unit_tests/voidcrew_puzzle_containment.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/armor_partial_modifiers.dm" // VOIDCREW EDIT ADDITION
-#include "../../../voidcrew/modules/unit_tests/overmap_spawn_density.dm" // VOIDCREW EDIT ADDITION
 // END_INCLUDE
+// VOIDCREW EDIT ADDITION START - fork tests share the upstream test macros.
+#include "../../../voidcrew/modules/unit_tests/_unit_tests.dm"
+// VOIDCREW EDIT ADDITION END
 #ifdef REFERENCE_TRACKING_DEBUG //Don't try and parse this file if ref tracking isn't turned on. IE: don't parse ref tracking please mr linter
 #include "find_reference_sanity.dm"
 #endif

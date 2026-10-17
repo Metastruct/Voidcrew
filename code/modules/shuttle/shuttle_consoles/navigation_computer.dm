@@ -311,7 +311,7 @@
 	. = ..()
 	console?.checkLandingSpot() // VOIDCREW EDIT: shuttle uses survey-owned navigation images and enforces encounter camera boundaries.
 
-// VOIDCREW EDIT: shuttle provides a survey camera containment hook; implementation in voidcrew/modules/shuttle/survey/eye_boundary_hook.dm.
+// VOIDCREW EDIT: shuttle provides a survey camera containment hook; implementation in voidcrew/edits/modules/shuttle/shuttle_consoles/navigation_computer.dm.
 
 /mob/eye/camera/remote/shuttle_docker/update_remote_sight(mob/living/user)
 	user.set_sight(BLIND|SEE_TURFS)

@@ -191,6 +191,7 @@
  * This should only be called by `generate_terrain()`, if you have to call this,
  * you're probably doing something wrong.
  */
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/map_generator/cave_generator/proc/generate_terrain_with_biomes(list/turfs, area/generate_in)
 	if(!(generate_in.area_flags & CAVES_ALLOWED))
 		return
@@ -296,6 +297,7 @@
 	announce_generation_time("[name] terrain generation finished in [(REALTIMEOFDAY - start_time)/10]s!")
 
 
+// VOIDCREW EDIT END
 /datum/map_generator/cave_generator/populate_terrain(list/turfs, area/generate_in)
 	if(length(possible_biomes))
 		return populate_terrain_with_biomes(turfs, generate_in)
@@ -398,6 +400,7 @@
  * This proc won't do anything if the area we're trying to generate in does not
  * have `FLORA_ALLOWED` or `MOB_SPAWN_ALLOWED` in its `area_flags`.
  */
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/map_generator/cave_generator/proc/populate_terrain_with_biomes(list/turfs, area/generate_in)
 	// Area var pullouts to make accessing in the loop faster
 	var/flora_allowed = (generate_in.area_flags & FLORA_ALLOWED)
@@ -422,6 +425,7 @@
 	announce_generation_time("[name] terrain population finished in [(REALTIMEOFDAY - start_time)/10]s!")
 
 
+// VOIDCREW EDIT END
 /datum/map_generator/cave_generator/jungle
 	possible_biomes = list(
 		BIOME_LOW_HEAT = list(

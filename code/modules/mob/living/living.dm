@@ -1331,11 +1331,12 @@
 /mob/living/can_hold_items(obj/item/I)
 	return ..() && HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS) && usable_hands
 
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /mob/living/can_perform_action(atom/target, action_bitflags)
 	if(!istype(target))
 		CRASH("Missing target arg for can_perform_action")
 
-	if(stat != CONSCIOUS && !(stat == SOFT_CRIT && (action_bitflags & ALLOW_SOFT_CRIT))) // VOIDCREW EDIT: soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/mobs/softcrit_interaction.dm)
+	if(stat != CONSCIOUS && !(stat == SOFT_CRIT && (action_bitflags & ALLOW_SOFT_CRIT))) // VOIDCREW EDIT: soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/modules/mob/mob.dm)
 		to_chat(src, span_warning("You are not conscious enough for this action!"))
 		return FALSE
 
@@ -1343,10 +1344,10 @@
 		var/ignore_flags = NONE
 		if(interaction_flags_atom & INTERACT_ATOM_IGNORE_RESTRAINED)
 			ignore_flags |= INCAPABLE_RESTRAINTS
-		if(!(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB) && stat != SOFT_CRIT) // VOIDCREW EDIT: soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/mobs/softcrit_interaction.dm)
+		if(!(interaction_flags_atom & INTERACT_ATOM_CHECK_GRAB) && stat != SOFT_CRIT) // VOIDCREW EDIT: soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/modules/mob/mob.dm)
 			ignore_flags |= INCAPABLE_GRAB
 
-		// VOIDCREW EDIT START - soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/mobs/softcrit_interaction.dm)
+		// VOIDCREW EDIT START - soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/modules/mob/mob.dm)
 		var/is_incapacitated = (action_bitflags & ALLOW_SOFT_CRIT) ? incapacitated_except_softcrit(ignore_flags) : INCAPACITATED_IGNORING(src, ignore_flags)
 		if(is_incapacitated)
 		// VOIDCREW EDIT END
@@ -1413,6 +1414,7 @@
 
 	return TRUE
 
+// VOIDCREW EDIT END
 /mob/living/proc/can_use_guns(obj/item/G)//actually used for more than guns!
 	if(G.trigger_guard == TRIGGER_GUARD_NONE)
 		to_chat(src, span_warning("You are unable to fire this!"))
@@ -2359,6 +2361,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	looking_holder = new(get_looking_turf(DOWN), src, DOWN)
 	reset_perspective(looking_holder)
 
+// VOIDCREW EDIT START - PR #284: Port MonkeStation soft-crit item use.
 /mob/living/set_stat(new_stat)
 	. = ..()
 	if(isnull(.))
@@ -2375,7 +2378,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(SOFT_CRIT)
 			if(stat >= UNCONSCIOUS)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT) //adding trait sources should come before removing to avoid unnecessary updates
-				ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT) // VOIDCREW EDIT: soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/mobs/softcrit_interaction.dm)
+				ADD_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT) // VOIDCREW EDIT: soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/modules/mob/mob.dm)
 			if(pulledby)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT)
 		if(UNCONSCIOUS)
@@ -2400,7 +2403,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
 			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
 			log_combat(src, src, "entered soft crit")
-			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT) // VOIDCREW EDIT: soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/mobs/softcrit_interaction.dm)
+			REMOVE_TRAIT(src, TRAIT_HANDS_BLOCKED, STAT_TRAIT) // VOIDCREW EDIT: soft crit interaction: permit selected actions while retaining other incapacitation checks (voidcrew/edits/modules/mob/mob.dm)
 		if(UNCONSCIOUS)
 			if(. != HARD_CRIT)
 				become_blind(UNCONSCIOUS_TRAIT)
@@ -2426,6 +2429,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 
 ///Reports the event of the change in value of the buckled variable.
+// VOIDCREW EDIT END
 /mob/living/proc/set_buckled(new_buckled)
 	if(new_buckled == buckled)
 		return

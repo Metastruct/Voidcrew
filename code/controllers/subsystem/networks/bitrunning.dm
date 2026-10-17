@@ -1,11 +1,13 @@
 #define REDACTED "???"
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 SUBSYSTEM_DEF(bitrunning)
 	name = "Bitrunning"
 	flags = SS_NO_FIRE
 
 	var/list/all_domains = list()
 
+// VOIDCREW EDIT END
 /datum/controller/subsystem/bitrunning/Initialize()
 	InitializeDomains()
 	return SS_INIT_SUCCESS
@@ -37,7 +39,6 @@ SUBSYSTEM_DEF(bitrunning)
 		))
 
 	return levels
-
 
 /datum/controller/subsystem/bitrunning/proc/pick_secondary_loot(completed_domain)
 	var/datum/lazy_template/virtual_domain/domain = completed_domain

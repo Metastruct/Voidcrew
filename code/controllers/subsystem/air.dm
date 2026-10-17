@@ -106,6 +106,16 @@ SUBSYSTEM_DEF(air)
 
 
 /datum/controller/subsystem/air/fire(resumed = FALSE)
+	// VOIDCREW EDIT ADDITION START - ship and checkpoint loads switch can_fire off so atmos cannot see a
+	// template's machines before setup_template_machinery() has built their pipelines. can_fire
+	// only stops new runs: the MC still resumes a run paused before the load began, or one queued
+	// just before it. That run's next stage copies atmos_machinery afresh, loaded pumps and
+	// heaters with no pipelines included, and its rebuilds expand into pipes whose Initialize has
+	// not set their volume yet. Drop the rest of the run; the next one starts from the top.
+	if(!can_fire)
+		currentpart = SSAIR_PIPENETS
+		return
+	// VOIDCREW EDIT END
 	var/timer = TICK_USAGE_REAL
 
 	//Rebuilds can happen at any time, so this needs to be done outside of the normal system
@@ -125,7 +135,7 @@ SUBSYSTEM_DEF(air)
 	// outside process_rebuilds() - that block only runs when a queue is non-empty, and an
 	// orphan by definition is not in any queue. Runs before the drain so it can never be
 	// editing networks/expansion_queue while expand_pipeline() is walking them.
-	// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/subsystem/air_cleanup.dm).
+	// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/controllers/subsystem/air.dm).
 	reap_orphan_pipelines()
 
 	// Every time we fire, we want to make sure pipenets are rebuilt. The game state could have changed between each fire() proc call
@@ -301,7 +311,7 @@ SUBSYSTEM_DEF(air)
 	// constantly: pipe/nullify_node() queues the neighbour it just disconnected from, and
 	// during a mass deletion that neighbour is very often already in the qdel queue.
 	if(QDELETED(atmos_machine))
-		// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/subsystem/air_cleanup.dm).
+		// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/controllers/subsystem/air.dm).
 		return
 	if(istype(atmos_machine, /obj/machinery/atmospherics) && !atmos_machine.rebuilding)
 		rebuild_queue += atmos_machine
@@ -420,9 +430,8 @@ SUBSYSTEM_DEF(air)
 		if (MC_TICK_CHECK)
 			return
 
-
 /datum/controller/subsystem/air/proc/process_rebuilds()
-	// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/subsystem/air_cleanup.dm).
+	// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/controllers/subsystem/air.dm).
 	reap_pipeline_husks()
 	//Yes this does mean rebuilding pipenets can freeze up the subsystem forever, but if we're in that situation something else is very wrong
 	var/list/currentrun = rebuild_queue
@@ -501,7 +510,7 @@ SUBSYSTEM_DEF(air)
 			// expansion_queue, which is the list this very drain is walking. Park it and
 			// let reap_pipeline_husks() take it on a later fire - leaving it was a
 			// permanent member-less pipeline in SSair.networks, one per site build.
-			// VOIDCREW EDIT START: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/subsystem/air_cleanup.dm).
+			// VOIDCREW EDIT START: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/controllers/subsystem/air.dm).
 			if(stolen_from && stolen_from != net && !QDELETED(stolen_from) && !length(stolen_from.members) && !length(stolen_from.other_atmos_machines))
 				if(stolen_from.building)
 					pipeline_husks |= stolen_from
@@ -767,7 +776,7 @@ SUBSYSTEM_DEF(air)
 		// pipeline into SSair.networks, and a machine that deleted itself during its own
 		// Initialize() will never delete that pipeline again.
 		if(QDELETED(AM))
-			// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/subsystem/air_cleanup.dm).
+			// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/controllers/subsystem/air.dm).
 			continue
 		var/list/targets = AM.get_rebuild_targets()
 		for(var/datum/pipeline/build_off as anything in targets)
@@ -802,7 +811,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 		// (stacked pipes on one turf, which every voidcrew hull has some of). Minting a
 		// pipeline for it leaks one per template load, and this soak loads constantly.
 		if(QDELETED(AM))
-			// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/subsystem/air_cleanup.dm).
+			// VOIDCREW EDIT: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/controllers/subsystem/air.dm).
 			continue
 		var/list/targets = AM.get_rebuild_targets()
 		for(var/datum/pipeline/build_off as anything in targets)
@@ -862,7 +871,7 @@ GLOBAL_LIST_EMPTY(colored_images)
 		// ADD_GAS below then indexes a null list once per turf that uses the string.
 		// Warn once for the mix instead and leave that component out.
 		if(!ispath(path))
-			// VOIDCREW EDIT START: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/subsystem/air_cleanup.dm).
+			// VOIDCREW EDIT START: Keep atmos rebuild cleanup safe across repeated site loads (voidcrew/edits/controllers/subsystem/air.dm).
 			stack_trace("parse_gas_string(): unknown gas id \"[id]\" in gas string \"[gas_string]\" - ignoring it.")
 			continue
 			// VOIDCREW EDIT END

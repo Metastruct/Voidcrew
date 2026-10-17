@@ -50,6 +50,7 @@
 	do_bloodcrawl(blood_nearby, cast_on)
 
 /// Returns a nearby blood decal, or null if there aren't any
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/find_nearby_blood(turf/origin)
 	for(var/obj/effect/decal/cleanable/blood_nearby in range(blood_radius, origin))
 		if(is_valid_blood_destination(origin, blood_nearby)) // VOIDCREW EDIT: jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/spells/jaunt_destinations.dm)
@@ -60,6 +61,7 @@
  * Attempts to enter or exit the passed blood pool.
  * Returns TRUE if we successfully entered or exited said pool, FALSE otherwise
  */
+// VOIDCREW EDIT END
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/do_bloodcrawl(obj/effect/decal/cleanable/blood, mob/living/jaunter)
 	if(is_jaunting(jaunter))
 		. = try_exit_jaunt(blood, jaunter)
@@ -74,6 +76,7 @@
  * Attempts to enter the passed blood pool.
  * If forced is TRUE, it will override enter_blood_time.
  */
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/try_enter_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter, forced = FALSE)
 	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/spells/jaunt_destinations.dm)
 	if(!is_valid_blood_destination(jaunter, blood))
@@ -123,6 +126,8 @@
  * Attempts to Exit the passed blood pool.
  * If forced is TRUE, it will override exit_blood_time, and if we're currently consuming someone.
  */
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/try_exit_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter, forced = FALSE)
 	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/spells/jaunt_destinations.dm)
 	if(!is_valid_blood_destination(jaunter, blood))
@@ -149,6 +154,7 @@
 	blood.visible_message(span_boldwarning("[jaunter] rises out of [blood]!"))
 	return TRUE
 
+// VOIDCREW EDIT END
 /datum/action/cooldown/spell/jaunt/bloodcrawl/on_jaunt_exited(obj/effect/dummy/phased_mob/jaunt, mob/living/unjaunter)
 	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
 	exit_blood_effect(unjaunter)

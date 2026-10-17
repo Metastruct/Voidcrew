@@ -326,7 +326,7 @@
 
 /obj/singularity/proc/consume(atom/thing)
 	// VOIDCREW EDIT START - trade outpost protection: stop suppressed or protected hazards before further effects
-	if(QDELETED(src) || is_trader_outpost_protected(src) || is_trader_outpost_protected(thing)) // VOIDCREW
+	if(QDELETED(src) || is_trader_outpost_protected(src) || is_trader_outpost_protected(thing) || singularity_spares(thing)) // VOIDCREW
 		return
 	// VOIDCREW EDIT END
 	if(istype(thing, /obj/item/storage/backpack/holding) && !consumed_supermatter && !collapsing)

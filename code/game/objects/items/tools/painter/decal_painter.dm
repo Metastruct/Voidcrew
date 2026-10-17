@@ -37,8 +37,9 @@
  * Arguments:
  * * target - The turf being painted to
 */
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/airlock_painter/decal/proc/paint_floor(turf/open/floor/target)
-	var/list/decal_data = get_decal_data() // VOIDCREW EDIT: shuttle construction: route captured designs and remote building through construction hooks (voidcrew/edits/objects/items/construction_hooks.dm)
+	var/list/decal_data = get_decal_data() // VOIDCREW EDIT: shuttle construction: route captured designs and remote building through construction hooks (voidcrew/edits/game/objects/items/tools/painter/decal_painter.dm)
 
 	target.AddElement( \
 		/datum/element/decal, \
@@ -50,6 +51,7 @@
 		_cleanable = FALSE, \
 	)
 
+// VOIDCREW EDIT END
 /obj/item/airlock_painter/decal/proc/set_category(datum/paintable_decal_category/category)
 	current_category = category
 	selected_color = category.possible_colors?[category.possible_colors[1]]

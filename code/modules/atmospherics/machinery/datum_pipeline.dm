@@ -19,11 +19,6 @@
 	var/update = TRUE
 	///Is this pipeline being reconstructed?
 	var/building = FALSE
-	/// VOIDCREW ADDITION: consecutive orphan sweeps this pipeline has been found with no
-	/// live members on. Reset the moment it has any. See SSair.reap_orphan_pipelines().
-	// VOIDCREW EDIT: Detach pipeline ownership safely and remove stale members during site churn (voidcrew/edits/atmospherics/pipeline_cleanup.dm).
-	var/orphan_strikes = 0
-
 
 /datum/pipeline/New()
 	other_airs = list()
@@ -46,7 +41,7 @@
 	// removes the component from other_atmos_machines) - a for-in over the live list
 	// skips every other entry when the current one is removed. Detach the lists first.
 	var/list/dying_members = members
-	// VOIDCREW EDIT START: Detach pipeline ownership safely and remove stale members during site churn (voidcrew/edits/atmospherics/pipeline_cleanup.dm).
+	// VOIDCREW EDIT START: Detach pipeline ownership safely and remove stale members during site churn (voidcrew/edits/modules/atmospherics/machinery/datum_pipeline.dm).
 	members = list()
 	for(var/obj/machinery/atmospherics/pipe/considered_pipe in dying_members)
 		// Only sever pipes that are still ours: a pipe already rebuilt into a LIVE
@@ -59,7 +54,7 @@
 		if(QDELETED(considered_pipe))
 			continue
 		SSair.add_to_rebuild_queue(considered_pipe)
-	// VOIDCREW EDIT START: Detach pipeline ownership safely and remove stale members during site churn (voidcrew/edits/atmospherics/pipeline_cleanup.dm).
+	// VOIDCREW EDIT START: Detach pipeline ownership safely and remove stale members during site churn (voidcrew/edits/modules/atmospherics/machinery/datum_pipeline.dm).
 	var/list/dying_machines = other_atmos_machines
 	other_atmos_machines = list()
 	for(var/obj/machinery/atmospherics/components/considered_component in dying_machines)
@@ -210,7 +205,7 @@
 	// in both pipelines at once, and concatenating duplicated the shared pipes into
 	// the survivor's members (each duplicate = one permanent GC-blocking ref).
 	var/list/merged_members = parent_pipeline.members
-	// VOIDCREW EDIT START: Detach pipeline ownership safely and remove stale members during site churn (voidcrew/edits/atmospherics/pipeline_cleanup.dm).
+	// VOIDCREW EDIT START: Detach pipeline ownership safely and remove stale members during site churn (voidcrew/edits/modules/atmospherics/machinery/datum_pipeline.dm).
 	parent_pipeline.members = list()
 	members |= merged_members
 	for(var/obj/machinery/atmospherics/pipe/reference_pipe in merged_members)
@@ -223,7 +218,7 @@
 			require_custom_reconcilation |= reference_component
 	other_atmos_machines |= parent_pipeline.other_atmos_machines
 	other_airs |= parent_pipeline.other_airs
-	// VOIDCREW EDIT REMOVAL: Detach pipeline ownership safely and remove stale members during site churn (voidcrew/edits/atmospherics/pipeline_cleanup.dm).
+	// VOIDCREW EDIT REMOVAL: Detach pipeline ownership safely and remove stale members during site churn (voidcrew/edits/modules/atmospherics/machinery/datum_pipeline.dm).
 	parent_pipeline.other_atmos_machines.Cut()
 	parent_pipeline.require_custom_reconcilation.Cut()
 	update = TRUE

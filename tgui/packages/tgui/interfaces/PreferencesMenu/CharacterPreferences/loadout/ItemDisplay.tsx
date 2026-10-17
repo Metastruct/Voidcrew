@@ -1,3 +1,4 @@
+// VOIDCREW EDIT START - Voidcrew loadout costs and store integration.
 import { useBackend } from 'tgui/backend';
 import {
   DmIcon,
@@ -212,3 +213,4 @@ export function SearchDisplay(props: SearchProps) {
 
   return <ItemListDisplay items={validLoadoutItems} />;
 }
+// VOIDCREW EDIT END

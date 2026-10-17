@@ -1,3 +1,4 @@
+// VOIDCREW EDIT START - Voidcrew character-slot and loadout integration.
 import { sortBy } from 'es-toolkit';
 import { filter, map } from 'es-toolkit/compat';
 import { type ReactNode, useState } from 'react';
@@ -627,3 +628,4 @@ export function MainPage(props: MainPageProps) {
     </>
   );
 }
+// VOIDCREW EDIT END

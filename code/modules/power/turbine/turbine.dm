@@ -238,7 +238,7 @@
 /obj/machinery/power/turbine/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change = TRUE)
 	. = ..()
 	if(shuttle_moving) // VOIDCREW EDIT ADDITION - a shuttle move carries the whole assembly together; see onShuttleMove below
-		return // VOIDCREW EDIT: shuttle turbine integration: preserve the assembly throughout movement (voidcrew/edits/machinery/turbine_shuttle.dm)
+		return // VOIDCREW EDIT: shuttle turbine integration: preserve the assembly throughout movement (voidcrew/edits/modules/power/turbine/turbine.dm)
 	set_panel_open(TRUE)
 	update_appearance(UPDATE_OVERLAYS)
 	deactivate_parts()

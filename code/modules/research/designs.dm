@@ -166,4 +166,4 @@ other types of metals and chemistry for reagents).
 	refill_experimental_technology_deck()
 	// VOIDCREW EDIT END
 
-// VOIDCREW EDIT: research refills the experimental technology deck at exhaustion; implementation in voidcrew/modules/research/experimental_technology_deck.dm.
+// VOIDCREW EDIT: research refills the experimental technology deck at exhaustion; implementation in voidcrew/edits/modules/research/designs.dm.

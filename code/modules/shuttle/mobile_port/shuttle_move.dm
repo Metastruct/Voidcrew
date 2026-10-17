@@ -12,6 +12,11 @@
 		return DOCKING_NULL_DESTINATION
 	// VOIDCREW EDIT END
 
+	// VOIDCREW EDIT ADDITION START: also enforce bay ownership on forced template loads.
+	if(!new_dock.allows_ship_bay_docking(src))
+		return DOCKING_BLOCKED
+	// VOIDCREW EDIT ADDITION END
+
 	if(new_dock.get_docked() == src)
 		remove_ripples()
 		return DOCKING_SUCCESS
@@ -124,7 +129,7 @@
 	remove_ripples()
 	return DOCKING_SUCCESS
 
-// VOIDCREW EDIT: shuttle preserves whole hull powernets and repairs aborted moves; implementation in voidcrew/modules/shuttle/shuttle_move_helpers.dm.
+// VOIDCREW EDIT: shuttle preserves whole hull powernets and repairs aborted moves; implementation in voidcrew/edits/modules/shuttle/mobile_port/shuttle_move.dm.
 
 /obj/docking_port/mobile/proc/preflight_check(list/old_turfs, list/new_turfs, list/areas_to_move, list/underlying_areas, rotation)
 	for(var/i in 1 to length(old_turfs))

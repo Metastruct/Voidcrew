@@ -15,6 +15,7 @@
  *
  */
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather
 	/// name of weather
 	var/name = "space wind"
@@ -136,6 +137,7 @@
 	/// The actual atom that holds our reagents that is held in nullspace
 	var/obj/effect/abstract/weather_reagent_holder
 
+// VOIDCREW EDIT END
 /datum/weather/New(z_levels, list/weather_data, datum/weather_site/site) // VOIDCREW EDIT - optional scheduling site
 	..()
 
@@ -235,9 +237,9 @@
 		send_alert(telegraph_message, telegraph_sound, telegraph_sound_vol)
 	addtimer(CALLBACK(src, PROC_REF(start)), telegraph_duration)
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather/proc/setup_weather_areas()
 	var/list/affectareas = list()
-	// VOIDCREW EDIT ADDITION START - a site-launched storm already knows its area instances, so
 	// it skips the world-wide get_areas() sweep and never picks up a co-tenant's areas.
 	//
 	// An area-scoped site that owns NOTHING impacts nothing, rather than falling through to the
@@ -250,8 +252,7 @@
 	if(isnull(candidate_areas) && !weather_site?.area_scoped)
 		candidate_areas = get_areas(area_type)
 		log_packed_level_area_sweep()
-	// VOIDCREW EDIT ADDITION END
-	// VOIDCREW EDIT: Scope storm effects to their site and bound planetary weather work (voidcrew/edits/weather/packed_sites.dm).
+	// VOIDCREW EDIT: Scope storm effects to their site and bound planetary weather work (voidcrew/edits/datums/weather/weather.dm).
 	for(var/area/selected_area as anything in candidate_areas)
 		affectareas += selected_area
 	for(var/area/protected_area as anything in protected_areas)
@@ -266,7 +267,7 @@
 				continue
 
 			impacted_areas |= affected_area
-			// VOIDCREW EDIT: Use an area membership lookup for site-scoped storm eligibility (voidcrew/edits/weather/packed_sites.dm).
+			// VOIDCREW EDIT: Use an area membership lookup for site-scoped storm eligibility (voidcrew/edits/datums/weather/weather.dm).
 			impacted_areas_lookup[affected_area] = TRUE
 
 			if(!(weather_flags & (WEATHER_THUNDER|WEATHER_TURFS)))
@@ -282,8 +283,8 @@
 			impacted_areas_weighted[z_string][affected_area] = total_turfs
 			total_impacted_turfs += total_turfs
 
-
 /// Selects a turf impacted by weather, if available, otherwise returns null
+// VOIDCREW EDIT END
 /datum/weather/proc/pick_turf()
 	var/z_string = pick_weight_recursive(impacted_z_levels_weighted)
 	var/area/selected_area = pick_weight_recursive(impacted_areas_weighted[z_string])
@@ -296,6 +297,7 @@
 		return pick(available_turfs)
 	return
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather/proc/setup_weather_turfs()
 	if(!(weather_flags & (WEATHER_TURFS|WEATHER_THUNDER)))
 		return
@@ -304,7 +306,7 @@
 
 	if(weather_flags & (WEATHER_TURFS))
 		weather_turfs_per_tick = total_impacted_turfs * turf_weather_chance
-		// VOIDCREW EDIT: Scope storm effects to their site and bound planetary weather work (voidcrew/edits/weather/packed_sites.dm).
+		// VOIDCREW EDIT: Scope storm effects to their site and bound planetary weather work (voidcrew/edits/datums/weather/weather.dm).
 		weather_turfs_per_tick = min(weather_turfs_per_tick, turf_act_containers_only ? MAX_CONTAINER_ONLY_TURFS_PER_TICK : MAX_TURFS_PER_TICK)
 	if(weather_flags & (WEATHER_THUNDER))
 		thunder_turfs_per_tick = total_impacted_turfs * turf_thunder_chance
@@ -317,6 +319,7 @@
  * Begins dealing effects from weather to mobs in the area
  *
  */
+// VOIDCREW EDIT END
 /datum/weather/proc/start()
 	if(stage >= MAIN_STAGE)
 		return
@@ -394,10 +397,9 @@
 // the checks for if a mob should receive alerts, returns TRUE if can
 /datum/weather/proc/can_get_alert(mob/player)
 	var/turf/mob_turf = get_turf(player)
-	// VOIDCREW EDIT START: Use an area membership lookup for site-scoped storm eligibility (voidcrew/edits/weather/packed_sites.dm).
+	// VOIDCREW EDIT START: Use an area membership lookup for site-scoped storm eligibility (voidcrew/edits/datums/weather/weather.dm).
 	if(isnull(mob_turf))
 		return FALSE
-	// VOIDCREW EDIT ADDITION START - alerts follow the impacted AREAS, not the whole z-level.
 	// clients_by_zlevel alone tells a crew standing in a cave (or, once several places share
 	// a level, on the neighbouring planet) about a surface storm that cannot reach them.
 	// Storms with no area scoping at all keep the plain on-an-impacted-z behaviour.
@@ -414,19 +416,17 @@
 	// (flat co-tenants all sit in the one global /area/space).
 	if(weather_site && !weather_site.contains_turf(mob_turf))
 		return FALSE
-	// VOIDCREW EDIT ADDITION END
 	return TRUE
 	// VOIDCREW EDIT END
 
 /**
  * Returns TRUE if the living mob can be affected by the weather
  */
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather/proc/can_weather_act_mob(mob/living/mob_to_check)
 	// Preserve effects on abandoned player bodies while excluding ordinary fauna.
-	// VOIDCREW EDIT START: Restrict planetary storm damage to current or former player bodies.
 	if(!mob_to_check.mind && !mob_to_check.ever_had_mind)
 		return
-	// VOIDCREW EDIT END
 
 	var/turf/mob_turf = get_turf(mob_to_check)
 
@@ -436,7 +436,7 @@
 	if(!(mob_turf.z in impacted_z_levels))
 		return
 
-	// VOIDCREW EDIT: Use an area membership lookup for site-scoped storm eligibility (voidcrew/edits/weather/packed_sites.dm).
+	// VOIDCREW EDIT: Use an area membership lookup for site-scoped storm eligibility (voidcrew/edits/datums/weather/weather.dm).
 	if(!impacted_areas_lookup[mob_turf.loc])
 		return
 
@@ -450,6 +450,7 @@
 /**
  * Returns TRUE if the atom should protect itself or its contents from weather
  */
+// VOIDCREW EDIT END
 /datum/weather/proc/recursive_weather_protection_check(atom/to_check)
 	return HAS_TRAIT(to_check, TRAIT_WEATHER_IMMUNE) || (immunity_type && HAS_TRAIT(to_check, immunity_type))
 
@@ -497,11 +498,11 @@
 /**
  * Affects the turf with whatever the weather does
  */
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather/proc/weather_act_turf(turf/open/weather_turf)
 	if(!weather_reagent || !weather_reagent_holder)
 		return
 
-	// VOIDCREW EDIT START: Scope storm effects to their site and bound planetary weather work (voidcrew/edits/weather/packed_sites.dm).
 	if(turf_act_containers_only)
 		for(var/atom/movable/thing as anything in weather_turf)
 			if(is_reagent_container(thing))
@@ -514,7 +515,6 @@
 				if(!tray.IsObscured())
 					tray.adjust_waterlevel(rand(5, 10))
 		return
-	// VOIDCREW EDIT END
 
 	weather_reagent_holder.reagents.expose(weather_turf, TOUCH, TURF_REAGENT_VOLUME_MULTIPLIER)
 	for(var/atom/thing as anything in weather_turf)
@@ -539,6 +539,8 @@
 /**
  * Affects the turf with thunder
  */
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather/proc/thunder_act_turf(turf/open/weather_turf)
 	var/obj/effect/temp_visual/thunderbolt/thunder = new(weather_turf)
 	thunder.flash_lighting_fx(6, 2, duration = thunder.duration)
@@ -547,10 +549,8 @@
 		thunder.color = thunder_color
 
 	for(var/mob/living/hit_mob in weather_turf)
-		// VOIDCREW EDIT START: Restrict planetary storm damage to current or former player bodies.
 		if(!can_weather_act_mob(hit_mob))
 			continue
-		// VOIDCREW EDIT END
 		to_chat(hit_mob, span_userdanger("You've been struck by lightning!"))
 		hit_mob.electrocute_act(50, "thunder", flags = SHOCK_TESLA|SHOCK_NOGLOVES)
 
@@ -574,13 +574,14 @@
 /**
  * Updates the overlays on impacted areas
  */
+// VOIDCREW EDIT END
 /datum/weather/proc/update_areas()
 	var/list/new_overlay_cache = generate_overlay_cache()
 	for(var/area/impacted as anything in impacted_areas)
 		// VOIDCREW EDIT ADDITION - a hard-deleted area is nulled IN PLACE in this list rather
 		// than removed from it, and `as anything` skips the istype filter that would catch it.
 		if(isnull(impacted))
-			// VOIDCREW EDIT: Scope storm effects to their site and bound planetary weather work (voidcrew/edits/weather/packed_sites.dm).
+			// VOIDCREW EDIT: Scope storm effects to their site and bound planetary weather work (voidcrew/edits/datums/weather/weather.dm).
 			continue
 		if(length(overlay_cache))
 			impacted.overlays -= overlay_cache

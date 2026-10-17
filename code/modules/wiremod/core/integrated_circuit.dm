@@ -290,7 +290,7 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 		to_add.register_shell(shell)
 	return TRUE
 
-// VOIDCREW EDIT: circuits provides per-board component restrictions; implementation in voidcrew/modules/circuits/component_hooks.dm.
+// VOIDCREW EDIT: circuits provides per-board component restrictions; implementation in voidcrew/edits/modules/wiremod/core/integrated_circuit.dm.
 
 /**
  * Adds a component to the circuitboard through a manual action.

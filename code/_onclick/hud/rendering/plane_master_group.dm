@@ -94,6 +94,7 @@
 
 /// Actually generate our plane masters, in some offset range (where offset is the z layers to render to, because each "layer" in a multiz stack gets its own plane master cube)
 /// Returns the list of plane masters we just built, so callers that run after we already have a hud can show them
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/plane_master_group/proc/build_plane_masters(starting_offset, ending_offset)
 	// VOIDCREW EDIT: Return new plane masters so the HUD can show and offset planes after a live map load.
 	var/list/atom/movable/screen/plane_master/built = list()
@@ -110,6 +111,7 @@
 			// VOIDCREW EDIT END
 
 /// Similarly, exists so subtypes can do unique behavior to planes on creation
+// VOIDCREW EDIT END
 /datum/plane_master_group/proc/prep_plane_instance(atom/movable/screen/plane_master/instance)
 	return
 

@@ -54,6 +54,7 @@
 		turn_off(user)
 	update_appearance()
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/update_icon_state()
 	// VOIDCREW EDIT START - Voidcrew clothing sprites: use dedicated inhand states from voidcrew/icons/mob/inhands/clothing
 	icon_state = "hardhat[on]_[hat_type]"
@@ -64,6 +65,7 @@
 	// VOIDCREW EDIT END
 	return ..()
 
+// VOIDCREW EDIT END
 /obj/item/clothing/head/utility/hardhat/proc/turn_on(mob/user)
 	set_light_on(TRUE)
 
@@ -79,12 +81,15 @@
 /obj/item/clothing/head/utility/hardhat/attack_self(mob/living/user)
 	toggle_helmet_light(user)
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/orange
 	icon_state = "hardhat0_orange"
 	inhand_icon_state = "hardhat_orange" // VOIDCREW EDIT: Voidcrew clothing sprites: use dedicated inhand states from voidcrew/icons/mob/inhands/clothing
 	hat_type = "orange"
 	dog_fashion = null
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/red
 	icon_state = "hardhat0_red"
 	inhand_icon_state = "hardhat_red" // VOIDCREW EDIT: Voidcrew clothing sprites: use dedicated inhand states from voidcrew/icons/mob/inhands/clothing
@@ -97,6 +102,8 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/red/upgraded
 	name = "workplace-ready firefighter helmet"
 	desc = "By applying state of the art lighting technology to a fire helmet, and using photo-chemical hardening methods, this hardhat will protect you from robust workplace hazards."
@@ -107,6 +114,8 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT*5)
 	hat_type = "purple"
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/white
 	icon_state = "hardhat0_white"
 	inhand_icon_state = "hardhat_white" // VOIDCREW EDIT: Voidcrew clothing sprites: use dedicated inhand states from voidcrew/icons/mob/inhands/clothing
@@ -118,12 +127,15 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/dblue
 	icon_state = "hardhat0_dblue"
 	inhand_icon_state = "hardhat_dblue" // VOIDCREW EDIT: Voidcrew clothing sprites: use dedicated inhand states from voidcrew/icons/mob/inhands/clothing
 	hat_type = "dblue"
 	dog_fashion = null
 
+// VOIDCREW EDIT END
 /obj/item/clothing/head/utility/hardhat/welding
 	name = "welding hard hat"
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield! The bulb seems a little smaller though."
@@ -176,11 +188,14 @@
 	up = FALSE
 	visor_toggling()
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/welding/orange
 	icon_state = "hardhat0_orange"
 	inhand_icon_state = "hardhat_orange" // VOIDCREW EDIT: Voidcrew clothing sprites: use dedicated inhand states from voidcrew/icons/mob/inhands/clothing
 	hat_type = "orange"
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/welding/white
 	desc = "A piece of headgear used in dangerous working conditions to protect the head. Comes with a built-in flashlight AND welding shield!" //This bulb is not smaller
 	icon_state = "hardhat0_white"
@@ -193,6 +208,7 @@
 	cold_protection = HEAD
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 
+// VOIDCREW EDIT END
 /obj/item/clothing/head/utility/hardhat/welding/white/up
 	up = TRUE // for calls to worn_overlays before init (prefs)
 
@@ -202,11 +218,14 @@
 	visor_toggling()
 
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/welding/dblue
 	icon_state = "hardhat0_dblue"
 	inhand_icon_state = "hardhat_dblue" // VOIDCREW EDIT: Voidcrew clothing sprites: use dedicated inhand states from voidcrew/icons/mob/inhands/clothing
 	hat_type = "dblue"
 
+// VOIDCREW EDIT END
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/welding/atmos
 	icon_state = "hardhat0_atmos"
 	inhand_icon_state = "hardhat_atmos" // VOIDCREW EDIT: Voidcrew clothing sprites: use dedicated inhand states from voidcrew/icons/mob/inhands/clothing
@@ -227,11 +246,13 @@
 	visor_flags_inv = NONE
 	visor_state = "weldvisor_atmos"
 
+// VOIDCREW EDIT END
 /obj/item/clothing/head/utility/hardhat/welding/atmos/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/pumpkinhead
 	name = "carved pumpkin"
 	desc = "A jack o' lantern! Believed to ward off evil spirits."
@@ -252,6 +273,7 @@
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 	clothing_traits = list()
 
+// VOIDCREW EDIT END
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
@@ -284,6 +306,7 @@
 	. = ..()
 	dog_fashion = /datum/dog_fashion/head/pumpkin/unlit
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin
 	name = "carved blumpkin"
 	desc = "A very blue jack o' lantern! Believed to ward off vengeful chemists."
@@ -293,6 +316,7 @@
 	light_color = "#76ff8e"
 	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
 
+// VOIDCREW EDIT END
 /obj/item/clothing/head/utility/hardhat/pumpkinhead/blumpkin/turn_on(mob/user)
 	. = ..()
 	dog_fashion = /datum/dog_fashion/head/blumpkin/lit
@@ -301,6 +325,7 @@
 	. = ..()
 	dog_fashion = /datum/dog_fashion/head/blumpkin/unlit
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /obj/item/clothing/head/utility/hardhat/reindeer
 	name = "novelty reindeer hat"
 	desc = "Some fake antlers and a very fake red nose."
@@ -316,3 +341,4 @@
 	clothing_traits = list()
 
 	dog_fashion = /datum/dog_fashion/head/reindeer
+// VOIDCREW EDIT END

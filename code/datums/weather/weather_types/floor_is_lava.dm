@@ -28,6 +28,7 @@
 	weather_flags = (WEATHER_MOBS | WEATHER_INDOORS)
 
 
+// VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/weather/floor_is_lava/can_weather_act_mob(mob/living/mob_to_check)
 	// VOIDCREW EDIT REMOVAL: Use common weather eligibility so abandoned player bodies remain affected by lava weather.
 	. = ..()
@@ -42,6 +43,7 @@
 	if(mob_to_check.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
 
+// VOIDCREW EDIT END
 /datum/weather/floor_is_lava/weather_act_mob(mob/living/victim)
 	victim.adjustFireLoss(3)
 	return ..()

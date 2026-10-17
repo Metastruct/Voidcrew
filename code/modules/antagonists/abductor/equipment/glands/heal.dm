@@ -154,7 +154,7 @@
 /obj/item/organ/heart/gland/heal/proc/replace_eyes(obj/item/organ/eyes/eyes)
 	// VOIDCREW EDIT ADDITION: capture the recipient before organ-removal callbacks can change it.
 	var/mob/living/carbon/recipient = owner
-	var/generation = healing_generation // VOIDCREW EDIT: healing gland integration: pending regrowth belongs to one continuous implantation (voidcrew/edits/mobs/healing_gland.dm)
+	var/generation = healing_generation // VOIDCREW EDIT: healing gland integration: pending regrowth belongs to one continuous implantation (voidcrew/edits/modules/antagonists/abductor/equipment/glands/heal.dm)
 	if(eyes)
 		owner.visible_message(span_warning("[owner]'s [eyes.name] fall out of their sockets!"), span_userdanger("Your [eyes.name] fall out of their sockets!"))
 		playsound(owner, 'sound/effects/splat.ogg', 50, TRUE)
@@ -180,7 +180,7 @@
 /obj/item/organ/heart/gland/heal/proc/replace_limb(body_zone, obj/item/bodypart/limb)
 	// VOIDCREW EDIT ADDITION: limb-removal callbacks must not redirect the pending regrowth.
 	var/mob/living/carbon/recipient = owner
-	var/generation = healing_generation // VOIDCREW EDIT: healing gland integration: pending regrowth belongs to one continuous implantation (voidcrew/edits/mobs/healing_gland.dm)
+	var/generation = healing_generation // VOIDCREW EDIT: healing gland integration: pending regrowth belongs to one continuous implantation (voidcrew/edits/modules/antagonists/abductor/equipment/glands/heal.dm)
 	if(limb)
 		owner.visible_message(span_warning("[owner]'s [limb.plaintext_zone] suddenly detaches from [owner.p_their()] body!"), span_userdanger("Your [limb.plaintext_zone] suddenly detaches from your body!"))
 		playsound(owner, SFX_DESECRATION, 50, TRUE, -1)
