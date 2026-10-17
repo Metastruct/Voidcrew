@@ -21,7 +21,6 @@
 	/// VOIDCREW EDIT: physical exit references travel with the deck during shuttle movement.
 	var/list/exit_point_list
 
-
 /datum/action/cooldown/spell/jaunt/ethereal_jaunt/enter_jaunt(mob/living/jaunter, turf/loc_override)
 	. = ..()
 	if(!.)

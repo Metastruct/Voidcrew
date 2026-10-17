@@ -53,7 +53,7 @@
 // VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/find_nearby_blood(turf/origin)
 	for(var/obj/effect/decal/cleanable/blood_nearby in range(blood_radius, origin))
-		if(is_valid_blood_destination(origin, blood_nearby)) // VOIDCREW EDIT: jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/spells/jaunt_destinations.dm)
+		if(is_valid_blood_destination(origin, blood_nearby)) // VOIDCREW EDIT: jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/modules/spells/spell_types/jaunt/bloodcrawl.dm)
 			return blood_nearby
 	return null
 
@@ -78,7 +78,7 @@
  */
 // VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/try_enter_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter, forced = FALSE)
-	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/spells/jaunt_destinations.dm)
+	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/modules/spells/spell_types/jaunt/bloodcrawl.dm)
 	if(!is_valid_blood_destination(jaunter, blood))
 		return FALSE
 	// VOIDCREW EDIT END
@@ -89,7 +89,7 @@
 				return FALSE
 
 	// The pool or its teleport permissions may have changed during the wind-up.
-	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/spells/jaunt_destinations.dm)
+	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/modules/spells/spell_types/jaunt/bloodcrawl.dm)
 	if(!is_valid_blood_destination(jaunter, blood))
 		return FALSE
 	// VOIDCREW EDIT END
@@ -129,7 +129,7 @@
 // VOIDCREW EDIT END
 // VOIDCREW EDIT START - PR #123: ship systems and overmap integration.
 /datum/action/cooldown/spell/jaunt/bloodcrawl/proc/try_exit_jaunt(obj/effect/decal/cleanable/blood, mob/living/jaunter, forced = FALSE)
-	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/spells/jaunt_destinations.dm)
+	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/modules/spells/spell_types/jaunt/bloodcrawl.dm)
 	if(!is_valid_blood_destination(jaunter, blood))
 		return FALSE
 	// VOIDCREW EDIT END
@@ -144,7 +144,7 @@
 				return FALSE
 
 	// Moving into a NOTELEPORT area makes eject_jaunter scatter us across the z-level.
-	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/spells/jaunt_destinations.dm)
+	// VOIDCREW EDIT START - jaunt destination integration: validate teleport permission before and after the wind-up (voidcrew/edits/modules/spells/spell_types/jaunt/bloodcrawl.dm)
 	if(!is_valid_blood_destination(jaunter, blood))
 		return FALSE
 	// VOIDCREW EDIT END

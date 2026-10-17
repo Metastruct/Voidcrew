@@ -317,13 +317,13 @@
 			if(!initial(window_path.fulltile))
 				//not user.dir: a remotely driven RCD builds where its drone is looking, not
 				//where the body credited with the build happens to be pointing
-				// VOIDCREW EDIT START - shuttle construction: directional builds follow the remote drone (voidcrew/edits/objects/items/construction_hooks.dm)
+				// VOIDCREW EDIT START - shuttle construction: directional builds follow the remote drone (voidcrew/edits/game/objects/items/rcd/RCD.dm)
 				var/build_dir = the_rcd.rcd_build_dir(user)
 				if(!valid_build_direction(src, build_dir, is_fulltile = FALSE))
 				// VOIDCREW EDIT END
 					balloon_alert(user, "window already here!")
 					return FALSE
-				var/obj/structure/window/WD = new window_path(src, build_dir) // VOIDCREW EDIT: shuttle construction: directional builds follow the remote drone (voidcrew/edits/objects/items/construction_hooks.dm)
+				var/obj/structure/window/WD = new window_path(src, build_dir) // VOIDCREW EDIT: shuttle construction: directional builds follow the remote drone (voidcrew/edits/game/objects/items/rcd/RCD.dm)
 				WD.set_anchored(TRUE)
 				return TRUE
 
@@ -338,7 +338,7 @@
 
 			if(ispath(airlock_type, /obj/machinery/door/window))
 				//see the window branch above - the drone's facing, not the operator's
-				// VOIDCREW EDIT START - shuttle construction: directional builds follow the remote drone (voidcrew/edits/objects/items/construction_hooks.dm)
+				// VOIDCREW EDIT START - shuttle construction: directional builds follow the remote drone (voidcrew/edits/game/objects/items/rcd/RCD.dm)
 				var/build_dir = the_rcd.rcd_build_dir(user)
 				if(!valid_build_direction(src, build_dir, is_fulltile = FALSE))
 				// VOIDCREW EDIT END
@@ -350,7 +350,7 @@
 					balloon_alert(user, "there's already a door!")
 					return FALSE
 				//create the assembly and let it finish itself
-				var/obj/structure/windoor_assembly/assembly = new (src, build_dir) // VOIDCREW EDIT: shuttle construction: directional builds follow the remote drone (voidcrew/edits/objects/items/construction_hooks.dm)
+				var/obj/structure/windoor_assembly/assembly = new (src, build_dir) // VOIDCREW EDIT: shuttle construction: directional builds follow the remote drone (voidcrew/edits/game/objects/items/rcd/RCD.dm)
 				assembly.secure = ispath(airlock_type, /obj/machinery/door/window/brigdoor)
 				assembly.electronics = the_rcd.airlock_electronics.create_copy(assembly)
 				assembly.finish_door()
@@ -394,7 +394,7 @@
 			)
 			if(is_path_in_list(locate_type, dir_types))
 				//see the window branch above - the drone's facing, not the operator's
-				design.setDir(the_rcd.rcd_build_dir(user)) // VOIDCREW EDIT: shuttle construction: directional builds follow the remote drone (voidcrew/edits/objects/items/construction_hooks.dm)
+				design.setDir(the_rcd.rcd_build_dir(user)) // VOIDCREW EDIT: shuttle construction: directional builds follow the remote drone (voidcrew/edits/game/objects/items/rcd/RCD.dm)
 			return TRUE
 		if(RCD_DECONSTRUCT)
 			if(rcd_proof)
