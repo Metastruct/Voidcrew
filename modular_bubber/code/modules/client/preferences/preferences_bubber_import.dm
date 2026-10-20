@@ -303,6 +303,7 @@ GLOBAL_LIST_INIT(bubber_part_color_keys, list(
 
 	// --- Legs ---
 	out["feature_lizard_legs"] = (lowertext("[bubber["digitigrade_legs"]]") == "digitigrade legs") ? DIGITIGRADE_LEGS : NORMAL_LEGS
+	out["leg_style"] = bubber_resolve_via_pref(bubber, "leg_style", "leg_style", "Native", "legs style")
 
 	// --- Body markings ---
 	// Legacy per-species slot (lizard/moth) plus the newer per-limb list, which stores

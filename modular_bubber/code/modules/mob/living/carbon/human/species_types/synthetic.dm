@@ -110,6 +110,10 @@
 		// selected here and `BODYPART_ID_DIGITIGRADE` is passed so its sanity check looks
 		// for a digitigrade state instead of the chassis' plantigrade one (if choosen).
 		if(limb.port_synth_digitigrade)
+			// META EDIT - CHANGE - START - LEG_STYLE
+			if(!port_leg_style_is_native(human))
+				continue
+			// META EDIT - CHANGE - END - LEG_STYLE
 			var/datum/sprite_accessory/synth_chassis/digi_chassis = chassis
 			if(!chassis.is_digi_compatible)
 				digi_chassis = SSaccessories.synth_chassis_list[SYNTH_FALLBACK_CHASSIS]

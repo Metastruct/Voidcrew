@@ -543,6 +543,13 @@
 		. += "[limb_gender]-"
 	. += "[limb_id]"
 	. += "-[body_zone]"
+	// META EDIT - ADDITION - START - LEG_STYLE
+	// Digitigrade limbs from different species/styles share limb_id "digitigrade" but use
+	// different sprite sheets, and `limb_icon_cache` is static, so the icon must be part of
+	// the key or every style would reuse whichever digileg icon was drawn first.
+	if(limb_id == BODYPART_ID_DIGITIGRADE)
+		. += "-[icon_greyscale || icon_static]"
+	// META EDIT - ADDITION - END - LEG_STYLE
 	if(should_draw_greyscale && draw_color)
 		. += "-[draw_color]"
 	if(is_invisible)

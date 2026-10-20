@@ -2042,14 +2042,17 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
 	var/list/final_bodypart_overrides = new_species.bodypart_overrides.Copy()
-	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		// PORT EDIT - CHANGE - BUBBER_CUSTOMIZATION
-		// Use the species' own digitigrade type. Hardcoding the lizard type here would
-		// override ported species that draw digitigrade legs from another sheet.
-		// ORIGINAL: final_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		// ORIGINAL: final_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
-		final_bodypart_overrides[BODY_ZONE_R_LEG] = new_species.digitigrade_right_type
-		final_bodypart_overrides[BODY_ZONE_L_LEG] = new_species.digitigrade_left_type
+	// META EDIT - CHANGE - START - LEG_STYLE
+	// ORIGINAL: if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
+	// ORIGINAL: final_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
+	// ORIGINAL: final_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+	// The leg type now comes from the selectable Legs Style (modular_meta/modules/
+	// leg_styles); `port_leg_style_overrides()` resolves both leg zones (including the
+	// native digitigrade types) from the style + the Normal/Digitigrade toggle.
+	var/list/leg_style_overrides = port_leg_style_overrides(new_species, target)
+	for(var/leg_zone in leg_style_overrides)
+		final_bodypart_overrides[leg_zone] = leg_style_overrides[leg_zone]
+	// META EDIT - CHANGE - END - LEG_STYLE
 
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
