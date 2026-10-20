@@ -36,6 +36,10 @@
 		barker = new()
 		barker.bark_voice = new()
 	barker.bark_voice.set_from_prefs(preferences)
+	// META EDIT - ADDITION - START - BARK_NONE_OPTION
+	if(isnull(barker.bark_voice.voicepack)) // "none" selected - nothing to preview
+		return TRUE
+	// META EDIT - ADDITION - END - BARK_NONE_OPTION
 	barker.bark_voice.long_bark(list(user), 7, 300, FALSE, 32, barker)
 	COOLDOWN_START(src, bark_cooldown, 2 SECONDS)
 	return TRUE
@@ -58,7 +62,9 @@
 /// GLOB.voice_pack_list for atoms to use, but the voice screen never lists them, so
 /// leaving them in here just puts unselectable entries in the dropdown.
 /datum/preference/choiced/voice_pack/init_possible_values()
-	var/list/values = list()
+	// META EDIT - CHANGE - BARK_NONE_OPTION
+	// ORIGINAL: var/list/values = list()
+	var/list/values = list("none")
 	for(var/voice_pack_id in GLOB.voice_pack_list)
 		var/datum/voice_pack/voicepack = GLOB.voice_pack_list[voice_pack_id]
 		if(voicepack.hidden)
@@ -71,8 +77,13 @@
 /datum/preference/choiced/voice_pack/compile_constant_data()
 	var/list/data = ..()
 
-	var/list/display_names = list()
+	// META EDIT - CHANGE - START - BARK_NONE_OPTION
+	// ORIGINAL: var/list/display_names = list()
+	var/list/display_names = list("none" = "None")
 	for(var/voice_pack_id in get_choices())
+		if(voice_pack_id == "none")
+			continue
+		// META EDIT - CHANGE - END - BARK_NONE_OPTION
 		var/datum/voice_pack/voicepack = GLOB.voice_pack_list[voice_pack_id]
 		display_names[voice_pack_id] = "[voicepack.group_name]: [voicepack.name]"
 	data[CHOICED_PREFERENCE_DISPLAY_NAMES] = display_names
@@ -80,6 +91,11 @@
 	return data
 
 /datum/preference/choiced/voice_pack/apply_to_human(mob/living/carbon/human/target, value)
+	// META EDIT - ADDITION - START - BARK_NONE_OPTION
+	if(value == "none")
+		target.set_bark_voice_pack(null)
+		return
+	// META EDIT - ADDITION - END - BARK_NONE_OPTION
 	target.set_bark_voice_pack(value)
 
 /datum/preference/choiced/voice_pack/create_default_value()

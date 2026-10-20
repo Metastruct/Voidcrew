@@ -11,6 +11,7 @@
 import type {
   Feature,
   FeatureChoiced,
+  FeatureChoicedServerData,
   FeatureNumeric,
   FeatureToggle,
 } from 'tgui/interfaces/PreferencesMenu/preferences/features/base';
@@ -161,6 +162,40 @@ export const feature_synth_screen = dropdown('Screen');
 export const feature_synth_antenna = dropdown('Antenna');
 export const feature_synth_chassis = dropdown('Chassis');
 export const feature_synth_head = dropdown('Head');
+
+// "Legs Style" (Metastruct): the server sends the picker's value together with the choices
+// this character may actually use (native styles, plus everything with "Allow Mismatched
+// Parts" on), so foreign styles are never shown.
+type LegStyleData = {
+  value?: string;
+  choices?: string[];
+};
+
+export const leg_style: FeatureChoiced = {
+  name: 'Legs Style',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    const raw = props.value as unknown;
+    const packed =
+      typeof raw === 'object' && raw !== null
+        ? (raw as LegStyleData)
+        : undefined;
+    const value = packed?.value ?? (raw as string);
+    const serverData =
+      packed?.choices && props.serverData
+        ? { ...props.serverData, choices: packed.choices }
+        : props.serverData;
+    return (
+      <FeatureDropdownInput
+        buttons
+        {...props}
+        value={value}
+        serverData={serverData}
+      />
+    );
+  },
+};
 
 // Chassis/head are single-tone (Bubber's ipc_chassis_color/ipc_head_color); the antenna
 // is three-tone (ipc_antenna_color). Screens are pre-coloured and not tintable in Bubber

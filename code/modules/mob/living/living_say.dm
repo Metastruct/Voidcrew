@@ -467,8 +467,15 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			filter += tts_filter.Join(",")
 
 		var/voice_to_use = get_tts_voice(filter, special_filter)
+		// META EDIT - ADDITION - START - TTS_WHISPER_VOICE
+		// Use a separate voice/customization while whispering, if one is set and valid.
+		var/tts_custom = tts_custom_voice
+		if(message_mods[WHISPER_MODE] && length(tts_whisper_voice) && (tts_whisper_voice in SStts.available_speakers))
+			voice_to_use = tts_whisper_voice
+			tts_custom = tts_whisper_custom
+		// META EDIT - ADDITION - END - TTS_WHISPER_VOICE
 		if (!CONFIG_GET(flag/tts_no_whisper) || (CONFIG_GET(flag/tts_no_whisper) && !message_mods[WHISPER_MODE]))
-			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"))
+			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice_to_use, filter.Join(","), listened, message_range = message_range, pitch = pitch, special_filters = special_filter.Join("|"), custom_voice = tts_custom) // META EDIT - CHANGE - TTS_WHISPER_VOICE
 
 	var/image/say_popup = image('icons/mob/effects/talk.dmi', src, "[bubble_type][talk_icon_state]", FLY_LAYER)
 	SET_PLANE_EXPLICIT(say_popup, ABOVE_GAME_PLANE, src)

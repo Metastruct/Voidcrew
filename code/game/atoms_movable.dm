@@ -115,6 +115,20 @@
 	/// Set to anything other than "" to activate the silicon voice effect for TTS messages.
 	var/tts_silicon_voice_effect = ""
 
+	// META EDIT - ADDITION - START - TTS_CUSTOM_VOICE
+	/// Free-form TTS parameters (eSpeak/DECtalk/SAPI4) for the normal voice.
+	/// Ignored by the TTS server for engines that don't support it. See the
+	/// tts_custom_voice preference.
+	var/tts_custom_voice = ""
+	// META EDIT - ADDITION - END - TTS_CUSTOM_VOICE
+
+	// META EDIT - ADDITION - START - TTS_WHISPER_VOICE
+	/// TTS voice used only while whispering. "" reuses the normal voice.
+	var/tts_whisper_voice = ""
+	/// Free-form TTS parameters used only while whispering (see tts_custom_voice).
+	var/tts_whisper_custom = ""
+	// META EDIT - ADDITION - END - TTS_WHISPER_VOICE
+
 	/// Value used to increment ex_act() if reactionary_explosions is on
 	/// How much we as a source block explosions by
 	/// Will not automatically apply to the turf below you, you need to apply /datum/element/block_explosives in conjunction with this

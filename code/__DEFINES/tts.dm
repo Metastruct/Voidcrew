@@ -8,3 +8,5 @@
 #define TTS_FILTER_RADIO "radio"
 ///TTS filter to activate a silicon effect on speech.
 #define TTS_FILTER_SILICON "silicon"
+///TTS voice preference value meaning "no voice assigned"; TTS is skipped for this character.
+#define TTS_VOICE_NONE "None" // META EDIT - ADDITION - TTS_DEFAULT_NONE

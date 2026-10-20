@@ -135,8 +135,16 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		filter += tts_filter.Join(",")
 
 	if(voice && found_client)
+		// META EDIT - ADDITION - START - TTS_WHISPER_VOICE
+		// Use a separate voice/customization while whispering, if one is set and valid.
+		var/tts_speaker = voice
+		var/tts_custom = tts_custom_voice
+		if(message_mods[WHISPER_MODE] && length(tts_whisper_voice) && (tts_whisper_voice in SStts.available_speakers))
+			tts_speaker = tts_whisper_voice
+			tts_custom = tts_whisper_custom
+		// META EDIT - ADDITION - END - TTS_WHISPER_VOICE
 		if (!CONFIG_GET(flag/tts_no_whisper) || (CONFIG_GET(flag/tts_no_whisper) && !message_mods[WHISPER_MODE]))
-			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, voice, filter.Join(","), listened, message_range = range, pitch = pitch)
+			INVOKE_ASYNC(SStts, TYPE_PROC_REF(/datum/controller/subsystem/tts, queue_tts_message), src, html_decode(tts_message_to_use), message_language, tts_speaker, filter.Join(","), listened, message_range = range, pitch = pitch, custom_voice = tts_custom) // META EDIT - CHANGE - TTS_WHISPER_VOICE
 
 /atom/movable/proc/compose_message(atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, radio_freq_name, radio_freq_color, list/spans, list/message_mods = list(), visible_name = FALSE)
 	//This proc uses [] because it is faster than continually appending strings. Thanks BYOND.

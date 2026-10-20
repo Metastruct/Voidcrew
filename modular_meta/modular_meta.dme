@@ -12,3 +12,6 @@
 #include "modules\leg_styles\code\leg_style_preference.dm"
 #include "modules\leg_styles\code\synth_organic_legs.dm"
 #include "modules\leg_styles\code\teshari_leg_fit.dm"
+#include "modules\tts\code\tts_custom_voice.dm"
+#include "modules\tts\code\tts_whisper_custom.dm"
+#include "modules\tts\code\tts_whisper_voice.dm"

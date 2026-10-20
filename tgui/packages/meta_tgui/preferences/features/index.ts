@@ -2,3 +2,4 @@
 // Imported by the core PreferencesMenu features index.
 
 export * from './customization';
+export * from './tts';

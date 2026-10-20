@@ -9,7 +9,9 @@
 	var/speed = 6 // Lower values are faster, higher values are slower
 
 /datum/atom_voice/proc/set_voice_pack(id)
-	voicepack = GLOB.voice_pack_list[id]
+	// META EDIT - CHANGE - BARK_NONE_OPTION
+	// ORIGINAL: voicepack = GLOB.voice_pack_list[id]
+	voicepack = id ? GLOB.voice_pack_list[id] : null
 
 /datum/atom_voice/proc/copy_from(datum/atom_voice/other)
 	voicepack = other.voicepack

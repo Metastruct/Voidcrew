@@ -111,6 +111,8 @@
 		// for a digitigrade state instead of the chassis' plantigrade one (if choosen).
 		if(limb.port_synth_digitigrade)
 			// META EDIT - CHANGE - START - LEG_STYLE
+			// Only the native style draws the chassis' digitigrade art; other styles ship
+			// their own sprite on the bodypart (e.g. "Organic Lizard").
 			if(!port_leg_style_is_native(human))
 				continue
 			// META EDIT - CHANGE - END - LEG_STYLE

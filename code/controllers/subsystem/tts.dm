@@ -268,7 +268,7 @@ SUBSYSTEM_DEF(tts)
 
 #undef TTS_ARBRITRARY_DELAY
 
-/datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, list/listeners, local = FALSE, message_range = 7, volume_offset = 0, pitch = 0, special_filters = "")
+/datum/controller/subsystem/tts/proc/queue_tts_message(datum/target, message, datum/language/language, speaker, filter, list/listeners, local = FALSE, message_range = 7, volume_offset = 0, pitch = 0, special_filters = "", custom_voice = null) // META EDIT - CHANGE - TTS_CUSTOM_VOICE
 	if(!tts_enabled)
 		return
 
@@ -284,7 +284,7 @@ SUBSYSTEM_DEF(tts)
 
 	var/shell_scrubbed_input = tts_speech_filter(message)
 	shell_scrubbed_input = copytext(shell_scrubbed_input, 1, 300)
-	var/identifier = "[sha1(speaker + filter + num2text(pitch) + special_filters + shell_scrubbed_input)].[world.time]"
+	var/identifier = "[sha1(speaker + filter + num2text(pitch) + special_filters + shell_scrubbed_input + "[custom_voice]")].[world.time]" // META EDIT - CHANGE - TTS_CUSTOM_VOICE
 	if(!(speaker in available_speakers))
 		return
 
@@ -295,7 +295,19 @@ SUBSYSTEM_DEF(tts)
 	var/datum/http_request/request_blips = new()
 	var/file_name = "tmp/tts/[identifier].ogg"
 	var/file_name_blips = "tmp/tts/[identifier]_blips.ogg"
-	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
+	// META EDIT - ADDITION - START - TTS_CUSTOM_VOICE
+	// Free-form voice parameters (eSpeak/DECtalk/SAPI4); the TTS server ignores this
+	// for engines without custom support. Callers that know it explicitly (whisper,
+	// preview) pass it in; otherwise fall back to the target's normal customization.
+	var/custom_query = ""
+	if(isnull(custom_voice))
+		var/atom/movable/voice_source = target
+		if(istype(voice_source))
+			custom_voice = voice_source.tts_custom_voice
+	if(length(custom_voice))
+		custom_query = "&custom=[url_encode(custom_voice)]"
+	// META EDIT - ADDITION - END - TTS_CUSTOM_VOICE
+	request.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&special_filters=[url_encode(special_filters)][custom_query]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	request_blips.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips?voice=[speaker]&identifier=[identifier]&filter=[url_encode(filter)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, shell_scrubbed_input, target, local, language, message_range, volume_offset, listeners, pitch)
 	var/list/player_queued_tts_messages = queued_tts_messages[target]
