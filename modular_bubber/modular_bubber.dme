@@ -107,6 +107,11 @@
 // ---------------------------------------------------------------------------
 #include "code\modules\clothing\overslot.dm"
 #include "code\modules\clothing\modsuit_variations.dm"
+#include "code\modules\general_sprite_overrides\objects\structures\tables_racks.dm"
+#include "code\modules\general_sprite_overrides\objects\structures\window.dm"
+#include "code\modules\general_sprite_overrides\turfs\decals.dm"
+#include "code\modules\general_sprite_overrides\turfs\floors.dm"
+#include "code\modules\general_sprite_overrides\turfs\walls.dm"
 
 // ---------------------------------------------------------------------------
 // Modules: self-contained features
