@@ -135,6 +135,8 @@
 	data["is_captain"] = ship.is_ship_captain(captain)
 
 	// Crew list
+	var/datum/mind/crew_leader = ship.get_crew_record()?.leader
+	data["crew_leader"] = crew_leader?.current?.real_name || crew_leader?.name || "None"
 	data["crew"] = list()
 	if(ship.ship_team)
 		for(var/datum/mind/member in ship.ship_team.members)
@@ -250,10 +252,7 @@
 			return TRUE
 
 		if("set_memo")
-			var/new_memo = params["memo"]
-			if(length(new_memo) > 500)
-				new_memo = copytext(new_memo, 1, 501)
-			ship.memo = new_memo
+			ship.set_memo(params["memo"])
 			to_chat(captain, span_notice("Ship memo updated."))
 			return TRUE
 
@@ -353,21 +352,19 @@
 	if(!ship || QDELETED(ship))
 		to_chat(player, span_warning("The ship no longer exists!"))
 		return
+	return accept_crew_invite(player)
 
-	// Check if player is already on a ship team - remove them first
-	for(var/datum/team/voidcrew/old_team in player.mind.ship_teams)
-		if(old_team != ship.ship_team)
-			old_team.remove_member(player.mind)
-
-	// Add player to ship team
-	if(ship.ship_team)
-		ship.ship_team.add_member(player.mind)
-		ship.manifest += player.real_name
+/// Final invitation transaction, revalidated after the player's prompt.
+/datum/captain_management_ui/proc/accept_crew_invite(mob/living/player)
+	if(QDELETED(ship) || !ship.is_ship_captain(captain) || !player?.mind)
+		return FALSE
+	if(!ship.enlist_crewmember(player))
+		return FALSE
 
 	// Remember the captain's invitation across respawns until the password changes
 	// or the captain resets join access.
-	if(ckey)
-		ship.password_cleared_ckeys[ckey] = TRUE
+	if(player.ckey)
+		ship.password_cleared_ckeys[player.ckey] = TRUE
 
 	// Humans can pick up a ship headset. A silicon's radio is built in, so point it at
 	// this ship's channel the way a silicon crew spawn does.
@@ -382,6 +379,7 @@
 	to_chat(player, span_notice("You have joined the crew of [ship.name]!"))
 	ship.ship_notify("[player.real_name] has joined the crew.", "CREW UPDATE", SHIP_NOTIFY_NOTICE, 'voidcrew/sound/notify.ogg', 50)
 	log_game("[key_name(captain)] invited [key_name(player)] to ship [ship.name]")
+	return TRUE
 
 // ===== CREW MANAGEMENT =====
 
@@ -395,7 +393,7 @@
 
 	// Remove from ship team
 	if(ship.ship_team)
-		ship.ship_team.remove_member(target)
+		target.leave_reputation_crew()
 
 	// Remove from manifest
 	ship.manifest -= kicked_name
@@ -414,3 +412,9 @@
 		return
 
 	to_chat(player, boxed_message(span_notice("<b>Ship Memo from [ship.name]:</b>\n[ship.memo]")))
+
+/// Sets the ship memo. It is shown in chat to everyone who joins, so tags are stripped here.
+/obj/structure/overmap/ship/proc/set_memo(new_memo)
+	if(!istext(new_memo))
+		return
+	memo = trim(STRIP_HTML_SIMPLE(new_memo, 501))
