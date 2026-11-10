@@ -150,3 +150,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/closet/wall/nanotrasen, 32)
 	icon_state = "syndicate"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/closet/wall/syndicate, 32)
+
+/obj/item/wallframe/closet
+	name = "mounted closet frame"
+	desc = "A frame for a wall mounted storage unit. Great for everything except bathrooms."
+	icon = 'voidcrew/icons/obj/storage/wallcloset.dmi'
+	icon_state = "generic_frame"
+	result_path = /obj/structure/closet/wall
+	pixel_shift = 32
